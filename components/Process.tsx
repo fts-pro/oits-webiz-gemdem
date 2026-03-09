@@ -34,9 +34,9 @@ export const Process: React.FC = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} id={SectionId.PROCESS} className="py-24 bg-slate-50 dark:bg-slate-950 relative overflow-hidden transition-colors duration-300">
+    <section ref={sectionRef} id={SectionId.PROCESS} className="py-24 md:py-32 bg-slate-50 dark:bg-slate-950 relative overflow-hidden transition-colors duration-300">
       <div className="container mx-auto px-6 relative z-10">
-        <div className="text-center max-w-3xl mx-auto mb-20">
+        <div className="text-center max-w-3xl mx-auto mb-20 md:mb-32">
           <h2 className="text-sm font-bold text-blue-600 dark:text-blue-400 uppercase tracking-widest mb-4">Our Workflow</h2>
           <h3 className="text-3xl md:text-5xl font-bold text-slate-900 dark:text-white mb-6">How we bring your vision to life.</h3>
           <p className="text-slate-600 dark:text-slate-400 text-lg">
@@ -44,47 +44,54 @@ export const Process: React.FC = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-4 relative">
-          {/* Connector Line (Desktop) */}
-          <div className="hidden md:block absolute top-1/2 left-0 w-full h-px bg-slate-200 dark:bg-slate-800 -translate-y-12 z-0"></div>
+        <div className="relative max-w-5xl mx-auto">
+          {/* Vertical Line */}
+          <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-px bg-slate-200 dark:bg-slate-800 -translate-x-1/2 z-0"></div>
 
-          {PROCESS_STEPS.map((step, index) => (
-            <div 
-              key={step.id} 
-              className={`group relative z-10 flex flex-col items-center text-center p-6 rounded-3xl transition-all duration-300 hover:bg-white dark:hover:bg-slate-800 hover:shadow-xl dark:hover:shadow-blue-900/10 ease-out transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}
-              style={{ transitionDelay: `${index * 150}ms` }}
-            >
-              <div className="mb-6 relative">
-                 <div className="w-16 h-16 rounded-2xl bg-white dark:bg-slate-800 border-2 border-slate-100 dark:border-slate-700 flex items-center justify-center text-blue-600 dark:text-blue-400 shadow-xl shadow-blue-500/5 group-hover:scale-110 group-hover:rotate-3 transition-all duration-500">
+          <div className="space-y-12 md:space-y-24">
+            {PROCESS_STEPS.map((step, index) => {
+              const isEven = index % 2 === 0;
+              return (
+                <div 
+                  key={step.id} 
+                  className={`relative z-10 flex flex-col md:flex-row items-center gap-8 md:gap-16 transition-all duration-700 ease-out transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}
+                  style={{ transitionDelay: `${index * 150}ms` }}
+                >
+                  {/* Left Content (or Right on mobile) */}
+                  <div className={`w-full md:w-1/2 flex ${isEven ? 'md:justify-end text-left md:text-right' : 'md:justify-start md:order-last text-left'}`}>
+                    <div className="bg-white dark:bg-slate-900 p-8 rounded-3xl border border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-xl transition-shadow max-w-md w-full group">
+                      <div className={`text-5xl font-black text-slate-100 dark:text-slate-800/50 mb-4 transition-colors group-hover:text-blue-50 dark:group-hover:text-blue-900/20 ${isEven ? 'md:text-right' : 'md:text-left'}`}>
+                        {step.number}
+                      </div>
+                      <h4 className="text-2xl font-bold text-slate-900 dark:text-white mb-4 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">{step.title}</h4>
+                      <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
+                        {step.description}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Center Icon */}
+                  <div className="hidden md:flex absolute left-1/2 -translate-x-1/2 w-16 h-16 rounded-2xl bg-white dark:bg-slate-800 border-4 border-slate-50 dark:border-slate-950 items-center justify-center text-blue-600 dark:text-blue-400 shadow-xl shadow-blue-500/10 z-20">
                     {iconMap[step.icon]}
-                 </div>
-                 <div className="absolute -top-3 -right-3 w-8 h-8 rounded-full bg-slate-900 dark:bg-blue-600 text-white text-xs font-bold flex items-center justify-center border-2 border-white dark:border-slate-900 transition-all duration-300 group-hover:scale-125 group-hover:bg-blue-600 group-hover:text-white">
-                    {step.number}
-                 </div>
-              </div>
-              
-              <h4 className="text-xl font-bold text-slate-900 dark:text-white mb-3 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">{step.title}</h4>
-              <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed max-w-[200px]">
-                {step.description}
-              </p>
+                  </div>
 
-              {index < PROCESS_STEPS.length - 1 && (
-                <div className="md:hidden flex justify-center py-6 text-slate-300">
-                  <ChevronRight className="rotate-90" />
+                  {/* Empty space for alternating layout */}
+                  <div className={`hidden md:block w-1/2 ${isEven ? 'order-last' : ''}`}></div>
                 </div>
-              )}
-            </div>
-          ))}
+              );
+            })}
+          </div>
         </div>
         
-        <div className="mt-20 p-8 rounded-3xl bg-blue-600 text-white flex flex-col md:flex-row items-center justify-between gap-8 shadow-2xl shadow-blue-500/20">
-           <div className="max-w-xl">
-             <h4 className="text-2xl font-bold mb-2">Ready to start the discovery?</h4>
-             <p className="text-blue-100">Schedule a 30-minute consultation with our lead architect to discuss your project requirements.</p>
+        <div className="mt-32 p-10 md:p-12 rounded-[3rem] bg-blue-600 text-white flex flex-col md:flex-row items-center justify-between gap-8 shadow-2xl shadow-blue-600/20 relative overflow-hidden">
+           <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3"></div>
+           <div className="max-w-xl relative z-10 text-center md:text-left">
+             <h4 className="text-3xl font-bold mb-4">Ready to start the discovery?</h4>
+             <p className="text-blue-100 text-lg">Schedule a 30-minute consultation with our lead architect to discuss your project requirements.</p>
            </div>
            <button 
              onClick={() => document.getElementById(SectionId.CONTACT)?.scrollIntoView({ behavior: 'smooth' })}
-             className="px-8 py-4 bg-white text-blue-600 rounded-xl font-bold hover:bg-blue-50 transition-colors shadow-lg shadow-black/10"
+             className="px-10 py-5 bg-white text-blue-600 rounded-2xl font-bold hover:bg-blue-50 transition-all shadow-xl hover:scale-105 active:scale-95 relative z-10 whitespace-nowrap"
            >
              Book Consultation
            </button>

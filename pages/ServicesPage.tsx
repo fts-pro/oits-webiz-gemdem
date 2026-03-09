@@ -5,6 +5,7 @@ import { Process } from '../components/Process';
 import { Button } from '../components/ui/Button';
 import { Link } from 'react-router-dom';
 import { Lightbulb, Users, Activity, TrendingUp } from 'lucide-react';
+import { SEO } from '../components/SEO';
 
 const WHY_CHOOSE_US = [
   {
@@ -30,21 +31,13 @@ const WHY_CHOOSE_US = [
 ];
 
 const ServicesPage: React.FC = () => {
-  const { hash } = useLocation();
-
-  useEffect(() => {
-    if (hash) {
-      const element = document.getElementById(hash.replace('#', ''));
-      if (element) {
-        setTimeout(() => {
-          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }, 100);
-      }
-    }
-  }, [hash]);
-
   return (
     <div className="pt-20 animate-fade-in">
+      <SEO 
+        title="Our Services | OITS Dhaka"
+        description="High-performance solutions tailored to the needs of modern enterprises and fast-growing startups. Explore our engineering capabilities."
+        keywords="enterprise web solutions, native mobile apps, dedicated teams, cloud infrastructure"
+      />
       <div className="py-32 bg-slate-950 text-white relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 to-transparent pointer-events-none" />
         <div className="container mx-auto px-6 relative z-10 text-center">

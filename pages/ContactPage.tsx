@@ -1,10 +1,16 @@
 import React from 'react';
 import { Contact } from '../components/Contact';
 import { ADDRESS } from '../constants';
+import { SEO } from '../components/SEO';
 
 const ContactPage: React.FC = () => {
   return (
     <div className="pt-20 animate-fade-in">
+      <SEO 
+        title="Contact Us | OITS Dhaka"
+        description="Get in touch with our engineering team to discuss your project requirements and start building your digital future."
+        keywords="contact OITS Dhaka, software development consultation, hire developers"
+      />
       <div className="py-24 bg-slate-900 text-white text-center">
         <div className="container mx-auto px-6">
           <h1 className="text-4xl md:text-6xl font-extrabold mb-6">Let's Talk</h1>

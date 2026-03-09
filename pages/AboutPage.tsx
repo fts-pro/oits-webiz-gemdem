@@ -3,6 +3,7 @@ import { About } from '../components/About';
 import { Button } from '../components/ui/Button';
 import { Link } from 'react-router-dom';
 import { ChevronDown, HelpCircle, Briefcase, Coffee, Globe, GraduationCap } from 'lucide-react';
+import { SEO } from '../components/SEO';
 
 const LOGOS = [
   { name: 'TechFlow' },
@@ -63,6 +64,11 @@ const AccordionItem: React.FC<{ question: string; answer: string }> = ({ questio
 const AboutPage: React.FC = () => {
   return (
     <div className="pt-20 animate-fade-in bg-white dark:bg-slate-950">
+      <SEO 
+        title="About Us | OITS Dhaka"
+        description="Learn about OITS Dhaka, our culture, and our mission to build the digital infrastructure for tomorrow's industry leaders."
+        keywords="about OITS Dhaka, software company culture, engineering team, tech partners"
+      />
       <div className="py-24 md:py-32 bg-slate-900 text-white text-center relative overflow-hidden">
         <div className="absolute top-0 right-0 w-96 h-96 bg-blue-600 rounded-full blur-[120px] opacity-20 -translate-y-1/2 translate-x-1/3"></div>
         <div className="container mx-auto px-6 relative z-10">

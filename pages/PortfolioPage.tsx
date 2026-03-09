@@ -1,10 +1,16 @@
 import React from 'react';
 import { Portfolio } from '../components/Portfolio';
 import { Button } from '../components/ui/Button';
+import { SEO } from '../components/SEO';
 
 const PortfolioPage: React.FC = () => {
   return (
     <div className="pt-20 animate-fade-in bg-white dark:bg-slate-950">
+      <SEO 
+        title="Our Portfolio | OITS Dhaka"
+        description="Explore our selection of complex engineering challenges solved with precision and creativity. View our impactful digital stories."
+        keywords="portfolio, case studies, software projects, web development projects, OITS Dhaka"
+      />
       <div className="py-24 md:py-32 bg-slate-900 text-white relative overflow-hidden">
         <div className="absolute inset-0 bg-blue-600/10 pointer-events-none" />
         <div className="container mx-auto px-6 relative z-10 text-center">

@@ -9,10 +9,16 @@ import { Testimonials } from '../components/Testimonials';
 import { TrustedBy } from '../components/TrustedBy';
 import { Link } from 'react-router-dom';
 import { Button } from '../components/ui/Button';
+import { SEO } from '../components/SEO';
 
 const Home: React.FC = () => {
   return (
     <div className="animate-fade-in overflow-hidden">
+      <SEO 
+        title="OITS Dhaka | Modern Software Solutions"
+        description="Transforming ideas into digital reality with expert web and mobile development. We architect resilient, high-speed digital systems."
+        keywords="software development, web development, mobile apps, OITS Dhaka, engineering"
+      />
       <Hero />
       <Marquee />
       
