@@ -37,25 +37,31 @@ const FAQS = [
   }
 ];
 
-const AccordionItem: React.FC<{ question: string; answer: string }> = ({ question, answer }) => {
+const AccordionItem: React.FC<{ question: string; answer: string; id: string }> = ({ question, answer, id }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <div className="border-b border-slate-100 dark:border-slate-800 last:border-0 overflow-hidden">
       <button 
+        id={`accordion-button-${id}`}
+        aria-expanded={isOpen}
+        aria-controls={`accordion-panel-${id}`}
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full flex items-center justify-between py-6 text-left group hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors px-4 rounded-xl"
+        className="w-full flex items-center justify-between py-6 text-left group hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors px-4 rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
       >
-        <span className="font-bold text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">{question}</span>
+        <span className="font-bold text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors pr-4">{question}</span>
         <ChevronDown 
-          className={`text-slate-400 transition-transform duration-300 ${isOpen ? 'rotate-180 text-blue-600' : ''}`} 
+          className={`text-slate-400 transition-transform duration-300 shrink-0 ${isOpen ? 'rotate-180 text-blue-600' : ''}`} 
           size={20} 
         />
       </button>
       <div 
-        className={`overflow-hidden transition-all duration-300 ease-in-out px-4 ${isOpen ? 'max-h-48 opacity-100 pb-6' : 'max-h-0 opacity-0'}`}
+        id={`accordion-panel-${id}`}
+        role="region"
+        aria-labelledby={`accordion-button-${id}`}
+        className={`overflow-hidden transition-all duration-300 ease-in-out px-4 ${isOpen ? 'max-h-96 opacity-100 pb-6' : 'max-h-0 opacity-0'}`}
       >
-        <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">{answer}</p>
+        <p className="text-slate-600 dark:text-slate-400 text-sm md:text-base leading-relaxed">{answer}</p>
       </div>
     </div>
   );
@@ -129,7 +135,7 @@ const AboutPage: React.FC = () => {
                <div className="lg:w-2/3">
                   <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-2 md:p-6 shadow-sm">
                      {FAQS.map((faq, index) => (
-                        <AccordionItem key={index} question={faq.question} answer={faq.answer} />
+                        <AccordionItem key={index} id={`faq-${index}`} question={faq.question} answer={faq.answer} />
                      ))}
                   </div>
                </div>

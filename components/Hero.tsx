@@ -101,14 +101,14 @@ export const Hero: React.FC = () => {
 
     if (typedCode.length < CODE_SNIPPET.length) {
       const nextChar = CODE_SNIPPET[typedCode.length];
-      let delay = 40; 
+      let delay = 25; 
       
-      if (nextChar === '\n') delay = 400;
-      else if ([';', '{', '}'].includes(nextChar)) delay = 150;
-      else if (nextChar === ',') delay = 100;
-      else if (nextChar === ' ') delay = 20;
+      if (nextChar === '\n') delay = 250;
+      else if ([';', '{', '}'].includes(nextChar)) delay = 100;
+      else if (nextChar === ',') delay = 60;
+      else if (nextChar === ' ') delay = 15;
       
-      delay += Math.random() * 20 - 10;
+      delay += Math.random() * 15 - 5;
 
       const timeout = setTimeout(() => {
         setTypedCode(CODE_SNIPPET.slice(0, typedCode.length + 1));
@@ -149,18 +149,18 @@ export const Hero: React.FC = () => {
       </div>
 
       <div className="container mx-auto px-4 sm:px-6 relative z-10">
-        <div className="flex flex-col lg:flex-row items-center gap-10 lg:gap-20 xl:gap-24">
+        <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20 xl:gap-24">
           
           {/* Text Content */}
           <div className="flex-1 space-y-8 md:space-y-10 text-center lg:text-left w-full pt-4 lg:pt-0">
             {/* Tag */}
-            <div className={`inline-flex items-center justify-center lg:justify-start gap-2 px-3 py-1.5 md:px-4 md:py-2 rounded-full bg-blue-500/10 border border-blue-400/20 text-[10px] md:text-xs font-black text-blue-300 uppercase tracking-[0.2em] md:tracking-[0.3em] transition-all duration-1000 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+            <div className={`inline-flex items-center justify-center lg:justify-start gap-2 px-3 py-1.5 md:px-4 md:py-2 rounded-full bg-blue-500/10 border border-blue-400/20 text-[10px] md:text-xs font-black text-blue-300 uppercase tracking-[0.2em] md:tracking-[0.3em] transition-all duration-1000 ease-out transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
               <Zap size={12} className="fill-current animate-pulse text-blue-400 md:w-3.5 md:h-3.5" />
               <span>Future-Proof Engineering</span>
             </div>
             
             {/* Main Title - Responsive Sizing */}
-            <h1 className={`text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black text-white tracking-tighter leading-[1.1] md:leading-[1.05] min-h-[2.2em] md:min-h-[1.1em] drop-shadow-2xl transition-all duration-1000 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+            <h1 className={`text-5xl sm:text-6xl md:text-7xl lg:text-7xl xl:text-8xl font-black text-white tracking-tighter leading-[1.1] md:leading-[1.05] min-h-[2.2em] md:min-h-[1.1em] drop-shadow-2xl transition-all duration-1000 delay-150 ease-out transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
               Building the <br className="hidden md:block"/>
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-300 to-blue-200 inline-block">
                 {typedTitle}
@@ -171,8 +171,8 @@ export const Hero: React.FC = () => {
             </h1>
             
             {/* Tagline and Buttons */}
-            <div className={`space-y-8 md:space-y-10 transition-all duration-1000 delay-300 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-              <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-slate-200/90 max-w-2xl mx-auto lg:mx-0 leading-relaxed font-semibold drop-shadow-md min-h-[3.5rem] md:min-h-0 px-2 sm:px-0">
+            <div className={`space-y-8 md:space-y-10 transition-all duration-1000 delay-300 ease-out transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+              <p className="text-lg sm:text-xl md:text-2xl lg:text-2xl text-slate-200/90 max-w-2xl mx-auto lg:mx-0 leading-relaxed font-medium drop-shadow-md min-h-[3.5rem] md:min-h-0 px-2 sm:px-0">
                 {typedTagline}
                 {isTitleDone && !isTaglineDone && (
                   <span className="inline-block w-[2px] h-[0.8em] bg-blue-400 ml-1 animate-pulse align-middle" />
@@ -186,7 +186,7 @@ export const Hero: React.FC = () => {
                     <Button 
                       size="lg" 
                       variant="primary" 
-                      className="group relative w-full sm:w-auto overflow-hidden rounded-xl sm:rounded-2xl border-none bg-blue-600 px-8 py-3.5 md:px-10 md:py-4 font-black text-white shadow-2xl shadow-blue-600/40 transition-all duration-300 hover:scale-110 hover:bg-blue-500 hover:shadow-[0_25px_50px_rgba(37,99,235,0.6)] active:scale-95 text-xs sm:text-sm md:text-base tracking-widest uppercase ring-offset-2 ring-offset-slate-900 focus:ring-2 focus:ring-blue-400"
+                      className="group relative w-full sm:w-auto overflow-hidden rounded-xl sm:rounded-2xl border-none bg-blue-600 px-8 py-4 md:px-10 md:py-4 font-black text-white shadow-2xl shadow-blue-600/40 transition-all duration-300 hover:scale-105 hover:bg-blue-500 hover:shadow-[0_20px_40px_rgba(37,99,235,0.5)] active:scale-95 text-sm md:text-base tracking-widest uppercase ring-offset-2 ring-offset-slate-900 focus:ring-2 focus:ring-blue-400"
                     >
                       <span className="relative z-10 flex items-center justify-center gap-3">
                         Get Started Today
@@ -198,7 +198,7 @@ export const Hero: React.FC = () => {
                     <Button 
                       variant="secondary" 
                       size="lg" 
-                      className="group w-full sm:w-auto gap-2 rounded-xl sm:rounded-2xl border border-white/20 bg-slate-900/40 px-8 py-3.5 md:px-10 md:py-4 font-black text-white shadow-xl backdrop-blur-md transition-all duration-300 hover:scale-110 hover:bg-white/10 hover:border-white/40 hover:shadow-[0_20px_40px_rgba(255,255,255,0.15)] active:scale-95 text-xs sm:text-sm md:text-base tracking-widest uppercase"
+                      className="group w-full sm:w-auto gap-2 rounded-xl sm:rounded-2xl border border-white/20 bg-slate-900/40 px-8 py-4 md:px-10 md:py-4 font-black text-white shadow-xl backdrop-blur-md transition-all duration-300 hover:scale-105 hover:bg-white/10 hover:border-white/40 hover:shadow-[0_15px_30px_rgba(255,255,255,0.1)] active:scale-95 text-sm md:text-base tracking-widest uppercase"
                     >
                       <PlayCircle size={18} className="transition-transform duration-300 group-hover:scale-110 group-hover:fill-white/20 md:w-5 md:h-5" />
                       Request a Demo
@@ -210,7 +210,7 @@ export const Hero: React.FC = () => {
                   <Button 
                     variant="ghost" 
                     size="md" 
-                    className="group w-full gap-2 rounded-xl border border-transparent px-6 font-bold text-slate-300 transition-all duration-300 hover:scale-105 hover:border-white/10 hover:bg-white/5 hover:text-white lg:w-auto text-xs md:text-sm"
+                    className="group w-full gap-2 rounded-xl border border-transparent px-6 font-bold text-slate-300 transition-all duration-300 hover:scale-105 hover:border-white/10 hover:bg-white/5 hover:text-white lg:w-auto text-sm"
                   >
                     <MessageCircle size={16} className="transition-transform duration-300 group-hover:-rotate-12 group-hover:text-blue-400 md:w-[18px] md:h-[18px]" />
                     Contact Us Directly
@@ -219,7 +219,7 @@ export const Hero: React.FC = () => {
               </div>
 
               {/* Trusted By - Responsive Layout with Enhanced Animations */}
-              <div className={`pt-10 md:pt-14 transition-all duration-1000 delay-500 border-t border-white/10 max-w-2xl mx-auto lg:mx-0 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}>
+              <div className={`pt-10 md:pt-14 transition-all duration-1000 delay-500 ease-out border-t border-white/10 max-w-2xl mx-auto lg:mx-0 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
                 <p className="text-center lg:text-left text-[10px] font-black text-slate-400 uppercase tracking-[0.4em] mb-8">
                   Trusted by Global Innovators
                 </p>
@@ -227,15 +227,15 @@ export const Hero: React.FC = () => {
                   {TRUSTED_BY.map((partner, idx) => (
                     <div 
                       key={partner.name} 
-                      className={`flex items-center gap-2.5 group cursor-default transition-all duration-700 transform ${isVisible ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 translate-y-8'}`}
+                      className={`flex items-center gap-2.5 group cursor-default transition-all duration-700 ease-out transform ${isVisible ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 translate-y-8'}`}
                       style={{ transitionDelay: `${700 + idx * 100}ms` }}
                     >
                       {/* Logo Container with Scale and Brightness Animation */}
-                      <div className={`w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-lg sm:rounded-xl md:rounded-2xl ${partner.color} flex items-center justify-center text-[10px] sm:text-[11px] md:text-xs font-black transition-all duration-500 transform group-hover:scale-110 group-hover:-rotate-3 group-hover:shadow-lg group-hover:shadow-blue-500/20 shadow-sm ring-1 ring-white/5 group-hover:ring-white/20 active:scale-95`}>
+                      <div className={`w-10 h-10 md:w-12 md:h-12 rounded-xl md:rounded-2xl ${partner.color} flex items-center justify-center text-[11px] md:text-xs font-black transition-all duration-500 transform group-hover:scale-110 group-hover:-rotate-3 group-hover:shadow-lg group-hover:shadow-blue-500/20 shadow-sm ring-1 ring-white/5 group-hover:ring-white/20 active:scale-95`}>
                         {partner.icon}
                       </div>
                       {/* Text label with color shift */}
-                      <span className="text-xs sm:text-sm font-black text-slate-500 group-hover:text-white transition-colors duration-300 tracking-tight hidden sm:inline-block">
+                      <span className="text-sm font-black text-slate-500 group-hover:text-white transition-colors duration-300 tracking-tight hidden sm:inline-block">
                         {partner.name}
                       </span>
                     </div>
@@ -246,7 +246,7 @@ export const Hero: React.FC = () => {
           </div>
 
           {/* Visual/Code Snippet Container - Adjusted spacing and scaling */}
-          <div className={`flex-1 w-full max-w-xl lg:max-w-2xl transition-all duration-1000 delay-300 transform ${isVisible ? 'opacity-100 translate-x-0 scale-100' : 'opacity-0 translate-x-12 scale-95'} mt-12 lg:mt-0 px-4 sm:px-0`}>
+          <div className={`flex-1 w-full max-w-xl lg:max-w-2xl transition-all duration-1000 delay-500 ease-out transform ${isVisible ? 'opacity-100 translate-y-0 lg:translate-x-0 scale-100' : 'opacity-0 translate-y-12 lg:translate-x-12 lg:translate-y-0 scale-95'} mt-16 lg:mt-0 px-4 sm:px-0`}>
             <div className="relative group/visual">
               
               {/* Floating Code Window (Hidden on mobile/tablet for cleaner look, visible on desktop) */}
@@ -265,14 +265,14 @@ export const Hero: React.FC = () => {
                   <div className="p-6 font-mono text-[10px] lg:text-[11px] leading-relaxed text-blue-300/90 h-64 overflow-hidden whitespace-pre-wrap relative bg-gradient-to-b from-transparent to-slate-950/20">
                     {typedCode}
                     {isTaglineDone && (
-                      <span className="inline-block w-2 h-3.5 bg-blue-500 align-middle ml-1 animate-pulse shadow-[0_0_15px_rgba(59,130,246,0.8)]" />
+                      <span className="inline-block w-2 h-3.5 bg-blue-400 align-middle ml-1 animate-[pulse_1s_ease-in-out_infinite] shadow-[0_0_10px_rgba(96,165,250,0.6)]" />
                     )}
                   </div>
                 </div>
               </div>
               
               {/* Image Container */}
-              <div className="relative bg-slate-900 border border-white/10 rounded-[1.5rem] sm:rounded-[2rem] md:rounded-[3rem] shadow-2xl overflow-hidden aspect-[4/3] group/img ring-1 ring-white/5 transition-all duration-700">
+              <div className="relative bg-slate-900 border border-white/10 rounded-[2rem] md:rounded-[3rem] shadow-2xl overflow-hidden aspect-square sm:aspect-[4/3] lg:aspect-[16/10] group/img ring-1 ring-white/5 transition-all duration-700">
                 <img 
                   src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&q=80&w=1200" 
                   className="w-full h-full object-cover opacity-60 transition-transform duration-1000 group-hover/img:scale-105" 
