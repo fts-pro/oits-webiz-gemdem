@@ -6,7 +6,7 @@ import { Button } from './ui/Button';
 import { Tooltip } from './ui/Tooltip';
 import { ScrollReveal } from './ui/ScrollReveal';
 
-const FALLBACK_IMAGE = 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800';
+const FALLBACK_IMAGE = 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800&fm=webp';
 
 const ALL_CATEGORY = 'All Categories';
 const STORAGE_KEY_CATEGORIES = 'portfolio-filter-categories';

@@ -26,7 +26,7 @@ const SocialLink = ({ href, icon: Icon, label }: { href: string; icon: any; labe
   </a>
 );
 
-const FooterLink = ({ href, children }: { href: string; children?: React.ReactNode }) => {
+const FooterLink = ({ href, children, 'aria-label': ariaLabel }: { href: string; children?: React.ReactNode; 'aria-label'?: string }) => {
   const content = (
     <span className="inline-block transition-all duration-300 group-hover:translate-x-1 group-hover:text-blue-400">
       {children}
@@ -36,6 +36,7 @@ const FooterLink = ({ href, children }: { href: string; children?: React.ReactNo
   return (
     <Link 
       to={href} 
+      aria-label={ariaLabel}
       className="group flex items-center text-slate-400 hover:text-blue-400 transition-all py-1.5 font-medium text-sm"
     >
       {content}
@@ -158,9 +159,9 @@ export const Footer: React.FC<FooterProps> = ({ theme, toggleTheme }) => {
         <div className="pt-12 border-t border-slate-900/50 flex flex-col md:flex-row justify-between items-center gap-8 text-[10px] font-black uppercase tracking-[0.25em] text-slate-500">
           <p>&copy; {new Date().getFullYear()} {COMPANY_NAME}. Digital Engineering Excellence.</p>
           <div className="flex flex-wrap justify-center gap-x-12 gap-y-4">
-            <Link to="#" className="hover:text-blue-400 transition-all hover:scale-105">Privacy Policy</Link>
-            <Link to="#" className="hover:text-blue-400 transition-all hover:scale-105">Terms of Service</Link>
-            <Link to="#" className="hover:text-blue-400 transition-all hover:scale-105">Legal Compliance</Link>
+            <Link to="#" className="hover:text-blue-400 transition-all hover:scale-105" aria-label="Read our Privacy Policy">Privacy Policy</Link>
+            <Link to="#" className="hover:text-blue-400 transition-all hover:scale-105" aria-label="Read our Terms of Service">Terms of Service</Link>
+            <Link to="#" className="hover:text-blue-400 transition-all hover:scale-105" aria-label="Read our Legal Compliance disclosures">Legal Compliance</Link>
           </div>
         </div>
       </div>

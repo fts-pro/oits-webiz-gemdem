@@ -113,7 +113,7 @@ const ServicesPage: React.FC = () => {
                  <div className="absolute inset-0 bg-blue-600 rounded-[3rem] rotate-3 group-hover:rotate-1 transition-transform opacity-10" />
                  <div className="relative aspect-video rounded-[3rem] overflow-hidden shadow-2xl">
                     <img 
-                      src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=1000" 
+                      src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=1000&fm=webp"
                       alt="Team working together at OITS Dhaka" 
                       loading="lazy"
                       className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
@@ -130,7 +130,7 @@ const ServicesPage: React.FC = () => {
                 <div className="flex items-center gap-4">
                   <div className="w-12 h-12 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden">
                     <img 
-                      src="https://i.pravatar.cc/150?u=techlead" 
+                      src="https://i.pravatar.cc/150?u=techlead" aria-label="OITS Dhaka Core Team tech lead avatar portrait"
                       className="w-full h-full object-cover opacity-80" 
                       alt="Tech Lead avatar" 
                       loading="lazy"
