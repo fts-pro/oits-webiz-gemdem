@@ -3,6 +3,7 @@ import { X, Tag, MonitorPlay, RotateCcw, Check, Play, Pause, AlertTriangle, Laye
 import { PROJECTS } from '../constants';
 import { Project } from '../types';
 import { Button } from './ui/Button';
+import { Tooltip } from './ui/Tooltip';
 
 const FALLBACK_IMAGE = 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800';
 
@@ -196,9 +197,11 @@ const ProjectCard = ({ project, onClick, onViewDemo, highlightedTags, index }: a
       </div>
       <div className="p-8">
         <h4 className="text-2xl font-bold text-slate-900 dark:text-white mb-3 group-hover:text-blue-600 transition-colors leading-tight">{project.title}</h4>
-        <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-6 line-clamp-2">
-          {project.description}
-        </p>
+        <Tooltip content={project.description} position="top">
+          <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-6 line-clamp-2 h-[40px]">
+            {project.description}
+          </p>
+        </Tooltip>
         <div className="flex flex-wrap gap-2">
           {project.technologies?.map((tech: string) => (
             <span 

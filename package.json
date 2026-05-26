@@ -10,12 +10,13 @@
     "lint": "tsc --noEmit"
   },
   "dependencies": {
-    "react": "^19.2.3",
-    "lucide-react": "^0.562.0",
-    "react-dom": "^19.2.3",
-    "react-router-dom": "^7.11.0",
+    "@google/genai": "^1.34.0",
     "lottie-react": "^2.4.1",
-    "@google/genai": "^1.34.0"
+    "lucide-react": "^0.562.0",
+    "motion": "^12.40.0",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3",
+    "react-router-dom": "^7.11.0"
   },
   "devDependencies": {
     "@types/node": "^22.14.0",

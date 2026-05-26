@@ -1,15 +1,17 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Globe, Smartphone, Users, Cloud, ArrowUpRight, X, Check, BookOpen } from 'lucide-react';
+import { Globe, Smartphone, Users, Cloud, ArrowUpRight, X, Check, BookOpen, Layers, Star } from 'lucide-react';
 import { SERVICES } from '../constants';
 import { SectionId, Service } from '../types';
 import { Button } from './ui/Button';
 import { Link } from 'react-router-dom';
+import { Tooltip } from './ui/Tooltip';
 
 const iconMap: Record<string, React.ReactNode> = {
   Globe: <Globe className="w-7 h-7" />,
   Smartphone: <Smartphone className="w-7 h-7" />,
   Users: <Users className="w-7 h-7" />,
   Cloud: <Cloud className="w-7 h-7" />,
+  Layers: <Layers className="w-7 h-7" />,
 };
 
 interface ServicesProps {
@@ -75,9 +77,11 @@ export const Services: React.FC<ServicesProps> = ({ limit }) => {
               </div>
 
               <h4 className="text-2xl font-black text-slate-900 dark:text-white mb-4 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors tracking-tight">{service.title}</h4>
-              <p id={`service-desc-${service.id}`} className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-8 line-clamp-4 font-medium">
-                {service.description}
-              </p>
+              <Tooltip content={service.description} position="top">
+                <p id={`service-desc-${service.id}`} className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-8 line-clamp-4 font-medium h-[80px]">
+                  {service.description}
+                </p>
+              </Tooltip>
 
               {/* Technologies/Benefits highlights directly in the card */}
               <div className="space-y-3 mb-10">
@@ -144,18 +148,48 @@ export const Services: React.FC<ServicesProps> = ({ limit }) => {
                 </div>
               </div>
 
-              <p className="text-slate-600 dark:text-slate-400 text-xl mb-12 leading-relaxed font-medium">{selectedService.description}</p>
+              <p className="text-slate-600 dark:text-slate-400 text-xl mb-12 leading-relaxed font-semibold">{selectedService.description}</p>
               
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
-                {selectedService.features.map((feature, idx) => (
-                  <div key={idx} className="flex items-center gap-4 p-5 bg-slate-50 dark:bg-slate-800/50 rounded-2xl border border-slate-100 dark:border-slate-700/50 transition-all hover:border-blue-500/30 group/item">
-                    <div className="w-10 h-10 rounded-xl bg-white dark:bg-slate-700 flex items-center justify-center text-blue-600 dark:text-blue-400 shadow-sm transition-transform group-hover/item:scale-110">
-                      <Check size={20} />
-                    </div>
-                    <span className="text-base font-bold text-slate-700 dark:text-slate-200 tracking-tight">{feature}</span>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+                <div>
+                  <h4 className="text-xs font-black text-slate-400 uppercase tracking-[0.2em] mb-4">Focus Areas & Tech</h4>
+                  <div className="space-y-4">
+                    {selectedService.features.map((feature, idx) => (
+                      <div key={idx} className="flex items-center gap-4 p-4.5 bg-slate-50 dark:bg-slate-800/20 rounded-2xl border border-slate-100 dark:border-slate-800/50 transition-all hover:border-blue-500/20 group/item">
+                        <div className="w-9 h-9 rounded-xl bg-blue-100 dark:bg-blue-900/40 flex items-center justify-center text-blue-600 dark:text-blue-400 shadow-sm shrink-0 transition-transform group-hover/item:scale-105">
+                          <Check size={16} />
+                        </div>
+                        <span className="text-sm font-bold text-slate-700 dark:text-slate-200 tracking-tight">{feature}</span>
+                      </div>
+                    ))}
                   </div>
-                ))}
+                </div>
+
+                {selectedService.benefits && (
+                  <div>
+                    <h4 className="text-xs font-black text-slate-400 uppercase tracking-[0.2em] mb-4">Strategic Advantages</h4>
+                    <div className="space-y-4">
+                      {selectedService.benefits.map((benefit, idx) => (
+                        <div key={idx} className="flex items-center gap-4 p-4.5 bg-indigo-50/20 dark:bg-indigo-900/10 rounded-2xl border border-indigo-100/10 dark:border-indigo-800/15 transition-all hover:border-indigo-500/20 group/benefit">
+                          <div className="w-9 h-9 rounded-xl bg-indigo-100/40 dark:bg-indigo-900/35 flex items-center justify-center text-indigo-600 dark:text-indigo-400 shrink-0">
+                            <Star size={14} className="fill-indigo-500/10" />
+                          </div>
+                          <span className="text-sm font-bold text-slate-700 dark:text-slate-200 tracking-tight">{benefit}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
+
+              {selectedService.caseStudyPlaceholder && (
+                <div className="mb-12 p-6.5 rounded-3xl bg-blue-50/30 dark:bg-slate-950/60 border border-blue-100/20 dark:border-slate-800/80">
+                  <h4 className="text-[10px] font-black text-blue-600 dark:text-blue-400 uppercase tracking-widest mb-3">Successful Delivery Case Testimonial</h4>
+                  <p className="text-slate-700 dark:text-slate-350 text-sm italic font-semibold leading-relaxed">
+                    {selectedService.caseStudyPlaceholder}
+                  </p>
+                </div>
+              )}
               
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link to="/contact" className="flex-1" onClick={() => setSelectedService(null)}>

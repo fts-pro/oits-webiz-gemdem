@@ -104,7 +104,7 @@ export const Footer: React.FC<FooterProps> = ({ theme, toggleTheme }) => {
                 </li>
               ))}
               <li>
-                <FooterLink href="/about">
+                <FooterLink href="/careers">
                   <div className="flex items-center gap-2">
                     Careers 
                     <span className="text-[9px] bg-blue-600/20 text-blue-400 px-2.5 py-0.5 rounded-full font-black uppercase tracking-widest animate-pulse">Hiring</span>

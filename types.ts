@@ -5,6 +5,8 @@ export interface Service {
   description: string;
   icon: string;
   features: string[];
+  benefits?: string[];
+  caseStudyPlaceholder?: string;
 }
 
 export interface Project {

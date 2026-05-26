@@ -5,6 +5,7 @@ import { Footer } from './components/Footer';
 import { AiAssistant } from './components/AiAssistant';
 import { CookieConsent } from './components/CookieConsent';
 import { ScrollToTopButton } from './components/ScrollToTopButton';
+import { PageTransition } from './components/PageTransition';
 import { COMPANY_NAME, TAGLINE } from './constants';
 
 // Lazy load pages for performance
@@ -12,6 +13,7 @@ const Home = lazy(() => import('./pages/Home'));
 const ServicesPage = lazy(() => import('./pages/ServicesPage'));
 const PortfolioPage = lazy(() => import('./pages/PortfolioPage'));
 const AboutPage = lazy(() => import('./pages/AboutPage'));
+const CareersPage = lazy(() => import('./pages/CareersPage'));
 const ContactPage = lazy(() => import('./pages/ContactPage'));
 
 // Scroll to top or hash on route change
@@ -70,11 +72,12 @@ function AppContent() {
           </div>
         }>
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/services" element={<ServicesPage />} />
-            <Route path="/portfolio" element={<PortfolioPage />} />
-            <Route path="/about" element={<AboutPage />} />
-            <Route path="/contact" element={<ContactPage />} />
+            <Route path="/" element={<PageTransition><Home /></PageTransition>} />
+            <Route path="/services" element={<PageTransition><ServicesPage /></PageTransition>} />
+            <Route path="/portfolio" element={<PageTransition><PortfolioPage /></PageTransition>} />
+            <Route path="/about" element={<PageTransition><AboutPage /></PageTransition>} />
+            <Route path="/careers" element={<PageTransition><CareersPage /></PageTransition>} />
+            <Route path="/contact" element={<PageTransition><ContactPage /></PageTransition>} />
           </Routes>
         </Suspense>
       </main>

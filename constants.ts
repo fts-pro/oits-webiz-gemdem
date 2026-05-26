@@ -61,33 +61,50 @@ export const PROCESS_STEPS: ProcessStep[] = [
 
 export const SERVICES: Service[] = [
   {
+    id: 'custom-software',
+    title: 'Custom Software Development',
+    description: 'We orchestrate robust client systems designed to automate internal team workflows, integrate legacy APIs, and resolve complex, business-specific scaling bottlenecks with strict data compliance metrics.',
+    icon: 'Users',
+    features: ['Workflow Automation Engines', 'Legacy Core Migration', 'SaaS Multi-tenant Control', 'Enterprise Risk Mitigations'],
+    benefits: ['100% intellectual property ownership', 'Streamlined administrative overhead', 'Seamless system interconnectedness', 'Reduced operating licensing costs'],
+    caseStudyPlaceholder: "Client Diagnostic: 'OITS Dhaka consolidated our fragmented backend portals into a unified workflow engine. Operating administrative spend dropped directly by 30%.'"
+  },
+  {
     id: 'web-dev',
-    title: 'Enterprise Web Solutions',
-    description: 'We architect scalable, high-performance web applications tailored for complex business logic and high-traffic environments. Our approach ensures long-term maintainability and seamless user experiences across all platforms.',
+    title: 'Web Application Development',
+    description: 'Architecting ultra-responsive, highly optimized, and modern web applications that handle massive transaction counts while ensuring leading edge Web Vitals score metrics.',
     icon: 'Globe',
-    features: ['React & Next.js Optimization', 'Cloud-Native SaaS Architecture', 'High-Conversion E-commerce', 'Headless CMS & API Integration'],
+    features: ['React & Next.js Core Optimization', 'Cloud-Native SaaS Architecture', 'High-Conversion E-commerce', 'Headless CMS & API Orchestration'],
+    benefits: ['Sub-second initial server response time', 'SEO-friendly server-side parsing', 'Fluid responsive layout adaptations', 'State preservation on connection loss'],
+    caseStudyPlaceholder: "Client Diagnostic: 'Our platform rewrite was handled with immense technical accuracy. Under Black Friday stress testing, we registered absolute zero-latency spikes.'"
   },
   {
     id: 'mobile-dev',
-    title: 'Native Mobile Apps',
-    description: 'Crafting premium iOS and Android experiences that leverage native hardware capabilities for maximum performance. We focus on creating fluid animations and intuitive interfaces that keep users engaged.',
+    title: 'Mobile App Development',
+    description: 'Crafting premium native and hybrid mobile applications for iOS and Android platforms. We construct immersive app pathways, battery-conscious frameworks, and offline-first data caching layers.',
     icon: 'Smartphone',
-    features: ['Swift & Kotlin Expertise', 'React Native & Flutter Mastery', 'Offline-First Functionality', 'Biometric & Device API Integration'],
-  },
-  {
-    id: 'dedicated-teams',
-    title: 'Dedicated Teams',
-    description: 'High-velocity engineering teams integrated directly into your workflow to accelerate product delivery cycles. We provide senior-level talent that adapts to your culture and engineering standards.',
-    icon: 'Users',
-    features: ['Seamless Staff Augmentation', 'Agile Governance & Scrum', 'Full-stack Product Teams', 'On-demand Technical Leadership'],
+    features: ['Swift & Kotlin Architecture', 'React Native & Flutter Mastery', 'Offline-First Functionality', 'Sensors & Device API Integration'],
+    benefits: ['Identical user layouts across operating systems', 'Lower device battery & CPU footprints', 'Immediate response times during cell transitions', 'Biometric sign-on compatibility'],
+    caseStudyPlaceholder: "Client Diagnostic: 'The OITS Dhaka mobile delivery has been exceptionally smooth. App Store ratings surged in eight weeks.'"
   },
   {
     id: 'cloud',
-    title: 'Cloud & Infrastructure',
-    description: 'Modernizing infrastructure with AWS, Azure, and GCP best practices, ensuring 99.99% availability and automated scaling. We build resilient systems that grow alongside your business demands.',
+    title: 'Cloud Solutions & Infrastructure',
+    description: 'Aligning enterprise setups with AWS, Azure, and Google Cloud optimization patterns to yield dynamic scaling, proactive data disaster recoveries, and extreme cost-efficiencies.',
     icon: 'Cloud',
-    features: ['Serverless & Microservices', 'Kubernetes Cluster Management', 'Automated CI/CD Pipelines', 'Proactive Disaster Recovery'],
+    features: ['Serverless & Microservices', 'Kubernetes Cluster Management', 'Automated CI/CD Pipelines', 'Automated Database Backups'],
+    benefits: ['On-demand container scaling controls', 'Up to 50% decrease in idle resource spend', 'Radical DevOps delivery automation rates', 'Guaranteed high accessibility benchmarks'],
+    caseStudyPlaceholder: "Client Diagnostic: 'Their cluster modernization removed all scaling bottlenecks. We now handle ten times our past user transactions smoothly.'"
   },
+  {
+    id: 'ui-ux',
+    title: 'UI/UX Design Engineering',
+    description: 'Creating human-centered interface architectures based on extensive user testing, high-fidelity interactive prototyping, and beautiful, standard visual hierarchies.',
+    icon: 'Layers',
+    features: ['Precision Wireframing & Pairing', 'Conversion Funnel Optimizations', 'Dynamic Interaction Prototyping', 'Universal Accessibility Compliance'],
+    benefits: ['Instant uplift in new user registrations', 'Reduced checkout drop-off rates', 'Strong core brand prestige signals', 'Frictionless customer navigation pathways'],
+    caseStudyPlaceholder: "Client Diagnostic: 'The UI redesign reduced user checkout drop-offs by 25% with immediate, measurable gains in user retention metrics.'"
+  }
 ];
 
 export const PROJECTS: Project[] = [
