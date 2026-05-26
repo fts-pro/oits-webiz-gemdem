@@ -129,6 +129,7 @@ export const Header: React.FC<HeaderProps> = ({ theme, toggleTheme }) => {
             onClick={toggleTheme}
             className={`p-2 rounded-full transition-colors ${themeButtonClass}`}
             aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+            title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
           >
             {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
           </button>
@@ -137,7 +138,8 @@ export const Header: React.FC<HeaderProps> = ({ theme, toggleTheme }) => {
             className={`p-2 rounded-lg transition-colors ${isScrolled ? 'text-slate-900 dark:text-white hover:bg-slate-100 dark:hover:bg-slate-800' : 'text-white hover:bg-white/20'}`}
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-expanded={isMobileMenuOpen}
-            aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
+            aria-label={isMobileMenuOpen ? "Close mobile menu" : "Open mobile menu"}
+            aria-controls="mobile-menu"
           >
             {isMobileMenuOpen ? <X /> : <Menu />}
           </button>
@@ -146,13 +148,14 @@ export const Header: React.FC<HeaderProps> = ({ theme, toggleTheme }) => {
 
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
-        <div className="absolute top-full left-0 right-0 bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 md:hidden p-6 shadow-2xl animate-in slide-in-from-top-4 duration-300">
-          <nav className="flex flex-col gap-2" aria-label="Mobile Navigation">
+        <div id="mobile-menu" className="absolute top-full left-0 right-0 bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 md:hidden p-6 shadow-2xl animate-in slide-in-from-top-4 duration-300">
+          <nav className="flex flex-col gap-2" aria-label="Mobile Navigation Menu">
             {NAV_LINKS.map((item) => (
               <Link 
                 key={item.label} 
                 to={item.href}
                 onClick={handleLinkClick}
+                aria-label={`Navigate to ${item.label}`}
                 className={`px-4 py-4 rounded-2xl text-lg font-bold transition-all active:scale-95 ${
                    location.pathname === item.href 
                     ? 'text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-slate-800' 
@@ -162,7 +165,7 @@ export const Header: React.FC<HeaderProps> = ({ theme, toggleTheme }) => {
                 {item.label}
               </Link>
             ))}
-            <Link to="/contact" className="mt-4" onClick={handleLinkClick}>
+            <Link to="/contact" className="mt-4" onClick={handleLinkClick} aria-label="Start a project with OITS Dhaka">
               <Button className="w-full py-6 text-lg rounded-2xl">
                 Start a Project
               </Button>

@@ -100,11 +100,11 @@ export const Footer: React.FC<FooterProps> = ({ theme, toggleTheme }) => {
             <ul className="space-y-2">
               {NAV_ITEMS.map((item) => (
                 <li key={item.label}>
-                  <FooterLink href={item.href}>{item.label}</FooterLink>
+                  <FooterLink href={item.href} aria-label={`Go to ${item.label} page`}>{item.label}</FooterLink>
                 </li>
               ))}
               <li>
-                <FooterLink href="/careers">
+                <FooterLink href="/careers" aria-label="Go to careers page, we are hiring">
                   <div className="flex items-center gap-2">
                     Careers 
                     <span className="text-[9px] bg-blue-600/20 text-blue-400 px-2.5 py-0.5 rounded-full font-black uppercase tracking-widest animate-pulse">Hiring</span>
@@ -119,7 +119,7 @@ export const Footer: React.FC<FooterProps> = ({ theme, toggleTheme }) => {
             <ul className="space-y-2">
               {SERVICES.map((service) => (
                 <li key={service.id}>
-                  <FooterLink href={`/services#${service.id}`}>
+                  <FooterLink href={`/services#${service.id}`} aria-label={`View our ${service.title} service`}>
                     {service.title}
                   </FooterLink>
                 </li>
@@ -130,18 +130,24 @@ export const Footer: React.FC<FooterProps> = ({ theme, toggleTheme }) => {
           <div>
             <h4 className="text-white text-xs font-black uppercase tracking-[0.3em] mb-10">Stay Informed</h4>
             <p className="text-sm mb-8 text-slate-400 font-medium leading-relaxed">Join our engineering collective for bi-weekly deep dives into modern tech stacks.</p>
-            <form className="space-y-4 group/form" onSubmit={(e) => e.preventDefault()}>
+            <form className="space-y-4 group/form" aria-label="Newsletter Subscription Form" onSubmit={(e) => e.preventDefault()}>
               <div className="relative">
                 <input 
                   id="newsletter-email"
                   type="email" 
                   placeholder="Work email address" 
+                  aria-label="Email for newsletter"
+                  required
                   className="w-full bg-slate-900 border border-slate-800 rounded-2xl px-6 py-4.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-blue-600 focus:ring-4 focus:ring-blue-600/10 focus:pl-8 transition-all duration-500 peer"
                 />
                 {/* Border pulse effect on focus */}
                 <div className="absolute inset-0 rounded-2xl border border-blue-600 opacity-0 peer-focus:opacity-100 transition-all duration-500 pointer-events-none scale-105 peer-focus:scale-100"></div>
               </div>
-              <button className="w-full bg-blue-600 text-white px-8 py-4.5 rounded-2xl text-[11px] font-black uppercase tracking-[0.2em] hover:bg-blue-500 transition-all duration-300 shadow-2xl shadow-blue-600/20 active:scale-95 active:shadow-none">
+              <button 
+                type="submit" 
+                aria-label="Subscribe to our insights newsletter"
+                className="w-full bg-blue-600 text-white px-8 py-4.5 rounded-2xl text-[11px] font-black uppercase tracking-[0.2em] hover:bg-blue-50 transition-all duration-300 shadow-2xl shadow-blue-600/20 active:scale-95 active:shadow-none"
+              >
                 Subscribe to Insights
               </button>
             </form>

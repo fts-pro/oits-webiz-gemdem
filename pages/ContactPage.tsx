@@ -2,10 +2,11 @@ import React from 'react';
 import { Contact } from '../components/Contact';
 import { ADDRESS } from '../constants';
 import { SEO } from '../components/SEO';
+import { ScrollReveal } from '../components/ui/ScrollReveal';
 
 const ContactPage: React.FC = () => {
   return (
-    <div className="pt-20 animate-fade-in">
+    <div className="pt-20">
       <SEO 
         title="Contact Us | OITS Dhaka"
         description="Get in touch with our engineering team to discuss your project requirements and start building your digital future."
@@ -13,10 +14,12 @@ const ContactPage: React.FC = () => {
       />
       <div className="py-24 bg-slate-900 text-white text-center">
         <div className="container mx-auto px-6">
-          <h1 className="text-4xl md:text-6xl font-extrabold mb-6">Let's Talk</h1>
-          <p className="text-slate-400 max-w-2xl mx-auto text-lg">
-            Have a project in mind or just want to chat about possibilities? We're here.
-          </p>
+          <ScrollReveal direction="up">
+            <h1 className="text-4xl md:text-6xl font-extrabold mb-6">Let's Talk</h1>
+            <p className="text-slate-400 max-w-2xl mx-auto text-lg">
+              Have a project in mind or just want to chat about possibilities? We're here.
+            </p>
+          </ScrollReveal>
         </div>
       </div>
       
@@ -45,18 +48,22 @@ const ContactPage: React.FC = () => {
       <section className="py-24 bg-white dark:bg-slate-900">
         <div className="container mx-auto px-6">
            <div className="max-w-2xl mx-auto text-center">
-              <h2 className="text-2xl font-bold mb-6 text-slate-900 dark:text-white">Our Process for Inquiries</h2>
-              <div className="space-y-8 text-left">
+              <ScrollReveal direction="up">
+                <h2 className="text-2xl font-bold mb-6 text-slate-900 dark:text-white">Our Process for Inquiries</h2>
+              </ScrollReveal>
+              <div className="space-y-8 text-left mt-10">
                 {[
                   { step: "1. Submission", text: "Fill out the form with your project details and goals." },
                   { step: "2. Consultation", text: "We schedule a 30-min discovery call to understand your needs." },
                   { step: "3. Strategy", text: "Our team drafts a technical proposal and roadmap." },
                   { step: "4. Kick-off", text: "Legal formalization and project start." }
-                ].map((s) => (
-                  <div key={s.step} className="flex gap-4">
-                     <div className="font-bold text-blue-600 dark:text-blue-400 whitespace-nowrap">{s.step}</div>
-                     <div className="text-slate-600 dark:text-slate-400">{s.text}</div>
-                  </div>
+                ].map((s, idx) => (
+                  <ScrollReveal key={s.step} delay={idx * 0.1}>
+                    <div className="flex gap-4">
+                       <div className="font-bold text-blue-600 dark:text-blue-400 whitespace-nowrap">{s.step}</div>
+                       <div className="text-slate-600 dark:text-slate-400">{s.text}</div>
+                    </div>
+                  </ScrollReveal>
                 ))}
               </div>
            </div>

@@ -2,10 +2,11 @@ import React from 'react';
 import { Portfolio } from '../components/Portfolio';
 import { Button } from '../components/ui/Button';
 import { SEO } from '../components/SEO';
+import { ScrollReveal } from '../components/ui/ScrollReveal';
 
 const PortfolioPage: React.FC = () => {
   return (
-    <div className="pt-20 animate-fade-in bg-white dark:bg-slate-950">
+    <div className="pt-20 bg-white dark:bg-slate-950">
       <SEO 
         title="Our Portfolio | OITS Dhaka"
         description="Explore our selection of complex engineering challenges solved with precision and creativity. View our impactful digital stories."
@@ -14,11 +15,13 @@ const PortfolioPage: React.FC = () => {
       <div className="py-24 md:py-32 bg-slate-900 text-white relative overflow-hidden">
         <div className="absolute inset-0 bg-blue-600/10 pointer-events-none" />
         <div className="container mx-auto px-6 relative z-10 text-center">
-          <h2 className="text-blue-400 font-bold uppercase tracking-[0.3em] mb-4 text-sm">Portfolio</h2>
-          <h1 className="text-5xl md:text-7xl font-extrabold mb-8 tracking-tighter leading-tight text-white">Impactful <br/> Digital Stories.</h1>
-          <p className="text-slate-400 max-w-2xl mx-auto text-xl leading-relaxed">
-            A selection of complex engineering challenges solved with precision and creativity.
-          </p>
+          <ScrollReveal direction="up">
+            <h2 className="text-blue-400 font-bold uppercase tracking-[0.3em] mb-4 text-sm">Portfolio</h2>
+            <h1 className="text-5xl md:text-7xl font-extrabold mb-8 tracking-tighter leading-tight text-white">Impactful <br/> Digital Stories.</h1>
+            <p className="text-slate-400 max-w-2xl mx-auto text-xl leading-relaxed">
+              A selection of complex engineering challenges solved with precision and creativity.
+            </p>
+          </ScrollReveal>
         </div>
       </div>
       

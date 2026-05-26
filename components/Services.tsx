@@ -1,10 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { Globe, Smartphone, Users, Cloud, ArrowUpRight, X, Check, BookOpen, Layers, Star } from 'lucide-react';
 import { SERVICES } from '../constants';
 import { SectionId, Service } from '../types';
 import { Button } from './ui/Button';
 import { Link } from 'react-router-dom';
 import { Tooltip } from './ui/Tooltip';
+import { ScrollReveal } from './ui/ScrollReveal';
 
 const iconMap: Record<string, React.ReactNode> = {
   Globe: <Globe className="w-7 h-7" />,
@@ -19,32 +20,15 @@ interface ServicesProps {
 }
 
 export const Services: React.FC<ServicesProps> = ({ limit }) => {
-  const [isVisible, setIsVisible] = useState(false);
   const [selectedService, setSelectedService] = useState<Service | null>(null);
-  const sectionRef = useRef<HTMLElement>(null);
 
   const displayServices = limit ? SERVICES.slice(0, limit) : SERVICES;
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.1 }
-    );
-
-    if (sectionRef.current) observer.observe(sectionRef.current);
-    return () => observer.disconnect();
-  }, []);
-
   return (
-    <section ref={sectionRef} id={SectionId.SERVICES} className="py-24 md:py-32 bg-white dark:bg-slate-900 relative transition-colors duration-300">
+    <section id={SectionId.SERVICES} className="py-24 md:py-32 bg-white dark:bg-slate-900 relative transition-colors duration-300">
       <div className="container mx-auto px-6">
         
-        <div className={`flex flex-col md:flex-row justify-between items-start md:items-end mb-20 gap-8 transition-all duration-1000 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}>
+        <ScrollReveal className="flex flex-col md:flex-row justify-between items-start md:items-end mb-20 gap-8">
           <div className="max-w-2xl">
             <h2 className="text-sm font-bold text-blue-600 dark:text-blue-400 uppercase tracking-widest mb-4">Engineering Capabilities</h2>
             <h3 className="text-4xl md:text-5xl lg:text-6xl font-black text-slate-900 dark:text-white leading-[1] tracking-tight">
@@ -54,15 +38,14 @@ export const Services: React.FC<ServicesProps> = ({ limit }) => {
           <p className="text-slate-600 dark:text-slate-400 max-w-sm text-lg leading-relaxed font-medium">
             We architect resilient, high-speed digital systems using the industry's most advanced technology stacks.
           </p>
-        </div>
+        </ScrollReveal>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-8 md:gap-10">
           {displayServices.map((service, index) => (
-            <div 
+            <ScrollReveal 
               key={service.id} 
-              id={service.id}
-              className={`group relative bg-slate-50 dark:bg-slate-800/40 border-2 border-slate-50 dark:border-slate-800 rounded-[2.5rem] p-10 transition-all duration-700 ease-out hover:-translate-y-3 hover:shadow-2xl hover:shadow-blue-500/5 hover:border-blue-400/30 cursor-pointer outline-none focus-visible:ring-4 focus-visible:ring-blue-500/20 scroll-mt-32 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}
-              style={{ transitionDelay: `${index * 120}ms` }}
+              delay={index * 0.1}
+              className={`group relative bg-slate-50 dark:bg-slate-800/40 border-2 border-slate-50 dark:border-slate-800 rounded-[2.5rem] p-10 transition-all duration-700 ease-out hover:-translate-y-3 hover:shadow-2xl hover:shadow-blue-500/5 hover:border-blue-400/30 cursor-pointer outline-none focus-visible:ring-4 focus-visible:ring-blue-500/20 scroll-mt-32`}
               onClick={() => setSelectedService(service)}
               role="button"
               tabIndex={0}
@@ -112,7 +95,7 @@ export const Services: React.FC<ServicesProps> = ({ limit }) => {
                   />
                 </button>
               </div>
-            </div>
+            </ScrollReveal>
           ))}
         </div>
       </div>

@@ -1,39 +1,35 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React from 'react';
 import { TRUSTED_PARTNERS } from '../constants';
+import { ScrollReveal } from './ui/ScrollReveal';
 
 export const TrustedBy: React.FC = () => {
-  const [isVisible, setIsVisible] = useState(false);
-  const sectionRef = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) setIsVisible(true);
-    }, { threshold: 0.1 });
-    if (sectionRef.current) observer.observe(sectionRef.current);
-    return () => observer.disconnect();
-  }, []);
-
   return (
-    <section ref={sectionRef} className="py-16 bg-white dark:bg-slate-900 border-t border-slate-100 dark:border-slate-800 transition-colors duration-300">
-      <div className="container mx-auto px-6">
-        <p className={`text-center text-[10px] font-black text-slate-400 uppercase tracking-[0.4em] mb-12 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+    <section className="py-16 bg-white dark:bg-slate-900 border-t border-slate-100 dark:border-slate-800 transition-colors duration-300">
+      <div className="container mx-auto px-6" aria-label="Trusted Partners">
+        <ScrollReveal direction="up" className="text-center text-[10px] font-black text-slate-400 uppercase tracking-[0.4em] mb-12">
           Trusted By Emerging Global Leaders
-        </p>
+        </ScrollReveal>
         <div className="flex flex-wrap justify-center items-center gap-10 md:gap-20">
           {TRUSTED_PARTNERS.map((logo, index) => (
-            <div 
+            <ScrollReveal 
               key={logo.name} 
-              className={`flex items-center gap-3 group cursor-default transition-all duration-700 transform ${isVisible ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 translate-y-8'}`}
-              style={{ transitionDelay: `${index * 100}ms` }}
+              delay={index * 0.05}
+              className="flex items-center gap-3 group cursor-default transition-all"
             >
-              <div className="w-12 h-12 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 flex items-center justify-center text-xs font-black text-slate-400 transition-all duration-300 group-hover:bg-blue-600 group-hover:text-white group-hover:scale-115 group-hover:rotate-3 shadow-sm group-hover:shadow-lg group-hover:shadow-blue-500/20">
+              <div 
+                className="w-12 h-12 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 flex items-center justify-center text-xs font-black text-slate-400 transition-all duration-300 group-hover:bg-blue-600 group-hover:text-white group-hover:scale-115 group-hover:rotate-3 shadow-sm group-hover:shadow-lg group-hover:shadow-blue-500/20"
+                aria-hidden="true"
+              >
                 {logo.icon}
               </div>
               {/* Darker slate-500 for better visibility in light mode */}
-              <span className="text-sm font-black text-slate-500 dark:text-slate-500 group-hover:text-slate-900 dark:group-hover:text-white transition-colors duration-300 tracking-tight">
+              <span 
+                className="text-sm font-black text-slate-500 dark:text-slate-500 group-hover:text-slate-900 dark:group-hover:text-white transition-colors duration-300 tracking-tight"
+                aria-label={`Partner: ${logo.name}`}
+              >
                 {logo.name}
               </span>
-            </div>
+            </ScrollReveal>
           ))}
         </div>
       </div>

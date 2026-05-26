@@ -1,9 +1,10 @@
-import React, { useEffect, useRef, useState, useMemo } from 'react';
-import { X, Tag, MonitorPlay, RotateCcw, Check, Play, Pause, AlertTriangle, Layers, FilterX, Linkedin, Twitter, Maximize, Minimize, Share2 } from 'lucide-react';
+import React, { useEffect, useState, useMemo, useRef } from 'react';
+import { X, Tag, MonitorPlay, RotateCcw, Check, Play, Pause, AlertTriangle, Layers, FilterX, Linkedin, Twitter, Maximize, Minimize } from 'lucide-react';
 import { PROJECTS } from '../constants';
 import { Project } from '../types';
 import { Button } from './ui/Button';
 import { Tooltip } from './ui/Tooltip';
+import { ScrollReveal } from './ui/ScrollReveal';
 
 const FALLBACK_IMAGE = 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800';
 
@@ -159,22 +160,11 @@ const CustomVideoPlayer: React.FC<CustomVideoPlayerProps> = ({ src, captionsUrl,
 
 const ProjectCard = ({ project, onClick, onViewDemo, highlightedTags, index }: any) => {
   const [imageLoaded, setImageLoaded] = useState(false);
-  const [isVisible, setIsVisible] = useState(false);
-  const cardRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) setIsVisible(true);
-    }, { threshold: 0.1 });
-    if (cardRef.current) observer.observe(cardRef.current);
-    return () => observer.disconnect();
-  }, []);
 
   return (
-    <div 
-      ref={cardRef}
-      className={`group bg-white dark:bg-slate-900 rounded-3xl overflow-hidden border border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-2xl transition-all duration-700 transform ${isVisible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-12 scale-95'}`}
-      style={{ transitionDelay: `${index * 80}ms` }}
+    <ScrollReveal 
+      delay={index * 0.05}
+      className={`group bg-white dark:bg-slate-900 rounded-3xl overflow-hidden border border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-2xl transition-all duration-700`}
     >
       <div className="relative aspect-[4/3] overflow-hidden bg-slate-200 dark:bg-slate-800 cursor-pointer" onClick={onClick}>
         <img 
@@ -183,13 +173,14 @@ const ProjectCard = ({ project, onClick, onViewDemo, highlightedTags, index }: a
           loading="lazy"
           onLoad={() => setImageLoaded(true)} 
           className={`w-full h-full object-cover transition-all duration-1000 group-hover:scale-110 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`} 
+          aria-label={`Project image for ${project.title}`}
         />
         <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-300 flex flex-col gap-4 items-center justify-center bg-slate-900/60 backdrop-blur-sm z-10">
-          <button className="bg-white text-slate-900 px-8 py-3 rounded-full font-bold text-xs shadow-xl transform translate-y-4 group-hover:translate-y-0 transition-all duration-500 hover:bg-blue-600 hover:text-white active:scale-95" onClick={(e) => { e.stopPropagation(); onClick(); }}>
+          <button className="bg-white text-slate-900 px-8 py-3 rounded-full font-bold text-xs shadow-xl transform translate-y-4 group-hover:translate-y-0 transition-all duration-500 hover:bg-blue-600 hover:text-white active:scale-95" onClick={(e) => { e.stopPropagation(); onClick(); }} aria-label={`View Case Study: ${project.title}`}>
             Case Study
           </button>
           {project.demoVideoUrl && (
-            <button className="bg-blue-600 text-white px-8 py-3 rounded-full font-bold text-xs shadow-xl transform translate-y-4 group-hover:translate-y-0 transition-all duration-500 delay-75 hover:bg-blue-700 hover:scale-110 flex items-center gap-2 active:scale-95" onClick={(e) => { e.stopPropagation(); onViewDemo(); }}>
+            <button className="bg-blue-600 text-white px-8 py-3 rounded-full font-bold text-xs shadow-xl transform translate-y-4 group-hover:translate-y-0 transition-all duration-500 delay-75 hover:bg-blue-700 hover:scale-110 flex items-center gap-2 active:scale-95" onClick={(e) => { e.stopPropagation(); onViewDemo(); }} aria-label={`View Demo: ${project.title}`}>
               <MonitorPlay size={18} /> Demo
             </button>
           )}
@@ -202,7 +193,7 @@ const ProjectCard = ({ project, onClick, onViewDemo, highlightedTags, index }: a
             {project.description}
           </p>
         </Tooltip>
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-wrap gap-2" aria-label={`Technologies used in ${project.title}`}>
           {project.technologies?.map((tech: string) => (
             <span 
               key={tech} 
@@ -217,7 +208,7 @@ const ProjectCard = ({ project, onClick, onViewDemo, highlightedTags, index }: a
           ))}
         </div>
       </div>
-    </div>
+    </ScrollReveal>
   );
 };
 
@@ -338,6 +329,7 @@ export const Portfolio: React.FC<PortfolioProps> = ({ limit }) => {
                           key={cat} 
                           onClick={() => toggleCategory(cat)} 
                           aria-pressed={active} 
+                          aria-label={`Filter by ${cat} category, ${count} projects available`}
                           className={`flex items-center justify-between px-5 py-3 rounded-2xl text-sm font-bold text-left transition-all border outline-none active:scale-[0.97] hover:scale-105 ${active ? 'bg-slate-900 dark:bg-blue-600 text-white shadow-xl border-transparent' : 'bg-white dark:bg-slate-900 text-slate-600 border-slate-200 dark:border-slate-800 hover:border-blue-300'}`}
                         >
                           <span className="flex items-center gap-2">
@@ -379,6 +371,7 @@ export const Portfolio: React.FC<PortfolioProps> = ({ limit }) => {
                           key={tag} 
                           onClick={() => toggleTag(tag)} 
                           aria-pressed={active} 
+                          aria-label={`Filter by ${tag} technology, ${count} projects available`}
                           className={`flex items-center gap-2 px-4 py-2 rounded-full text-xs font-black border transition-all active:scale-90 outline-none hover:scale-105 ${active ? 'bg-blue-600 border-blue-600 text-white shadow-lg shadow-blue-500/30 scale-105' : 'bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-500 hover:border-blue-400'}`}
                         >
                           {tag}

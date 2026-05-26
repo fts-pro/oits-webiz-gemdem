@@ -1,29 +1,10 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { Quote, ChevronLeft, ChevronRight } from 'lucide-react';
 import { TESTIMONIALS } from '../constants';
+import { ScrollReveal } from './ui/ScrollReveal';
 
 export const Testimonials: React.FC = () => {
-  const [isVisible, setIsVisible] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const sectionRef = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.1 }
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, []);
 
   const nextTestimonial = () => {
     setCurrentIndex((prev) => (prev + 1) % TESTIMONIALS.length);
@@ -34,9 +15,9 @@ export const Testimonials: React.FC = () => {
   };
 
   return (
-    <section ref={sectionRef} className="py-24 bg-white dark:bg-slate-900 overflow-hidden transition-colors duration-300">
+    <section className="py-24 bg-white dark:bg-slate-900 overflow-hidden transition-colors duration-300">
       <div className="container mx-auto px-6">
-        <div className={`flex flex-col md:flex-row items-end justify-between mb-16 gap-6 transition-all duration-700 ease-out ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}>
+        <ScrollReveal className="flex flex-col md:flex-row items-end justify-between mb-16 gap-6">
           <div>
             <h2 className="text-sm font-bold text-blue-600 dark:text-blue-400 uppercase tracking-widest mb-3">Testimonials</h2>
             <h3 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white">What our clients say.</h3>
@@ -57,12 +38,13 @@ export const Testimonials: React.FC = () => {
               <ChevronRight size={20} />
             </button>
           </div>
-        </div>
+        </ScrollReveal>
 
         <div className="relative overflow-hidden">
           <div 
             className="flex transition-transform duration-500 ease-in-out"
             style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+            aria-live="polite"
           >
             {TESTIMONIALS.map((t, index) => (
               <div 
@@ -70,31 +52,40 @@ export const Testimonials: React.FC = () => {
                 className="w-full flex-shrink-0 px-4"
                 aria-hidden={currentIndex !== index}
               >
-                <div className={`bg-slate-50 dark:bg-slate-800 p-8 md:p-12 rounded-3xl relative transition-all duration-700 ease-out max-w-4xl mx-auto shadow-sm hover:shadow-md ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+                <ScrollReveal 
+                  delay={0.1}
+                  className={`bg-slate-50 dark:bg-slate-800 p-8 md:p-12 rounded-3xl relative max-w-4xl mx-auto shadow-sm hover:shadow-md`}
+                >
                   <Quote className="text-blue-100 dark:text-blue-900/50 w-16 h-16 mb-8" />
-                  <p className="text-slate-700 dark:text-slate-300 italic mb-10 text-xl md:text-2xl relative z-10 leading-relaxed font-medium">"{t.content}"</p>
+                  <blockquote className="text-slate-700 dark:text-slate-300 italic mb-10 text-xl md:text-2xl relative z-10 leading-relaxed font-medium">"{t.content}"</blockquote>
                   
                   <div className="flex items-center gap-5 mt-auto">
-                    <img src={t.avatar} alt={`${t.name} avatar`} className="w-14 h-14 rounded-full object-cover shadow-sm" />
+                    <img 
+                      src={t.avatar} 
+                      alt={`${t.name} from ${t.company}`} 
+                      className="w-14 h-14 rounded-full object-cover shadow-sm bg-slate-200" 
+                      loading="lazy"
+                    />
                     <div>
                       <p className="font-bold text-lg text-slate-900 dark:text-white">{t.name}</p>
                       <p className="text-sm text-slate-500 dark:text-slate-400 font-medium">{t.role}, {t.company}</p>
                     </div>
                   </div>
-                </div>
+                </ScrollReveal>
               </div>
             ))}
           </div>
         </div>
         
-        <div className="flex justify-center gap-3 mt-12">
+        <div className="flex justify-center gap-3 mt-12" role="tablist" aria-label="Testimonial pagination">
           {TESTIMONIALS.map((_, index) => (
             <button
               key={index}
+              role="tab"
               onClick={() => setCurrentIndex(index)}
               aria-label={`Go to testimonial ${index + 1}`}
-              aria-current={currentIndex === index ? 'true' : 'false'}
-              className={`w-3 h-3 rounded-full transition-all duration-300 ${currentIndex === index ? 'bg-blue-600 w-8' : 'bg-slate-200 dark:bg-slate-700 hover:bg-blue-400'}`}
+              aria-selected={currentIndex === index}
+              className={`w-3 h-3 rounded-full transition-all duration-300 outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${currentIndex === index ? 'bg-blue-600 w-8' : 'bg-slate-200 dark:bg-slate-700 hover:bg-blue-400'}`}
             />
           ))}
         </div>

@@ -198,9 +198,10 @@ export const Hero: React.FC = () => {
                     <Button 
                       variant="secondary" 
                       size="lg" 
-                      className="group w-full sm:w-auto gap-2 rounded-xl sm:rounded-2xl border border-white/20 bg-slate-900/40 px-8 py-4 md:px-10 md:py-4 font-black text-white shadow-xl backdrop-blur-md transition-all duration-300 hover:scale-105 hover:bg-white/10 hover:border-white/40 hover:shadow-[0_15px_30px_rgba(255,255,255,0.1)] active:scale-95 text-sm md:text-base tracking-widest uppercase"
+                      aria-label="Request a project demo"
+                      className="group w-full sm:w-auto gap-2 rounded-xl sm:rounded-2xl border border-white/20 bg-white text-slate-900 shadow-xl backdrop-blur-md transition-all duration-300 hover:scale-105 hover:bg-white/90 active:scale-95 text-sm md:text-base tracking-widest uppercase"
                     >
-                      <PlayCircle size={18} className="transition-transform duration-300 group-hover:scale-110 group-hover:fill-white/20 md:w-5 md:h-5" />
+                      <PlayCircle size={18} className="transition-transform duration-300 group-hover:scale-110 md:w-5 md:h-5" />
                       Request a Demo
                     </Button>
                   </Link>
@@ -210,6 +211,7 @@ export const Hero: React.FC = () => {
                   <Button 
                     variant="ghost" 
                     size="md" 
+                    aria-label="Contact us directly"
                     className="group w-full gap-2 rounded-xl border border-transparent px-6 font-bold text-slate-300 transition-all duration-300 hover:scale-105 hover:border-white/10 hover:bg-white/5 hover:text-white lg:w-auto text-sm"
                   >
                     <MessageCircle size={16} className="transition-transform duration-300 group-hover:-rotate-12 group-hover:text-blue-400 md:w-[18px] md:h-[18px]" />
@@ -223,12 +225,13 @@ export const Hero: React.FC = () => {
                 <p className="text-center lg:text-left text-[10px] font-black text-slate-400 uppercase tracking-[0.4em] mb-8">
                   Trusted by Global Innovators
                 </p>
-                <div className="flex flex-wrap justify-center lg:justify-start items-center gap-6 sm:gap-10 md:gap-12">
+                <div className="flex flex-wrap justify-center lg:justify-start items-center gap-6 sm:gap-10 md:gap-12" aria-label="Partners and clients">
                   {TRUSTED_BY.map((partner, idx) => (
                     <div 
                       key={partner.name} 
                       className={`flex items-center gap-2.5 group cursor-default transition-all duration-700 ease-out transform ${isVisible ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 translate-y-8'}`}
                       style={{ transitionDelay: `${700 + idx * 100}ms` }}
+                      aria-label={`Partner: ${partner.name}`}
                     >
                       {/* Logo Container with Scale and Brightness Animation */}
                       <div className={`w-10 h-10 md:w-12 md:h-12 rounded-xl md:rounded-2xl ${partner.color} flex items-center justify-center text-[11px] md:text-xs font-black transition-all duration-500 transform group-hover:scale-110 group-hover:-rotate-3 group-hover:shadow-lg group-hover:shadow-blue-500/20 shadow-sm ring-1 ring-white/5 group-hover:ring-white/20 active:scale-95`}>
@@ -277,6 +280,8 @@ export const Hero: React.FC = () => {
                   src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&q=80&w=1200" 
                   className="w-full h-full object-cover opacity-60 transition-transform duration-1000 group-hover/img:scale-105" 
                   alt="Modern Software Engineering Environment"
+                  loading="lazy"
+                  aria-label="Modern Software Engineering Environment illustration"
                 />
                 <div className="absolute inset-0 bg-gradient-to-tr from-blue-600/30 via-transparent to-slate-950/40 pointer-events-none" />
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-blue-600/10 rounded-full blur-[80px] pointer-events-none" />
