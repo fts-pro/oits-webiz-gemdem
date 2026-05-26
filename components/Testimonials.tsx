@@ -5,6 +5,10 @@ import { ScrollReveal } from './ui/ScrollReveal';
 
 export const Testimonials: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = useState<number | null>(null);
+
+  const minSwipeDistance = 50;
 
   const nextTestimonial = () => {
     setCurrentIndex((prev) => (prev + 1) % TESTIMONIALS.length);
@@ -12,6 +16,28 @@ export const Testimonials: React.FC = () => {
 
   const prevTestimonial = () => {
     setCurrentIndex((prev) => (prev - 1 + TESTIMONIALS.length) % TESTIMONIALS.length);
+  };
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (touchStart === null || touchEnd === null) return;
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+    
+    if (isLeftSwipe) {
+      nextTestimonial();
+    } else if (isRightSwipe) {
+      prevTestimonial();
+    }
   };
 
   return (
@@ -40,7 +66,12 @@ export const Testimonials: React.FC = () => {
           </div>
         </ScrollReveal>
 
-        <div className="relative overflow-hidden">
+        <div 
+          className="relative overflow-hidden cursor-grab active:cursor-grabbing"
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+        >
           <div 
             className="flex transition-transform duration-500 ease-in-out"
             style={{ transform: `translateX(-${currentIndex * 100}%)` }}

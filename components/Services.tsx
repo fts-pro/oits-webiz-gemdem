@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Globe, Smartphone, Users, Cloud, ArrowUpRight, X, Check, BookOpen, Layers, Star } from 'lucide-react';
 import { SERVICES } from '../constants';
 import { SectionId, Service } from '../types';
@@ -20,8 +20,58 @@ interface ServicesProps {
   limit?: number;
 }
 
+const ServiceSkeleton: React.FC = () => (
+  <div className="group relative bg-slate-50 dark:bg-slate-800/20 border-2 border-slate-50/50 dark:border-slate-800/50 rounded-[2.5rem] p-10 select-none animate-pulse">
+    {/* Icon block skeleton */}
+    <div className="w-16 h-16 bg-slate-200 dark:bg-slate-700/80 rounded-2xl mb-10" />
+    
+    {/* Title skeleton */}
+    <div className="h-7 w-3/4 bg-slate-200 dark:bg-slate-700/80 rounded-lg mb-4" />
+    
+    {/* Description lines skeleton */}
+    <div className="space-y-2 mb-8">
+      <div className="h-4 bg-slate-100 dark:bg-slate-700/65 rounded w-full" />
+      <div className="h-4 bg-slate-100 dark:bg-slate-700/65 rounded w-5/6" />
+      <div className="h-4 bg-slate-100 dark:bg-slate-700/65 rounded w-4/5" />
+    </div>
+
+    {/* Key Tech Title */}
+    <div className="h-3 w-1/3 bg-slate-100 dark:bg-slate-800 rounded mb-4" />
+
+    {/* Key Tech items skeleton */}
+    <div className="space-y-3 mb-10">
+      <div className="flex items-center gap-3">
+        <div className="w-3.5 h-3.5 bg-slate-200 dark:bg-slate-700 rounded-full shrink-0" />
+        <div className="h-3 bg-slate-200 dark:bg-slate-700 rounded w-1/2" />
+      </div>
+      <div className="flex items-center gap-3">
+        <div className="w-3.5 h-3.5 bg-slate-200 dark:bg-slate-700 rounded-full shrink-0" />
+        <div className="h-3 bg-slate-200 dark:bg-slate-700 rounded w-2/3" />
+      </div>
+      <div className="flex items-center gap-3">
+        <div className="w-3.5 h-3.5 bg-slate-200 dark:bg-slate-700 rounded-full shrink-0" />
+        <div className="h-3 bg-slate-200 dark:bg-slate-700 rounded w-5/12" />
+      </div>
+    </div>
+
+    {/* Divider and button skeleton */}
+    <div className="space-y-6">
+      <div className="h-px w-full bg-slate-200/55 dark:bg-slate-700/35" />
+      <div className="h-4 w-1/3 bg-slate-200 dark:bg-slate-700 rounded-md" />
+    </div>
+  </div>
+);
+
 export const Services: React.FC<ServicesProps> = ({ limit }) => {
   const [selectedService, setSelectedService] = useState<Service | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 550);
+    return () => clearTimeout(timer);
+  }, []);
 
   const displayServices = limit ? SERVICES.slice(0, limit) : SERVICES;
 
@@ -42,63 +92,67 @@ export const Services: React.FC<ServicesProps> = ({ limit }) => {
         </AnimateScroll>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-8 md:gap-10">
-          {displayServices.map((service, index) => (
-            <ScrollReveal 
-              key={service.id} 
-              id={service.id}
-              delay={index * 0.1}
-              className={`group relative bg-slate-50 dark:bg-slate-800/40 border-2 border-slate-50 dark:border-slate-800 rounded-[2.5rem] p-10 transition-all duration-700 ease-out hover:-translate-y-3 hover:shadow-2xl hover:shadow-blue-500/5 hover:border-blue-400/30 cursor-pointer outline-none focus-visible:ring-4 focus-visible:ring-blue-500/20 scroll-mt-32`}
-              onClick={() => setSelectedService(service)}
-              role="button"
-              tabIndex={0}
-              aria-label={`Service: ${service.title}. Click for details.`}
-              aria-describedby={`service-desc-${service.id}`}
-              aria-expanded={selectedService?.id === service.id}
-              onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && setSelectedService(service)}
-            >
-              {/* Icon with hover bounce animation for interactive feedback */}
-              <div className="w-16 h-16 shrink-0 bg-white dark:bg-slate-700 rounded-2xl flex items-center justify-center text-slate-900 dark:text-white shadow-sm mb-10 group-hover:bg-blue-600 group-hover:text-white transition-all duration-300 group-hover:animate-smooth-bounce border border-slate-100 dark:border-slate-600">
-                {iconMap[service.icon]}
-              </div>
-
-              <h4 className="text-2xl font-black text-slate-900 dark:text-white mb-4 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors tracking-tight">{service.title}</h4>
-              <Tooltip content={service.description} position="top">
-                <p id={`service-desc-${service.id}`} className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-8 line-clamp-4 font-medium h-[80px]">
-                  {service.description}
-                </p>
-              </Tooltip>
-
-              {/* Technologies/Benefits highlights directly in the card */}
-              <div className="space-y-3 mb-10">
-                <p className="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-2">Key Tech & Benefits</p>
-                {service.features.slice(0, 3).map((feature, idx) => (
-                  <div key={idx} className="flex items-center gap-3 text-xs font-bold text-slate-500 dark:text-slate-400">
-                    <Check size={14} className="text-blue-600 dark:text-blue-400 shrink-0" />
-                    <span className="tracking-tight">{feature}</span>
-                  </div>
-                ))}
-              </div>
-
-              <div className="space-y-6">
-                <div className="h-px w-full bg-slate-200 dark:bg-slate-700/50" />
-                {/* Learn More button with scale-up and icon translation on hover */}
-                <button 
-                  className="group/btn flex items-center gap-2 text-xs font-black text-slate-900 dark:text-white uppercase tracking-[0.2em] transition-all duration-300 hover:scale-105 active:scale-95"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setSelectedService(service);
-                  }}
-                  aria-label={`Learn more about ${service.title}`}
+          {isLoading 
+            ? Array.from({ length: displayServices.length }).map((_, index) => (
+                <ServiceSkeleton key={`skeleton-${index}`} />
+              ))
+            : displayServices.map((service, index) => (
+                <ScrollReveal 
+                  key={service.id} 
+                  id={service.id}
+                  delay={index * 0.1}
+                  className={`group relative bg-slate-50 dark:bg-slate-800/40 border-2 border-slate-50 dark:border-slate-800 rounded-[2.5rem] p-10 transition-all duration-700 ease-out hover:-translate-y-3 hover:shadow-2xl hover:shadow-blue-500/5 hover:border-blue-400/30 cursor-pointer outline-none focus-visible:ring-4 focus-visible:ring-blue-500/20 scroll-mt-32`}
+                  onClick={() => setSelectedService(service)}
+                  role="button"
+                  tabIndex={0}
+                  aria-label={`Service: ${service.title}. Click for details.`}
+                  aria-describedby={`service-desc-${service.id}`}
+                  aria-expanded={selectedService?.id === service.id}
+                  onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && setSelectedService(service)}
                 >
-                  Learn More 
-                  <ArrowUpRight 
-                    size={16} 
-                    className="transition-transform duration-300 group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1 group-hover/btn:scale-110 text-blue-600 dark:text-blue-400" 
-                  />
-                </button>
-              </div>
-            </ScrollReveal>
-          ))}
+                  {/* Icon with hover bounce animation for interactive feedback */}
+                  <div className="w-16 h-16 shrink-0 bg-white dark:bg-slate-700 rounded-2xl flex items-center justify-center text-slate-900 dark:text-white shadow-sm mb-10 group-hover:bg-blue-600 group-hover:text-white transition-all duration-300 group-hover:animate-smooth-bounce border border-slate-100 dark:border-slate-600">
+                    {iconMap[service.icon]}
+                  </div>
+
+                  <h4 className="text-2xl font-black text-slate-900 dark:text-white mb-4 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors tracking-tight">{service.title}</h4>
+                  <Tooltip content={service.description} position="top">
+                    <p id={`service-desc-${service.id}`} className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-8 line-clamp-4 font-medium h-[80px]">
+                      {service.description}
+                    </p>
+                  </Tooltip>
+
+                  {/* Technologies/Benefits highlights directly in the card */}
+                  <div className="space-y-3 mb-10">
+                    <p className="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-2">Key Tech & Benefits</p>
+                    {service.features.slice(0, 3).map((feature, idx) => (
+                      <div key={idx} className="flex items-center gap-3 text-xs font-bold text-slate-500 dark:text-slate-400">
+                        <Check size={14} className="text-blue-600 dark:text-blue-400 shrink-0" />
+                        <span className="tracking-tight">{feature}</span>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="space-y-6">
+                    <div className="h-px w-full bg-slate-200 dark:bg-slate-700/50" />
+                    {/* Learn More button with scale-up and icon translation on hover */}
+                    <button 
+                      className="group/btn flex items-center gap-2 text-xs font-black text-slate-900 dark:text-white uppercase tracking-[0.2em] transition-all duration-300 hover:scale-105 active:scale-95"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setSelectedService(service);
+                      }}
+                      aria-label={`Learn more about ${service.title}`}
+                    >
+                      Learn More 
+                      <ArrowUpRight 
+                        size={16} 
+                        className="transition-transform duration-300 group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1 group-hover/btn:scale-110 text-blue-600 dark:text-blue-400" 
+                      />
+                    </button>
+                  </div>
+                </ScrollReveal>
+              ))}
         </div>
       </div>
 

@@ -13,6 +13,12 @@ import { SEO } from '../components/SEO';
 import { ScrollReveal } from '../components/ui/ScrollReveal';
 import { AnimateScroll } from '../components/ui/AnimateScroll';
 
+const HorizontalDivider: React.FC = () => (
+  <div className="container mx-auto px-6 opacity-60 dark:opacity-40">
+    <div className="h-px w-full bg-slate-200 dark:bg-slate-800" />
+  </div>
+);
+
 const Home: React.FC = () => {
   return (
     <div className="overflow-hidden">
@@ -23,6 +29,8 @@ const Home: React.FC = () => {
       />
       <Hero />
       <Marquee />
+      
+      <HorizontalDivider />
       
       {/* Featured Services Section */}
       <div className="relative">
@@ -36,8 +44,15 @@ const Home: React.FC = () => {
         </ScrollReveal>
       </div>
 
+      <HorizontalDivider />
+
       <FeaturedIn />
+      
+      <HorizontalDivider />
+      
       <TrustedBy />
+      
+      <HorizontalDivider />
       
       <Process />
 
@@ -57,7 +72,11 @@ const Home: React.FC = () => {
         </ScrollReveal>
       </div>
 
+      <HorizontalDivider />
+
       <Testimonials />
+      
+      <HorizontalDivider />
       
       <section className="py-32 bg-blue-600 relative overflow-hidden">
         <div className="absolute top-0 right-0 w-96 h-96 bg-blue-500 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2 opacity-50" />
