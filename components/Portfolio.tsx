@@ -273,32 +273,57 @@ export const Portfolio: React.FC<PortfolioProps> = ({ limit }) => {
 
   const dynamicCategoryCounts = useMemo(() => {
     const counts: Record<string, number> = {};
-    PROJECTS.forEach(p => {
-      const matchTags = selectedTags.length === 0 || (p.technologies && selectedTags.some(tag => p.technologies?.includes(tag)));
-      if (matchTags) {
-        counts[p.category] = (counts[p.category] || 0) + 1;
+    categories.forEach(cat => {
+      if (cat === ALL_CATEGORY) {
+        let matchCount = 0;
+        PROJECTS.forEach(p => {
+          const matchTags = selectedTags.length === 0 || (p.technologies && selectedTags.every(t => p.technologies?.includes(t)));
+          if (matchTags) matchCount++;
+        });
+        counts[cat] = matchCount;
+      } else {
+        const targetCats = selectedCategories.includes(cat)
+          ? selectedCategories.filter(c => c !== cat)
+          : [...selectedCategories, cat];
+        
+        let matchCount = 0;
+        PROJECTS.forEach(p => {
+          const matchCat = targetCats.length === 0 || targetCats.includes(p.category);
+          const matchTags = selectedTags.length === 0 || (p.technologies && selectedTags.every(t => p.technologies?.includes(t)));
+          if (matchCat && matchTags) {
+            matchCount++;
+          }
+        });
+        counts[cat] = matchCount;
       }
     });
     return counts;
-  }, [selectedTags]);
+  }, [selectedCategories, selectedTags, categories]);
 
   const dynamicTagCounts = useMemo(() => {
     const counts: Record<string, number> = {};
-    PROJECTS.forEach(p => {
-      const matchCat = selectedCategories.length === 0 || selectedCategories.includes(p.category);
-      if (matchCat) {
-        p.technologies?.forEach(t => {
-          counts[t] = (counts[t] || 0) + 1;
-        });
-      }
+    allTags.forEach(tag => {
+      const targetTags = selectedTags.includes(tag)
+        ? selectedTags.filter(t => t !== tag)
+        : [...selectedTags, tag];
+
+      let matchCount = 0;
+      PROJECTS.forEach(p => {
+        const matchCat = selectedCategories.length === 0 || selectedCategories.includes(p.category);
+        const matchTags = targetTags.length === 0 || (p.technologies && targetTags.every(t => p.technologies?.includes(t)));
+        if (matchCat && matchTags) {
+          matchCount++;
+        }
+      });
+      counts[tag] = matchCount;
     });
     return counts;
-  }, [selectedCategories]);
+  }, [selectedCategories, selectedTags, allTags]);
 
   const filteredProjects = useMemo(() => {
     let projs = PROJECTS.filter(p => {
       const matchCat = selectedCategories.length === 0 || selectedCategories.includes(p.category);
-      const matchTags = selectedTags.length === 0 || (p.technologies && selectedTags.some(tag => p.technologies?.includes(tag)));
+      const matchTags = selectedTags.length === 0 || (p.technologies && selectedTags.every(tag => p.technologies?.includes(tag)));
       return matchCat && matchTags;
     });
     return limit ? projs.slice(0, limit) : projs;
@@ -349,19 +374,21 @@ export const Portfolio: React.FC<PortfolioProps> = ({ limit }) => {
                     {categories.map(cat => {
                       const active = cat === ALL_CATEGORY ? selectedCategories.length === 0 : selectedCategories.includes(cat);
                       const count = cat === ALL_CATEGORY ? PROJECTS.length : (dynamicCategoryCounts[cat] || 0);
+                      const isZero = count === 0 && !active;
                       return (
                         <button 
                           key={cat} 
                           onClick={() => toggleCategory(cat)} 
                           aria-pressed={active} 
                           aria-label={`Filter by ${cat} category, ${count} projects available`}
-                          className={`flex items-center justify-between px-5 py-3 rounded-2xl text-sm font-bold text-left transition-all border outline-none active:scale-[0.97] hover:scale-105 ${active ? 'bg-slate-900 dark:bg-blue-600 text-white shadow-xl border-transparent' : 'bg-white dark:bg-slate-900 text-slate-600 border-slate-200 dark:border-slate-800 hover:border-blue-300'}`}
+                          disabled={isZero}
+                          className={`flex items-center justify-between px-5 py-3 rounded-2xl text-sm font-bold text-left transition-all border outline-none active:scale-[0.97] focus-visible:ring-2 focus-visible:ring-blue-500 hover:scale-105 ${active ? 'bg-slate-900 dark:bg-blue-600 text-white shadow-xl border-transparent' : isZero ? 'bg-slate-100/50 dark:bg-slate-950/40 text-slate-300 dark:text-slate-700 border-slate-200/50 dark:border-slate-900/50 opacity-50 cursor-not-allowed hover:scale-100' : 'bg-white dark:bg-slate-900 text-slate-600 border-slate-200 dark:border-slate-800 hover:border-blue-300'}`}
                         >
                           <span className="flex items-center gap-2">
                              {cat}
                              {active && cat !== ALL_CATEGORY && <Check size={14} />}
                           </span>
-                          <span className={`text-[10px] px-2 py-0.5 rounded-md font-black ${active ? 'bg-white/20 text-white' : 'bg-slate-100 dark:bg-slate-800 text-slate-400'}`}>
+                          <span className={`text-[10px] px-2 py-0.5 rounded-md font-mono font-bold tracking-tight ${active ? 'bg-white/20 text-white' : 'bg-slate-100 dark:bg-slate-800 text-slate-400'}`}>
                              {count}
                           </span>
                         </button>
@@ -391,16 +418,18 @@ export const Portfolio: React.FC<PortfolioProps> = ({ limit }) => {
                     {allTags.map(tag => {
                       const active = selectedTags.includes(tag);
                       const count = dynamicTagCounts[tag] || 0;
+                      const isZero = count === 0 && !active;
                       return (
                         <button 
                           key={tag} 
                           onClick={() => toggleTag(tag)} 
                           aria-pressed={active} 
                           aria-label={`Filter by ${tag} technology, ${count} projects available`}
-                          className={`flex items-center gap-2 px-4 py-2 rounded-full text-xs font-black border transition-all active:scale-90 outline-none hover:scale-105 ${active ? 'bg-blue-600 border-blue-600 text-white shadow-lg shadow-blue-500/30 scale-105' : 'bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-500 hover:border-blue-400'}`}
+                          disabled={isZero}
+                          className={`flex items-center gap-2 px-4 py-2 rounded-full text-xs font-black border transition-all active:scale-90 outline-none focus-visible:ring-2 focus-visible:ring-blue-500 hover:scale-105 ${active ? 'bg-blue-600 border-blue-600 text-white shadow-lg shadow-blue-500/30 scale-105' : isZero ? 'bg-slate-50/40 dark:bg-slate-900/20 border-dashed border-slate-200/50 dark:border-slate-800/50 text-slate-300 dark:text-slate-600 opacity-40 cursor-not-allowed hover:scale-100' : 'bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-500 hover:border-blue-400'}`}
                         >
                           {tag}
-                          <span className={`text-[9px] px-1.5 py-0.5 rounded-full ${active ? 'bg-white/20 text-white' : 'bg-slate-200 dark:bg-slate-700 text-slate-400'}`}>
+                          <span className={`text-[9px] px-1.5 py-0.5 rounded-full font-mono font-bold tracking-tight ${active ? 'bg-white/20 text-white' : 'bg-slate-200 dark:bg-slate-700 text-slate-400'}`}>
                              {count}
                           </span>
                         </button>

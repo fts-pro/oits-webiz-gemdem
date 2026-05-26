@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { About } from '../components/About';
+import { Metrics } from '../components/Metrics';
 import { Button } from '../components/ui/Button';
 import { Link } from 'react-router-dom';
 import { HelpCircle, Briefcase, Coffee, Globe, GraduationCap } from 'lucide-react';
@@ -66,6 +67,7 @@ const AboutPage: React.FC = () => {
       </div>
       
       <About />
+      <Metrics />
 
       {/* Culture Section */}
       <section className="py-24 bg-slate-50 dark:bg-slate-900/50">

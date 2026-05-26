@@ -104,8 +104,10 @@ export const Hero: React.FC = () => {
       let delay = 25; 
       
       if (nextChar === '\n') delay = 250;
-      else if ([';', '{', '}'].includes(nextChar)) delay = 100;
-      else if (nextChar === ',') delay = 60;
+      else if (['{', '}', '[', ']'].includes(nextChar)) delay = 220; // Structural brackets pauses
+      else if (nextChar === ':') delay = 140; // Pauses after keys/colons
+      else if ([';', '('].includes(nextChar)) delay = 120; // Granular pause for semicolons and starts
+      else if ([')', ','].includes(nextChar)) delay = 80; // Pauses after lists/parameters
       else if (nextChar === ' ') delay = 15;
       
       delay += Math.random() * 15 - 5;
@@ -186,10 +188,10 @@ export const Hero: React.FC = () => {
                     <Button 
                       size="lg" 
                       variant="primary" 
-                      className="group relative w-full sm:w-auto overflow-hidden rounded-xl sm:rounded-2xl border-none bg-blue-600 px-8 py-4 md:px-10 md:py-4 font-black text-white shadow-2xl shadow-blue-600/40 transition-all duration-300 hover:scale-105 hover:bg-blue-500 hover:shadow-[0_20px_40px_rgba(37,99,235,0.5)] active:scale-95 text-sm md:text-base tracking-widest uppercase ring-offset-2 ring-offset-slate-900 focus:ring-2 focus:ring-blue-400"
+                      className="group relative w-full sm:w-auto overflow-hidden rounded-xl sm:rounded-2xl border-none bg-blue-600 px-8 py-4 md:px-10 md:py-4 font-black text-white shadow-2xl shadow-blue-600/40 transition-all duration-300 hover:scale-105 hover:bg-blue-500 hover:shadow-[0_0_20px_rgba(37,99,235,0.4)] active:scale-95 text-sm md:text-base tracking-widest uppercase ring-offset-2 ring-offset-slate-900 focus:ring-2 focus:ring-blue-400"
                     >
                       <span className="relative z-10 flex items-center justify-center gap-3">
-                        Get Started Today
+                        Request a Quote
                         <ArrowRight className="h-4 w-4 md:h-5 md:w-5 transition-transform duration-300 group-hover:translate-x-1.5" />
                       </span>
                     </Button>
@@ -199,7 +201,7 @@ export const Hero: React.FC = () => {
                       variant="secondary" 
                       size="lg" 
                       aria-label="Request a project demo"
-                      className="group w-full sm:w-auto gap-2 rounded-xl sm:rounded-2xl border border-white/20 bg-white text-slate-900 shadow-xl backdrop-blur-md transition-all duration-300 hover:scale-105 hover:bg-white/90 active:scale-95 text-sm md:text-base tracking-widest uppercase"
+                      className="group w-full sm:w-auto gap-2 rounded-xl sm:rounded-2xl border border-white/20 bg-white text-slate-900 shadow-xl backdrop-blur-md transition-all duration-300 hover:scale-105 hover:bg-white/90 hover:shadow-[0_0_20px_rgba(37,99,235,0.4)] active:scale-95 text-sm md:text-base tracking-widest uppercase"
                     >
                       <PlayCircle size={18} className="transition-transform duration-300 group-hover:scale-110 md:w-5 md:h-5" />
                       Request a Demo

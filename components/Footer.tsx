@@ -1,5 +1,5 @@
-import React from 'react';
-import { Terminal, Github, Linkedin, Twitter, Facebook, Sun, Moon, MapPin } from 'lucide-react';
+import React, { useState } from 'react';
+import { Terminal, Github, Linkedin, Twitter, Facebook, Sun, Moon, MapPin, CheckCircle2, AlertCircle } from 'lucide-react';
 import { COMPANY_NAME, NAV_ITEMS, SERVICES, ADDRESS } from '../constants';
 import { Link } from 'react-router-dom';
 
@@ -7,6 +7,20 @@ interface FooterProps {
   theme: 'light' | 'dark';
   toggleTheme: () => void;
 }
+
+const Toast = ({ message, type, onClose }: { message: string, type: 'success' | 'error', onClose: () => void }) => {
+  React.useEffect(() => {
+    const timer = setTimeout(onClose, 4000);
+    return () => clearTimeout(timer);
+  }, [onClose]);
+
+  return (
+    <div className={`fixed bottom-8 right-8 z-50 flex items-center gap-3 px-6 py-4 rounded-2xl shadow-2xl border ${type === 'success' ? 'bg-green-600 border-green-500' : 'bg-red-600 border-red-500'} text-white animate-in slide-in-from-bottom-10 duration-500`}>
+      {type === 'success' ? <CheckCircle2 size={20} /> : <AlertCircle size={20} />}
+      <p className="font-bold text-sm tracking-tight">{message}</p>
+    </div>
+  );
+};
 
 const SocialLink = ({ href, icon: Icon, label }: { href: string; icon: any; label: string }) => (
   <a 
@@ -45,8 +59,23 @@ const FooterLink = ({ href, children, 'aria-label': ariaLabel }: { href: string;
 };
 
 export const Footer: React.FC<FooterProps> = ({ theme, toggleTheme }) => {
+  const [email, setEmail] = useState('');
+  const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
+
+  const handleSubscribe = (e: React.FormEvent) => {
+    e.preventDefault();
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (emailRegex.test(email)) {
+      setToast({ message: 'Welcome to our engineering insight collective!', type: 'success' });
+      setEmail('');
+    } else {
+      setToast({ message: 'Please enter a valid work email address.', type: 'error' });
+    }
+  };
+
   return (
     <footer className="bg-slate-950 text-slate-300 py-24 border-t border-slate-900 overflow-hidden">
+      {toast && <Toast message={toast.message} type={toast.type} onClose={() => setToast(null)} />}
       <div className="container mx-auto px-6">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16 mb-24">
           
@@ -131,7 +160,7 @@ export const Footer: React.FC<FooterProps> = ({ theme, toggleTheme }) => {
           <div>
             <h4 className="text-white text-xs font-black uppercase tracking-[0.3em] mb-10">Stay Informed</h4>
             <p className="text-sm mb-8 text-slate-400 font-medium leading-relaxed">Join our engineering collective for bi-weekly deep dives into modern tech stacks.</p>
-            <form className="space-y-4 group/form" aria-label="Newsletter Subscription Form" onSubmit={(e) => e.preventDefault()}>
+            <form className="space-y-4 group/form" aria-label="Newsletter Subscription Form" onSubmit={handleSubscribe}>
               <div className="relative">
                 <input 
                   id="newsletter-email"
@@ -139,6 +168,8 @@ export const Footer: React.FC<FooterProps> = ({ theme, toggleTheme }) => {
                   placeholder="Work email address" 
                   aria-label="Email for newsletter"
                   required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   className="w-full bg-slate-900 border border-slate-800 rounded-2xl px-6 py-4.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-blue-600 focus:ring-4 focus:ring-blue-600/10 focus:pl-8 transition-all duration-500 peer"
                 />
                 {/* Border pulse effect on focus */}
