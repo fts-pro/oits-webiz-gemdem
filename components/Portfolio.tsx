@@ -481,12 +481,24 @@ export const Portfolio: React.FC<PortfolioProps> = ({ limit }) => {
                     <h4 className="text-sm font-black text-blue-600 uppercase tracking-[0.3em]">Case Study Overview</h4>
                     <div className="flex items-center gap-4">
                       <span className="text-xs font-bold text-slate-400 uppercase tracking-widest mr-2">Share Project:</span>
-                      <button onClick={() => shareProject('linkedin')} aria-label="Share on LinkedIn" className="p-2.5 bg-slate-100 dark:bg-slate-800 rounded-full hover:bg-[#0077b5] hover:text-white transition-all shadow-sm hover:scale-110 active:scale-95 group">
-                        <Linkedin size={18} className="transition-transform group-hover:-rotate-6" />
-                      </button>
-                      <button onClick={() => shareProject('twitter')} aria-label="Share on Twitter" className="p-2.5 bg-slate-100 dark:bg-slate-800 rounded-full hover:bg-sky-500 hover:text-white transition-all shadow-sm hover:scale-110 active:scale-95 group">
-                        <Twitter size={18} className="transition-transform group-hover:rotate-6" />
-                      </button>
+                       <a 
+                         href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.origin + '/portfolio?project=' + modalState.project.id)}`}
+                         target="_blank"
+                         rel="noopener noreferrer"
+                         aria-label={`Share ${modalState.project.title} on LinkedIn`} 
+                         className="p-2.5 bg-slate-100 dark:bg-slate-800 rounded-full hover:bg-[#0077b5] hover:text-white transition-all shadow-sm hover:scale-110 active:scale-[0.93] focus-visible:ring-2 focus-visible:ring-blue-500 group focus:outline-none"
+                       >
+                         <Linkedin size={18} className="transition-transform group-hover:-rotate-6" />
+                       </a>
+                       <a 
+                         href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(`Check out this project by OITS Dhaka: ${modalState.project.title}`)}&url=${encodeURIComponent(window.location.origin + '/portfolio?project=' + modalState.project.id)}`}
+                         target="_blank"
+                         rel="noopener noreferrer"
+                         aria-label={`Share ${modalState.project.title} on Twitter`} 
+                         className="p-2.5 bg-slate-100 dark:bg-slate-800 rounded-full hover:bg-sky-500 hover:text-white transition-all shadow-sm hover:scale-110 active:scale-[0.93] focus-visible:ring-2 focus-visible:ring-blue-500 group focus:outline-none"
+                       >
+                         <Twitter size={18} className="transition-transform group-hover:rotate-6" />
+                       </a>
                     </div>
                  </div>
                  <p className="text-slate-700 dark:text-slate-300 text-xl leading-relaxed mb-10 font-medium">

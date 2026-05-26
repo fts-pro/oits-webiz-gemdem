@@ -6,6 +6,7 @@ import { Button } from './ui/Button';
 import { Link } from 'react-router-dom';
 import { Tooltip } from './ui/Tooltip';
 import { ScrollReveal } from './ui/ScrollReveal';
+import { AnimateScroll } from './ui/AnimateScroll';
 
 const iconMap: Record<string, React.ReactNode> = {
   Globe: <Globe className="w-7 h-7" />,
@@ -28,7 +29,7 @@ export const Services: React.FC<ServicesProps> = ({ limit }) => {
     <section id={SectionId.SERVICES} className="py-24 md:py-32 bg-white dark:bg-slate-900 relative transition-colors duration-300">
       <div className="container mx-auto px-6">
         
-        <ScrollReveal className="flex flex-col md:flex-row justify-between items-start md:items-end mb-20 gap-8">
+        <AnimateScroll className="flex flex-col md:flex-row justify-between items-start md:items-end mb-20 gap-8">
           <div className="max-w-2xl">
             <h2 className="text-sm font-bold text-blue-600 dark:text-blue-400 uppercase tracking-widest mb-4">Engineering Capabilities</h2>
             <h3 className="text-4xl md:text-5xl lg:text-6xl font-black text-slate-900 dark:text-white leading-[1] tracking-tight">
@@ -38,7 +39,7 @@ export const Services: React.FC<ServicesProps> = ({ limit }) => {
           <p className="text-slate-600 dark:text-slate-400 max-w-sm text-lg leading-relaxed font-medium">
             We architect resilient, high-speed digital systems using the industry's most advanced technology stacks.
           </p>
-        </ScrollReveal>
+        </AnimateScroll>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-8 md:gap-10">
           {displayServices.map((service, index) => (

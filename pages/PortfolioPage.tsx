@@ -3,6 +3,7 @@ import { Portfolio } from '../components/Portfolio';
 import { Button } from '../components/ui/Button';
 import { SEO } from '../components/SEO';
 import { ScrollReveal } from '../components/ui/ScrollReveal';
+import { AnimateScroll } from '../components/ui/AnimateScroll';
 
 const PortfolioPage: React.FC = () => {
   return (
@@ -15,13 +16,13 @@ const PortfolioPage: React.FC = () => {
       <div className="py-24 md:py-32 bg-slate-900 text-white relative overflow-hidden">
         <div className="absolute inset-0 bg-blue-600/10 pointer-events-none" />
         <div className="container mx-auto px-6 relative z-10 text-center">
-          <ScrollReveal direction="up">
+          <AnimateScroll>
             <h2 className="text-blue-400 font-bold uppercase tracking-[0.3em] mb-4 text-sm">Portfolio</h2>
             <h1 className="text-5xl md:text-7xl font-extrabold mb-8 tracking-tighter leading-tight text-white">Impactful <br/> Digital Stories.</h1>
             <p className="text-slate-400 max-w-2xl mx-auto text-xl leading-relaxed">
               A selection of complex engineering challenges solved with precision and creativity.
             </p>
-          </ScrollReveal>
+          </AnimateScroll>
         </div>
       </div>
       

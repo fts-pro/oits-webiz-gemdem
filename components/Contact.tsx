@@ -27,27 +27,53 @@ export const Contact: React.FC = () => {
     return () => observer.disconnect();
   }, []);
 
+  const validateField = (field: keyof typeof formData, value: string): string | undefined => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    
+    if (field === 'name') {
+      if (!value.trim()) {
+        return 'Full name is required';
+      }
+      if (value.trim().length < 3) {
+        return 'Please enter at least 3 characters';
+      }
+      if (!/^[a-zA-Z\såäöåæøÆØÅáéíóúÁÉÍÓÚñÑüÜß.\-]+$/.test(value.trim())) {
+        return 'Please enter a valid name (letters and spaces only)';
+      }
+    }
+
+    if (field === 'email') {
+      if (!value.trim()) {
+        return 'Email address is required';
+      }
+      if (!emailRegex.test(value.trim())) {
+        return 'Please provide a valid email format';
+      }
+    }
+
+    if (field === 'message') {
+      if (!value.trim()) {
+        return 'Project brief is required';
+      }
+      if (value.trim().length < 10) {
+        return 'Minimum 10 characters required';
+      }
+    }
+
+    return undefined;
+  };
+
   const validate = () => {
     const newErrors: typeof errors = {};
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    
+    const nameErr = validateField('name', formData.name);
+    if (nameErr) newErrors.name = nameErr;
 
-    if (!formData.name.trim()) {
-      newErrors.name = 'Full name is required';
-    } else if (formData.name.trim().length < 3) {
-      newErrors.name = 'Please enter at least 3 characters';
-    }
+    const emailErr = validateField('email', formData.email);
+    if (emailErr) newErrors.email = emailErr;
 
-    if (!formData.email.trim()) {
-      newErrors.email = 'Email address is required';
-    } else if (!emailRegex.test(formData.email)) {
-      newErrors.email = 'Please provide a valid email address';
-    }
-
-    if (!formData.message.trim()) {
-      newErrors.message = 'Please provide some details about your project';
-    } else if (formData.message.trim().length < 10) {
-      newErrors.message = 'Minimum 10 characters required';
-    }
+    const msgErr = validateField('message', formData.message);
+    if (msgErr) newErrors.message = msgErr;
     
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -56,12 +82,10 @@ export const Contact: React.FC = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!validate()) {
-      // Small haptic-like effect or sound could go here if needed
       return;
     }
     
     setStatus('sending');
-    // Simulate high-performance API call
     setTimeout(() => {
       setStatus('success');
       setFormData({ name: '', email: '', message: '' });
@@ -71,17 +95,23 @@ export const Contact: React.FC = () => {
 
   const handleInputChange = (field: keyof typeof formData, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
-    if (errors[field]) {
-      setErrors(prev => ({ ...prev, [field]: undefined }));
-    }
+    const error = validateField(field, value);
+    setErrors(prev => ({ ...prev, [field]: error }));
+  };
+
+  const handleBlur = (field: keyof typeof formData) => {
+    setFocusedField(null);
+    const error = validateField(field, formData[field]);
+    setErrors(prev => ({ ...prev, [field]: error }));
   };
 
   const getLabelClass = (field: keyof typeof formData) => {
     const isActive = focusedField === field || formData[field].length > 0;
+    const hasError = !!errors[field];
     return `absolute left-4 transition-all duration-300 pointer-events-none font-black uppercase tracking-[0.2em] text-[10px] 
       ${isActive 
-        ? '-top-2.5 bg-white dark:bg-slate-900 px-3 text-blue-600 dark:text-blue-400 opacity-100 z-10 scale-90 translate-x-[-2px]' 
-        : 'top-5 text-slate-500 opacity-50 translate-y-0 scale-100'}`;
+        ? `-top-2.5 bg-white dark:bg-slate-900 px-3 ${hasError ? 'text-red-500 dark:text-red-400' : 'text-blue-600 dark:text-blue-400'} opacity-100 z-10 scale-90 translate-x-[-2px]` 
+        : `top-5 ${hasError ? 'text-red-500/80 dark:text-red-400/80' : 'text-slate-500'} opacity-50 translate-y-0 scale-100`}`;
   };
 
   const getInputClass = (field: keyof typeof formData) => {
@@ -177,7 +207,7 @@ export const Contact: React.FC = () => {
                         placeholder="Full Name"
                         value={formData.name}
                         onFocus={() => setFocusedField('name')}
-                        onBlur={() => setFocusedField(null)}
+                        onBlur={() => handleBlur('name')}
                         onChange={(e) => handleInputChange('name', e.target.value)}
                      />
                      {errors.name && (
@@ -203,7 +233,7 @@ export const Contact: React.FC = () => {
                         placeholder="Work Email Address"
                         value={formData.email}
                         onFocus={() => setFocusedField('email')}
-                        onBlur={() => setFocusedField(null)}
+                        onBlur={() => handleBlur('email')}
                         onChange={(e) => handleInputChange('email', e.target.value)}
                      />
                      {errors.email && (
@@ -235,7 +265,7 @@ export const Contact: React.FC = () => {
                       value={formData.message}
                       maxLength={500}
                       onFocus={() => setFocusedField('message')}
-                      onBlur={() => setFocusedField(null)}
+                      onBlur={() => handleBlur('message')}
                       onChange={(e) => handleInputChange('message', e.target.value)}
                    />
                    {errors.message && (

@@ -11,6 +11,7 @@ import { Link } from 'react-router-dom';
 import { Button } from '../components/ui/Button';
 import { SEO } from '../components/SEO';
 import { ScrollReveal } from '../components/ui/ScrollReveal';
+import { AnimateScroll } from '../components/ui/AnimateScroll';
 
 const Home: React.FC = () => {
   return (
@@ -42,10 +43,10 @@ const Home: React.FC = () => {
 
       {/* Featured Works Section */}
       <div className="bg-slate-50 dark:bg-slate-950/50 pt-24 border-t border-slate-100 dark:border-slate-800">
-        <ScrollReveal className="container mx-auto px-6 text-center mb-16">
+        <AnimateScroll className="container mx-auto px-6 text-center mb-16">
            <h2 className="text-sm font-bold text-blue-600 dark:text-blue-400 uppercase tracking-widest mb-4">Selected Case Studies</h2>
            <h3 className="text-3xl md:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight">Proof of Engineering Excellence</h3>
-        </ScrollReveal>
+        </AnimateScroll>
         <Portfolio limit={3} />
         <ScrollReveal className="container mx-auto px-6 py-20 text-center">
           <Link to="/portfolio" aria-label="View our complete portfolio of case studies">
