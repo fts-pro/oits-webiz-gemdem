@@ -1,5 +1,6 @@
 {
-  "name": "Copy of OITS Dhaka - Modern Software Solutions",
+  "name": "OITS Dhaka - Modern Software Solutions",
   "description": "A high-performance business website for OITS Dhaka, featuring a modern aesthetic inspired by Eino.world, showcasing services, portfolio, and company insights.",
-  "requestFramePermissions": []
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }
