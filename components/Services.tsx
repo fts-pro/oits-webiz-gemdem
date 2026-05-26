@@ -44,6 +44,7 @@ export const Services: React.FC<ServicesProps> = ({ limit }) => {
           {displayServices.map((service, index) => (
             <ScrollReveal 
               key={service.id} 
+              id={service.id}
               delay={index * 0.1}
               className={`group relative bg-slate-50 dark:bg-slate-800/40 border-2 border-slate-50 dark:border-slate-800 rounded-[2.5rem] p-10 transition-all duration-700 ease-out hover:-translate-y-3 hover:shadow-2xl hover:shadow-blue-500/5 hover:border-blue-400/30 cursor-pointer outline-none focus-visible:ring-4 focus-visible:ring-blue-500/20 scroll-mt-32`}
               onClick={() => setSelectedService(service)}

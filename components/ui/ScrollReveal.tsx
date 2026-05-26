@@ -1,12 +1,11 @@
 import React from 'react';
 import { motion } from 'motion/react';
 
-interface ScrollRevealProps {
+interface ScrollRevealProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
   delay?: number;
   direction?: 'up' | 'down' | 'left' | 'right' | 'none';
   duration?: number;
-  className?: string;
   once?: boolean;
 }
 
@@ -17,6 +16,7 @@ export const ScrollReveal: React.FC<ScrollRevealProps> = ({
   duration = 0.6,
   className = '',
   once = true,
+  ...rest
 }) => {
   const getInitialProps = () => {
     switch (direction) {
@@ -49,6 +49,7 @@ export const ScrollReveal: React.FC<ScrollRevealProps> = ({
         ease: [0.21, 0.47, 0.32, 0.98],
       }}
       className={className}
+      {...rest}
     >
       {children}
     </motion.div>

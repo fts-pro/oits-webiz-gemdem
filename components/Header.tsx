@@ -26,12 +26,16 @@ export const Header: React.FC<HeaderProps> = ({ theme, toggleTheme }) => {
   useEffect(() => {
     const handleScroll = () => {
       window.requestAnimationFrame(() => {
-        setIsScrolled(window.scrollY > 20);
+        setIsScrolled(window.scrollY > 15);
       });
     };
+    
+    // Check initial scroll offset immediately on mount or location shift
+    handleScroll();
+    
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [location]);
 
   const handleLinkClick = () => {
     setIsMobileMenuOpen(false);
@@ -69,10 +73,10 @@ export const Header: React.FC<HeaderProps> = ({ theme, toggleTheme }) => {
 
   return (
     <header 
-      className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-700 ease-in-out ${
+      className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-500 ease-out border-b ${
         isScrolled 
-          ? 'bg-white/70 dark:bg-slate-950/70 backdrop-blur-md border-b border-white/20 dark:border-slate-800/20 py-2 shadow-2xl shadow-slate-900/5' 
-          : 'bg-transparent py-6 md:py-8'
+          ? 'bg-slate-50/80 dark:bg-slate-950/85 backdrop-blur-xl border-slate-200/40 dark:border-slate-800/40 py-3 shadow-lg shadow-slate-955/5' 
+          : 'bg-transparent border-transparent py-6 md:py-8'
       }`}
     >
       <div className="container mx-auto px-6 flex items-center justify-between">
@@ -81,10 +85,10 @@ export const Header: React.FC<HeaderProps> = ({ theme, toggleTheme }) => {
           className="flex items-center gap-2 group" 
           aria-label={`${COMPANY_NAME} home`}
         >
-          <div className={`${logoBgClass} rounded-xl flex items-center justify-center shadow-lg transition-all duration-500 group-hover:scale-110 group-hover:rotate-3 ${isScrolled ? 'w-9 h-9' : 'w-11 h-11'}`}>
-            <Terminal size={isScrolled ? 18 : 22} />
+          <div className={`${logoBgClass} rounded-xl flex items-center justify-center shadow-lg transition-all duration-500 group-hover:scale-110 group-hover:rotate-3 ${isScrolled ? 'w-10 h-10' : 'w-11 h-11'}`}>
+            <Terminal size={isScrolled ? 20 : 22} />
           </div>
-          <span className={`font-black tracking-tighter transition-all duration-300 ${textColorClass} ${isScrolled ? 'text-lg' : 'text-2xl'}`}>
+          <span className={`font-black tracking-tighter transition-all duration-300 ${textColorClass} ${isScrolled ? 'text-xl' : 'text-2xl'}`}>
             {COMPANY_NAME}
           </span>
         </Link>
@@ -97,7 +101,7 @@ export const Header: React.FC<HeaderProps> = ({ theme, toggleTheme }) => {
               to={item.href}
               aria-label={item.aria || `Navigate to ${item.label}`}
               onClick={handleLinkClick}
-              className={`px-4 py-2 rounded-full text-sm font-bold transition-all duration-300 hover:scale-105 active:scale-95 ${navLinkClass(item.href)}`}
+              className={`px-4 py-2 rounded-full text-sm font-bold transition-all duration-305 hover:scale-105 active:scale-95 ${navLinkClass(item.href)}`}
             >
               {item.label}
             </Link>
@@ -116,7 +120,7 @@ export const Header: React.FC<HeaderProps> = ({ theme, toggleTheme }) => {
               <Button 
                 variant="primary" 
                 size="sm" 
-                className={`transition-all duration-500 rounded-full font-black ${isScrolled ? 'scale-90 px-6' : 'scale-100 px-8 hover:bg-white hover:text-blue-900 bg-blue-600 text-white border-none'}`}
+                className={`transition-all duration-500 rounded-full font-black ${isScrolled ? 'px-6 py-2 bg-blue-600 hover:bg-blue-700' : 'scale-100 px-8 hover:bg-white hover:text-blue-900 bg-blue-600 text-white border-none'}`}
               >
                 Let's Build
               </Button>

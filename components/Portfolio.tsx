@@ -244,6 +244,30 @@ export const Portfolio: React.FC<PortfolioProps> = ({ limit }) => {
     return () => clearTimeout(timer);
   }, []);
 
+  useEffect(() => {
+    try {
+      const params = new URLSearchParams(window.location.search);
+      const projectId = params.get('project');
+      if (projectId) {
+        const found = PROJECTS.find(p => p.id === projectId);
+        if (found) {
+          setModalState({ project: found, autoPlay: false });
+        }
+      } else {
+        const hash = window.location.hash;
+        if (hash.startsWith('#project-')) {
+          const id = hash.replace('#project-', '');
+          const found = PROJECTS.find(p => p.id === id);
+          if (found) {
+            setModalState({ project: found, autoPlay: false });
+          }
+        }
+      }
+    } catch (e) {
+      console.error('Error parsing share URL parameters:', e);
+    }
+  }, []);
+
   const categories = useMemo(() => [ALL_CATEGORY, ...Array.from(new Set(PROJECTS.map(p => p.category)))], []);
   const allTags = useMemo(() => Array.from(new Set(PROJECTS.flatMap(p => p.technologies || []))).sort(), []);
 
@@ -294,7 +318,8 @@ export const Portfolio: React.FC<PortfolioProps> = ({ limit }) => {
 
   const shareProject = (platform: 'linkedin' | 'twitter') => {
     if (!modalState) return;
-    const url = window.location.href; // In a real app this would be a permalink to the project
+    const baseUrl = window.location.origin + '/portfolio';
+    const url = `${baseUrl}?project=${modalState.project.id}`;
     const text = `Check out this project by OITS Dhaka: ${modalState.project.title}`;
     const links = {
       linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`,
