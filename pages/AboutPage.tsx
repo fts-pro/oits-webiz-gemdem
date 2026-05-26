@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import { About } from '../components/About';
 import { Button } from '../components/ui/Button';
 import { Link } from 'react-router-dom';
-import { ChevronDown, HelpCircle, Briefcase, Coffee, Globe, GraduationCap } from 'lucide-react';
+import { HelpCircle, Briefcase, Coffee, Globe, GraduationCap } from 'lucide-react';
 import { SEO } from '../components/SEO';
 import { ScrollReveal } from '../components/ui/ScrollReveal';
+import { Accordion } from '../components/ui/Accordion';
 
 const LOGOS = [
   { name: 'TechFlow' },
@@ -17,56 +18,31 @@ const LOGOS = [
 
 const FAQS = [
   {
+    id: "faq-0",
     question: "What is OITS Dhaka's typical project timeline?",
     answer: "Project timelines vary depending on complexity. A typical MVP development cycle takes between 8 to 12 weeks, while larger enterprise transformations can span 6+ months with continuous agile iterations."
   },
   {
+    id: "faq-1",
     question: "How do you handle project communication?",
     answer: "We believe in radical transparency. Every project gets a dedicated Slack channel for real-time chat, bi-weekly video sprint reviews, and access to our project management tools (Jira/Asana) so you can track progress anytime."
   },
   {
+    id: "faq-2",
     question: "Can you help with post-launch support and scaling?",
     answer: "Absolutely. We offer flexible post-launch maintenance packages that include monitoring, bug fixes, performance tuning, and continuous feature development to help you scale based on real user feedback."
   },
   {
+    id: "faq-3",
     question: "Do you offer dedicated developer teams?",
     answer: "Yes, we specialize in high-velocity dedicated teams that integrate seamlessly with your in-house workflow. Our staff augmentation model ensures you get senior engineering talent that scales with your roadmap."
   },
   {
+    id: "faq-4",
     question: "How do you ensure the security of our data and intellectual property?",
     answer: "Security is baked into our DNA. We sign strict NDAs, follow OWASP security best practices during development, and implement robust CI/CD pipelines with automated vulnerability scanning."
   }
 ];
-
-const AccordionItem: React.FC<{ question: string; answer: string; id: string }> = ({ question, answer, id }) => {
-  const [isOpen, setIsOpen] = useState(false);
-
-  return (
-    <div className="border-b border-slate-100 dark:border-slate-800 last:border-0 overflow-hidden">
-      <button 
-        id={`accordion-button-${id}`}
-        aria-expanded={isOpen}
-        aria-controls={`accordion-panel-${id}`}
-        onClick={() => setIsOpen(!isOpen)}
-        className="w-full flex items-center justify-between py-6 text-left group hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors px-4 rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
-      >
-        <span className="font-bold text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors pr-4">{question}</span>
-        <ChevronDown 
-          className={`text-slate-400 transition-transform duration-300 shrink-0 ${isOpen ? 'rotate-180 text-blue-600' : ''}`} 
-          size={20} 
-        />
-      </button>
-      <div 
-        id={`accordion-panel-${id}`}
-        role="region"
-        aria-labelledby={`accordion-button-${id}`}
-        className={`overflow-hidden transition-all duration-300 ease-in-out px-4 ${isOpen ? 'max-h-96 opacity-100 pb-6' : 'max-h-0 opacity-0'}`}
-      >
-        <p className="text-slate-600 dark:text-slate-400 text-sm md:text-base leading-relaxed">{answer}</p>
-      </div>
-    </div>
-  );
-};
 
 const AboutPage: React.FC = () => {
   return (
@@ -136,10 +112,8 @@ const AboutPage: React.FC = () => {
                   </ScrollReveal>
                </div>
                <div className="lg:w-2/3">
-                  <ScrollReveal delay={0.2} className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-2 md:p-6 shadow-sm">
-                     {FAQS.map((faq, index) => (
-                        <AccordionItem key={index} id={`faq-${index}`} question={faq.question} answer={faq.answer} />
-                     ))}
+                  <ScrollReveal delay={0.2}>
+                     <Accordion items={FAQS} />
                   </ScrollReveal>
                </div>
             </div>

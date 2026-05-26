@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { Services } from '../components/Services';
 import { Process } from '../components/Process';
 import { Button } from '../components/ui/Button';
@@ -31,6 +32,20 @@ const WHY_CHOOSE_US = [
 ];
 
 const ServicesPage: React.FC = () => {
+  const { hash } = useLocation();
+
+  useEffect(() => {
+    if (hash) {
+      const id = hash.replace('#', '');
+      const element = document.getElementById(id);
+      if (element) {
+        setTimeout(() => {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 100);
+      }
+    }
+  }, [hash]);
+
   return (
     <div className="pt-20">
       <SEO 

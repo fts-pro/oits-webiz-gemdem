@@ -32,18 +32,29 @@ export const AiAssistant: React.FC = () => {
     setMessages(prev => [...prev, { role: 'user', text: userMsg }]);
     setIsTyping(true);
 
+    // Basic intent detection for project starting
+    const projectKeywords = ['start', 'project', 'build', 'hire', 'quote', 'estimate', 'work with you'];
+    const hasProjectIntent = projectKeywords.some(keyword => userMsg.toLowerCase().includes(keyword));
+
     try {
       const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
       const response = await ai.models.generateContent({
         model: 'gemini-3-flash-preview',
         contents: userMsg,
         config: {
-          systemInstruction: `You are a professional project consultant for OITS Dhaka, a software development company. 
-          Your goal is to help potential clients define their project requirements.
-          Be professional, encouraging, and technically insightful. 
-          Suggest OITS Dhaka's services like Web Dev, Mobile Apps, or Cloud Solutions where appropriate.
-          Keep responses concise (max 3 sentences).`,
-          temperature: 0.7,
+          systemInstruction: `You are a Senior Project Consultant at OITS Dhaka. 
+          Your mission is to help potential clients transform vague ideas into structured project blueprints.
+          
+          Consultation Framework:
+          1. Technical Feasibility: Briefly assess if the idea is technically sound.
+          2. Solution Architecture: Suggest relevant domains (Web, Mobile, Cloud, AI, Security).
+          3. OITS Edge: Connect their needs to OITS Dhaka's excellence.
+          
+          ${hasProjectIntent ? 'Note: The user seems interested in starting a project. Encourage them to fill out our contact form for a formal discovery session.' : ''}
+          
+          Tone: Professional, elite, enterprise-grade. 
+          Constraint: Keep responses between 2-4 sentences.`,
+          temperature: 0.8,
         },
       });
 
