@@ -137,9 +137,9 @@ export const About: React.FC = () => {
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                     aria-label={`Photo of ${member.name}, ${member.role}`}
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-transparent to-transparent opacity-80 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300"></div>
                 </div>
-                <div className="absolute bottom-0 left-0 right-0 p-6 translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6 md:translate-y-4 md:group-hover:translate-y-0 transition-transform duration-300">
                   <div className="bg-white/90 dark:bg-slate-900/90 backdrop-blur-sm p-4 rounded-xl border border-slate-100 dark:border-slate-700 shadow-lg">
                     <h4 className="font-bold text-slate-900 dark:text-white text-lg">{member.name}</h4>
                     <p className="text-sm text-blue-600 dark:text-blue-400 font-medium">{member.role}</p>

@@ -138,29 +138,28 @@ Whenever network exceptions or coordinate blocks happen, the widget renders loca
 ### File Tree & System Coordinates
 The system's clear division of labor separates assets, static constants, page configurations, and core components:
 ```
-├── src/
-│   ├── App.tsx                   # System Router & global theme state controller
-│   ├── main.tsx                  # Web container entry mount point
-│   ├── index.css                 # Master styles (includes responsive scrollbar definitions)
-│   ├── types.ts                  # Shared TypeScript models and interfaces
-│   ├── constants.ts              # System-wide static copy, portfolio datasets, pricing parameters
+├── App.tsx                   # System Router & global theme state controller
+├── index.tsx                 # Web container entry mount point
+├── index.html                # Entry HTML document
+├── types.ts                  # Shared TypeScript models and interfaces
+├── constants.ts              # System-wide static copy, portfolio datasets, pricing parameters
+│
+├── components/               # High-fidelity visual system components
+│   ├── ui/                   # Reusable atomic buttons, layouts, and accordion widgets
+│   │   ├── Button.tsx        # Standard button variations
+│   │   ├── Accordion.tsx     # Keyboard-friendly accessible FAQ widget
+│   │   └── ScrollReveal.tsx  # Dynamic scroll indicator wrappers
 │   │
-│   ├── components/               # High-fidelity visual system components
-│   │   ├── ui/                   # Reusable atomic buttons, layouts, and accordion widgets
-│   │   │   ├── Button.tsx        # Standard button variations
-│   │   │   ├── Accordion.tsx     # Keyboard-friendly accessible FAQ widget
-│   │   │   └── ScrollReveal.tsx  # Dynamic scroll indicator wrappers
-│   │   │
-│   │   ├── Header.tsx            # Sticky navigation structure & theme switchers
-│   │   ├── Footer.tsx            # Full sitemap generation & dynamic newsletter capture
-│   │   └── AiAssistant.tsx       # Embedded voice-compatible Gemini client
-│   │
-│   └── pages/                    # Explicit template views matched to Router configurations
-│       ├── Home.tsx              # Homepage (Includes carousels, testimonials, works summary)
-│       ├── ServicesPage.tsx      # Advanced services capabilities matrix & deep-dives
-│       ├── PortfolioPage.tsx     # Case-study center with complex tag filtering
-│       ├── AboutPage.tsx         # Our values, timeline story center & accessible FAQs
-│       └── ContactPage.tsx       # Enterprise scheduling options and coordinate indicators
+│   ├── Header.tsx            # Sticky navigation structure & theme switchers
+│   ├── Footer.tsx            # Full sitemap generation & dynamic newsletter capture
+│   └── AiAssistant.tsx       # Embedded voice-compatible Gemini client
+│
+└── pages/                    # Explicit template views matched to Router configurations
+    ├── Home.tsx              # Homepage (Includes carousels, testimonials, works summary)
+    ├── ServicesPage.tsx      # Advanced services capabilities matrix & deep-dives
+    ├── PortfolioPage.tsx     # Case-study center with complex tag filtering
+    ├── AboutPage.tsx         # Our values, timeline story center & accessible FAQs
+    └── ContactPage.tsx       # Enterprise scheduling options and coordinate indicators
 ```
 
 ---
@@ -168,7 +167,7 @@ The system's clear division of labor separates assets, static constants, page co
 ## 5. Standard Modification Playbooks
 
 ### Adding a Case Study / Portfolio Piece
-To publish a new successful case study, append a standard item to the `PROJECTS` array in `src/constants.ts`:
+To publish a new successful case study, append a standard item to the `PROJECTS` array in `constants.ts`:
 ```ts
 {
   id: '7',
@@ -184,10 +183,10 @@ To publish a new successful case study, append a standard item to the `PROJECTS`
 ```
 
 ### Registering a New Career Opening
-To add an active opening, append an item to the vacancy list inside your target state, or modify values inside your careers configuration pages in `src/pages/CareersPage.tsx` or matching constants inside `src/constants.ts`.
+To add an active opening, append an item to the vacancy list inside your target state, or modify values inside your careers configuration pages in `pages/CareersPage.tsx` or matching constants inside `constants.ts`.
 
 ### Adding System-Wide Constants
-To modify overall system emails, phone details, addresses, or metadata, update the constant values declared at the top of `src/constants.ts`:
+To modify overall system emails, phone details, addresses, or metadata, update the constant values declared at the top of `constants.ts`:
 ```ts
 export const CONTACT_EMAIL = "hq@oitsdhaka.com";
 export const ADDRESS = "Updated Office Address, Dhaka, Bangladesh";

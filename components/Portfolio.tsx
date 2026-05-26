@@ -437,7 +437,7 @@ export const Portfolio: React.FC<PortfolioProps> = ({ limit }) => {
                   <button onClick={() => setModalState(null)} className="absolute top-6 right-6 p-3 bg-black/50 backdrop-blur-md rounded-full text-white hover:bg-black/70 transition-all active:scale-90 z-20">
                     <X size={24}/>
                   </button>
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent flex flex-col justify-end p-10 md:p-16">
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent flex flex-col justify-end p-6 sm:p-10 md:p-16">
                     <h3 className="text-4xl md:text-6xl font-black text-white mb-4 tracking-tighter">{modalState.project.title}</h3>
                     <div className="flex gap-4">
                       {modalState.project.demoVideoUrl && (
@@ -450,7 +450,7 @@ export const Portfolio: React.FC<PortfolioProps> = ({ limit }) => {
                 </div>
               )}
             </div>
-            <div className="p-10 md:p-16 overflow-y-auto">
+            <div className="p-6 sm:p-10 md:p-16 overflow-y-auto">
               <div className="max-w-4xl">
                  <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-10 gap-4">
                     <h4 className="text-sm font-black text-blue-600 uppercase tracking-[0.3em]">Case Study Overview</h4>

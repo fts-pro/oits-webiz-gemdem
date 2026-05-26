@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, Terminal, Sun, Moon } from 'lucide-react';
+import { AnimatePresence, motion } from 'motion/react';
 import { COMPANY_NAME } from '../constants';
 import { Button } from './ui/Button';
 
@@ -127,7 +128,7 @@ export const Header: React.FC<HeaderProps> = ({ theme, toggleTheme }) => {
         <div className="flex items-center gap-3 md:hidden">
           <button
             onClick={toggleTheme}
-            className={`p-2 rounded-full transition-colors ${themeButtonClass}`}
+            className={`w-11 h-11 flex items-center justify-center rounded-full transition-all focus-visible:ring-2 focus-visible:ring-blue-500 ${themeButtonClass}`}
             aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
             title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
           >
@@ -135,44 +136,68 @@ export const Header: React.FC<HeaderProps> = ({ theme, toggleTheme }) => {
           </button>
           
           <button 
-            className={`p-2 rounded-lg transition-colors ${isScrolled ? 'text-slate-900 dark:text-white hover:bg-slate-100 dark:hover:bg-slate-800' : 'text-white hover:bg-white/20'}`}
+            className={`w-11 h-11 flex items-center justify-center rounded-xl transition-all focus-visible:ring-2 focus-visible:ring-blue-500 ${isScrolled ? 'text-slate-900 dark:text-white hover:bg-slate-100 dark:hover:bg-slate-800' : 'text-white hover:bg-white/20'}`}
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-expanded={isMobileMenuOpen}
             aria-label={isMobileMenuOpen ? "Close mobile menu" : "Open mobile menu"}
             aria-controls="mobile-menu"
           >
-            {isMobileMenuOpen ? <X /> : <Menu />}
+            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
       </div>
 
-      {/* Mobile Menu */}
-      {isMobileMenuOpen && (
-        <div id="mobile-menu" className="absolute top-full left-0 right-0 bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 md:hidden p-6 shadow-2xl animate-in slide-in-from-top-4 duration-300">
-          <nav className="flex flex-col gap-2" aria-label="Mobile Navigation Menu">
-            {NAV_LINKS.map((item) => (
-              <Link 
-                key={item.label} 
-                to={item.href}
-                onClick={handleLinkClick}
-                aria-label={`Navigate to ${item.label}`}
-                className={`px-4 py-4 rounded-2xl text-lg font-bold transition-all active:scale-95 ${
-                   location.pathname === item.href 
-                    ? 'text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-slate-800' 
-                    : 'text-slate-800 dark:text-slate-100 hover:bg-slate-50 dark:hover:bg-slate-900'
-                }`}
-              >
-                {item.label}
-              </Link>
-            ))}
-            <Link to="/contact" className="mt-4" onClick={handleLinkClick} aria-label="Start a project with OITS Dhaka">
-              <Button className="w-full py-6 text-lg rounded-2xl">
-                Start a Project
-              </Button>
-            </Link>
-          </nav>
-        </div>
-      )}
+      {/* Mobile Menu with Framer Motion AnimatePresence */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div 
+            id="mobile-menu" 
+            initial={{ opacity: 0, height: 0, y: -20 }}
+            animate={{ opacity: 1, height: 'auto', y: 0 }}
+            exit={{ opacity: 0, height: 0, y: -20 }}
+            transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+            className="absolute top-full left-0 right-0 bg-white/95 dark:bg-slate-950/95 backdrop-blur-xl border-b border-slate-200/50 dark:border-slate-800/50 md:hidden overflow-hidden shadow-2xl"
+          >
+            <div className="p-6">
+              <nav className="flex flex-col gap-2" aria-label="Mobile Navigation Menu">
+                {NAV_LINKS.map((item, index) => (
+                  <motion.div
+                    key={item.label}
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: index * 0.05 }}
+                  >
+                    <Link 
+                      to={item.href}
+                      onClick={handleLinkClick}
+                      aria-label={`Navigate to ${item.label}`}
+                      className={`px-4 py-4 rounded-2xl text-lg font-bold flex items-center transition-all active:scale-[0.98] ${
+                         location.pathname === item.href 
+                          ? 'text-blue-600 dark:text-blue-400 bg-blue-50/80 dark:bg-slate-900/80' 
+                          : 'text-slate-800 dark:text-slate-100 hover:bg-slate-50 dark:hover:bg-slate-900/50'
+                      }`}
+                    >
+                      {item.label}
+                    </Link>
+                  </motion.div>
+                ))}
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: NAV_LINKS.length * 0.05 }}
+                  className="mt-4"
+                >
+                  <Link to="/contact" onClick={handleLinkClick} aria-label="Start a project with OITS Dhaka">
+                    <Button className="w-full py-6 text-lg rounded-2xl shadow-xl shadow-blue-500/20">
+                      Start a Project
+                    </Button>
+                  </Link>
+                </motion.div>
+              </nav>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
   );
 };

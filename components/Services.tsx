@@ -109,10 +109,10 @@ export const Services: React.FC<ServicesProps> = ({ limit }) => {
           aria-labelledby="modal-title"
         >
           <div className="w-full max-w-3xl bg-white dark:bg-slate-900 rounded-[3rem] shadow-2xl overflow-hidden border-2 border-slate-50 dark:border-slate-800 animate-in zoom-in-95 duration-300 max-h-[90vh] flex flex-col">
-            <div className="p-10 md:p-16 relative overflow-y-auto">
+            <div className="p-6 sm:p-10 md:p-16 relative overflow-y-auto">
               <button 
                 onClick={() => setSelectedService(null)} 
-                className="absolute top-10 right-10 p-3 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors text-slate-500 focus-visible:ring-4 focus-visible:ring-blue-500/20" 
+                className="absolute top-6 right-6 sm:top-10 sm:right-10 p-3 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors text-slate-500 focus-visible:ring-4 focus-visible:ring-blue-500/20" 
                 aria-label="Close details"
               >
                 <X size={28} />

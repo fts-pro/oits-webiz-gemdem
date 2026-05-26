@@ -24,16 +24,16 @@ This document outlines the strict engineering standards, styling protocols, aest
 
 ### Strict Type Safety
 - All data models, routes, state parameters, and properties must have explicit TypeScript declarations.
-- Define shared interfaces inside the global `/src/types.ts` coordinate early rather than declaring inline on multiple files.
+- Define shared interfaces inside the global `/types.ts` coordinate early rather than declaring inline on multiple files.
 - **Type Imports constraint**: 
   - ALWAYS use top-level named imports for types.
   - NEVER use `import type` statement modifiers for dynamic Enum values.
 - **Enumerables**: Always use standard, explicit TypeScript `enum` blocks. NEVER use `const enum`.
 
 ### Modularity & Code Splitting
-- Do NOT aggregate extensive UI segments or full sub-views inside massive monolithic components (like `/src/App.tsx`).
-- Segment layout zones into dedicated atomic items inside `/src/components/` and `/src/components/ui/` directories.
-- Move extensive static configuration datasets, dictionaries, or lists out of files into `/src/constants.ts` to keep render engines lightweight.
+- Do NOT aggregate extensive UI segments or full sub-views inside massive monolithic components (like `/App.tsx`).
+- Segment layout zones into dedicated atomic items inside `/components/` and `/components/ui/` directories.
+- Move extensive static configuration datasets, dictionaries, or lists out of files into `/constants.ts` to keep render engines lightweight.
 
 ### React Hooks and State Safety
 - **State Updates**: Avoid updating state variables directly inside component render cycles to prevent infinite re-render loop errors.
