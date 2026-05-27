@@ -1,13 +1,14 @@
 import React, { useEffect, useState, useMemo, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { X, Tag, MonitorPlay, RotateCcw, Check, Play, Pause, AlertTriangle, Layers, FilterX, Linkedin, Twitter, Maximize, Minimize } from 'lucide-react';
+import { X, Tag, MonitorPlay, RotateCcw, Check, Play, Pause, AlertTriangle, Layers, FilterX, Linkedin, Twitter, Maximize, Minimize, BarChart3, TrendingUp, Info } from 'lucide-react';
+import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip, Cell } from 'recharts';
 import { PROJECTS } from '../constants';
 import { Project } from '../types';
 import { Button } from './ui/Button';
 import { Tooltip } from './ui/Tooltip';
 import { ScrollReveal } from './ui/ScrollReveal';
 
-const FALLBACK_IMAGE = 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800&fm=webp';
+const FALLBACK_IMAGE = '/assets/portfolio_fallback.png';
 
 const ALL_CATEGORY = 'All Categories';
 const STORAGE_KEY_CATEGORIES = 'portfolio-filter-categories';
@@ -175,22 +176,26 @@ const isSlowConnection = (): boolean => {
   return connection.saveData === true || ['slow-2g', '2g', '3g'].includes(connection.effectiveType);
 };
 
-const prefetchAsset = (url: string, asType: 'image' | 'video') => {
+const prefetchAsset = (url: string | { mp4: string; webm: string }, asType: 'image' | 'video') => {
   if (!url) return;
   // If the user's connection is slow or in Save-Data mode, skip downloading heavy video files
   if (asType === 'video' && isSlowConnection()) {
     return;
   }
   
-  // Prevent duplicate prefetch link injection
-  const existing = document.querySelector(`link[href="${url}"]`);
-  if (existing) return;
+  const urlsToPrefetch = typeof url === 'string' ? [url] : [url.mp4, url.webm].filter(Boolean);
 
-  const link = document.createElement('link');
-  link.rel = 'prefetch';
-  link.as = asType;
-  link.href = url;
-  document.head.appendChild(link);
+  urlsToPrefetch.forEach(u => {
+    // Prevent duplicate prefetch link injection
+    const existing = document.querySelector(`link[href="${u}"]`);
+    if (existing) return;
+
+    const link = document.createElement('link');
+    link.rel = 'prefetch';
+    link.as = asType;
+    link.href = u;
+    document.head.appendChild(link);
+  });
 };
 
 const ProjectCard = ({ project, onClick, onViewDemo, highlightedTags, index }: any) => {
@@ -353,6 +358,26 @@ export const Portfolio: React.FC<PortfolioProps> = ({ limit }) => {
   const categories = useMemo(() => [ALL_CATEGORY, ...Array.from(new Set(PROJECTS.map(p => p.category)))], []);
   const allTags = useMemo(() => Array.from(new Set(PROJECTS.flatMap(p => p.technologies || []))).sort(), []);
 
+  const techAnalyticsData = useMemo(() => {
+    const counts: Record<string, number> = {};
+    const totalProjects = PROJECTS.length;
+    
+    PROJECTS.forEach(p => {
+      p.technologies?.forEach(tech => {
+        counts[tech] = (counts[tech] || 0) + 1;
+      });
+    });
+
+    return Object.entries(counts)
+      .map(([name, count]) => ({
+        name,
+        count,
+        percentage: Math.round((count / totalProjects) * 100)
+      }))
+      .sort((a, b) => b.count - a.count)
+      .slice(0, 8);
+  }, []);
+
   const dynamicCategoryCounts = useMemo(() => {
     const counts: Record<string, number> = {};
     categories.forEach(cat => {
@@ -447,48 +472,135 @@ export const Portfolio: React.FC<PortfolioProps> = ({ limit }) => {
           </div>
         )}
 
-        <div className="mb-16 flex flex-col lg:flex-row gap-12">
-           {!limit && (
-             <aside className="w-full lg:w-80 space-y-8">
-                <div>
-                  <h4 className="text-xs font-black text-slate-400 uppercase tracking-[0.3em] mb-6">Verticals</h4>
-                  <nav className="flex lg:flex-col gap-3 overflow-x-auto no-scrollbar pb-2" role="group" aria-label="Vertical Filter Navigation">
-                    {categories.map(cat => {
-                      const active = cat === ALL_CATEGORY ? selectedCategories.length === 0 : selectedCategories.includes(cat);
-                      const count = cat === ALL_CATEGORY ? PROJECTS.length : (dynamicCategoryCounts[cat] || 0);
-                      const isZero = count === 0 && !active;
-                      return (
-                        <button 
-                          key={cat} 
-                          onClick={() => toggleCategory(cat)} 
-                          aria-pressed={active} 
-                          aria-label={`Filter by ${cat} category, ${count} projects available`}
-                          disabled={isZero}
-                          className={`flex items-center justify-between px-5 py-3 rounded-2xl text-sm font-bold text-left transition-all border outline-none active:scale-[0.97] focus-visible:ring-2 focus-visible:ring-blue-500 hover:scale-105 ${active ? 'bg-slate-900 dark:bg-blue-600 text-white shadow-xl border-transparent' : isZero ? 'bg-slate-100/50 dark:bg-slate-950/40 text-slate-300 dark:text-slate-700 border-slate-200/50 dark:border-slate-900/50 opacity-50 cursor-not-allowed hover:scale-100' : 'bg-white dark:bg-slate-900 text-slate-600 border-slate-200 dark:border-slate-800 hover:border-blue-300'}`}
-                        >
-                          <span className="flex items-center gap-2">
-                             {cat}
-                             {active && cat !== ALL_CATEGORY && <Check size={14} />}
-                          </span>
-                          <span className={`text-[10px] px-2 py-0.5 rounded-md font-mono font-bold tracking-tight ${active ? 'bg-white/20 text-white' : 'bg-slate-100 dark:bg-slate-800 text-slate-400'}`}>
-                             {count}
-                          </span>
-                        </button>
-                      );
-                    })}
-                  </nav>
+        {!limit && (
+          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-[2rem] p-8 mb-16 shadow-sm overflow-hidden animate-in fade-in-50 slide-in-from-bottom-10 duration-700">
+             <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-8 pb-6 border-b border-slate-100 dark:border-slate-800 gap-4">
+                <div className="flex items-center gap-3">
+                   <div className="p-2.5 bg-blue-100 dark:bg-blue-900/30 rounded-xl text-blue-600 dark:text-blue-400">
+                      <BarChart3 size={20} />
+                   </div>
+                   <div>
+                      <h4 className="font-black text-xl tracking-tight text-slate-900 dark:text-white">Technology Stack Ecosystem</h4>
+                      <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">Distribution and frequency of modern technologies utilized across our complete catalog</p>
+                   </div>
                 </div>
-             </aside>
-           )}
+                <div className="flex items-center gap-2 bg-blue-50 dark:bg-blue-950/40 text-blue-700 dark:text-blue-400 px-4 py-2 rounded-xl text-xs font-bold leading-none border border-blue-100 dark:border-blue-900/30">
+                   <Info size={14} />
+                   <span>Interactive Dashboard: Click a bar or item to filter state</span>
+                </div>
+             </div>
+             
+             <div className="grid grid-cols-1 lg:grid-cols-5 gap-10">
+                {/* Recharts Column */}
+                <div className="lg:col-span-3 h-[280px]">
+                   <ResponsiveContainer width="100%" height="100%">
+                      <BarChart data={techAnalyticsData} margin={{ top: 10, right: 10, left: -25, bottom: 5 }}>
+                         <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="rgba(148, 163, 184, 0.08)" />
+                         <XAxis 
+                            dataKey="name" 
+                            stroke="#94a3b8" 
+                            fontSize={10} 
+                            tickLine={false} 
+                            axisLine={false}
+                            className="font-mono"
+                         />
+                         <YAxis 
+                            stroke="#94a3b8" 
+                            fontSize={10} 
+                            tickLine={false} 
+                            axisLine={false}
+                            allowDecimals={false}
+                            className="font-mono"
+                         />
+                         <RechartsTooltip 
+                            cursor={{ fill: 'rgba(59, 130, 246, 0.04)', radius: 12 }}
+                            content={({ active, payload }) => {
+                               if (active && payload && payload.length) {
+                                  const item = payload[0].payload;
+                                  const isSelected = selectedTags.includes(item.name);
+                                  return (
+                                     <div className="bg-slate-900 dark:bg-slate-950 border border-slate-850 text-white rounded-2xl p-4 shadow-2xl text-xs space-y-2 font-sans">
+                                        <div className="flex items-center gap-2">
+                                           <span className="font-extrabold tracking-tight text-slate-100">{item.name}</span>
+                                           {isSelected && <span className="text-[9px] bg-blue-500/20 text-blue-400 border border-blue-500/35 px-1.5 py-0.5 rounded-full font-bold uppercase tracking-wider animate-pulse">Filtered</span>}
+                                        </div>
+                                        <div className="flex justify-between gap-8 pt-1 border-t border-slate-800">
+                                           <span className="text-slate-400">Total Projects:</span>
+                                           <span className="font-mono font-bold text-blue-400">{item.count}</span>
+                                        </div>
+                                        <div className="flex justify-between gap-8">
+                                           <span className="text-slate-400">Ecosystem Density:</span>
+                                           <span className="font-mono font-bold text-emerald-400">{item.percentage}%</span>
+                                        </div>
+                                     </div>
+                                  );
+                               }
+                               return null;
+                            }}
+                         />
+                         <Bar dataKey="count" radius={[6, 6, 0, 0]} onClick={(data) => {
+                            if (data && data.name) {
+                               toggleTag(data.name);
+                            }
+                         }}>
+                            {techAnalyticsData.map((entry, index) => {
+                               const isSelected = selectedTags.includes(entry.name);
+                               return (
+                                  <Cell 
+                                     key={`cell-${index}`} 
+                                     fill={isSelected ? '#2563eb' : 'rgba(59, 130, 246, 0.15)'}
+                                     stroke={isSelected ? '#3b82f6' : 'rgba(59, 130, 246, 0.3)'}
+                                     strokeWidth={isSelected ? 1.5 : 1}
+                                     style={{ cursor: 'pointer' }}
+                                     className="transition-all duration-300 hover:opacity-90"
+                                  />
+                               );
+                            })}
+                         </Bar>
+                      </BarChart>
+                   </ResponsiveContainer>
+                </div>
+                
+                {/* Metric Summary Column */}
+                <div className="lg:col-span-2 flex flex-col justify-center space-y-4">
+                   <h5 className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-2 flex items-center gap-1.5">
+                      <TrendingUp size={12} className="text-blue-500" />
+                      Ecosystem Stats
+                   </h5>
+                   <div className="grid grid-cols-2 gap-4">
+                      {techAnalyticsData.slice(0, 4).map((tech) => {
+                         const isSelected = selectedTags.includes(tech.name);
+                         return (
+                            <button
+                               key={tech.name}
+                               onClick={() => toggleTag(tech.name)}
+                               className={`p-4 rounded-2xl border text-left transition-all hover:scale-102 flex flex-col justify-between ${isSelected ? 'bg-blue-600 border-blue-600 text-white shadow-lg shadow-blue-500/10' : 'bg-slate-50 dark:bg-slate-800/40 border-slate-100 dark:border-slate-800 hover:border-blue-400 text-slate-900 dark:text-white'}`}
+                            >
+                               <span className={`text-[11px] font-black uppercase tracking-wider ${isSelected ? 'text-white/80' : 'text-slate-400'}`}>{tech.name}</span>
+                               <div className="flex items-baseline gap-2 mt-2">
+                                  <span className="font-mono text-xl font-bold">{tech.count}</span>
+                                  <span className={`text-xs ${isSelected ? 'text-white/70' : 'text-slate-500 font-medium'}`}>{tech.percentage}%</span>
+                               </div>
+                            </button>
+                         );
+                      })}
+                   </div>
+                </div>
+             </div>
+          </div>
+        )}
+
+        <div className="mb-16 flex flex-col lg:flex-row gap-12">
+
            <div className="flex-1">
               {!limit && (
                 <div className="bg-white dark:bg-slate-900 p-8 rounded-3xl border border-slate-200 dark:border-slate-800 mb-12 shadow-sm relative overflow-hidden group/filter">
-                  <div className="flex items-center justify-between mb-8">
+                  <div className="flex items-center justify-between mb-10">
                     <div className="flex items-center gap-3">
                       <div className="p-2.5 bg-blue-100 dark:bg-blue-900/30 rounded-xl text-blue-600 dark:text-blue-400">
                         <Tag size={20}/>
                       </div>
-                      <span className="font-black text-lg tracking-tight text-slate-900 dark:text-white">Technologies</span>
+                      <span className="font-black text-lg tracking-tight text-slate-900 dark:text-white">Filters</span>
                     </div>
                     {(selectedTags.length > 0 || selectedCategories.length > 0) && (
                       <button onClick={handleResetFilters} className="text-xs text-blue-600 dark:text-blue-400 flex items-center gap-2 font-black uppercase tracking-widest hover:underline px-4 py-2 bg-blue-50 dark:bg-blue-900/20 rounded-full transition-all">
@@ -496,27 +608,61 @@ export const Portfolio: React.FC<PortfolioProps> = ({ limit }) => {
                       </button>
                     )}
                   </div>
-                  <div className="flex flex-wrap gap-3" role="group" aria-label="Technology Filter Chips">
-                    {allTags.map(tag => {
-                      const active = selectedTags.includes(tag);
-                      const count = dynamicTagCounts[tag] || 0;
-                      const isZero = count === 0 && !active;
-                      return (
-                        <button 
-                          key={tag} 
-                          onClick={() => toggleTag(tag)} 
-                          aria-pressed={active} 
-                          aria-label={`Filter by ${tag} technology, ${count} projects available`}
-                          disabled={isZero}
-                          className={`flex items-center gap-2 px-4 py-2 rounded-full text-xs font-black border transition-all active:scale-90 outline-none focus-visible:ring-2 focus-visible:ring-blue-500 hover:scale-105 ${active ? 'bg-blue-600 border-blue-600 text-white shadow-lg shadow-blue-500/30 scale-105' : isZero ? 'bg-slate-50/40 dark:bg-slate-900/20 border-dashed border-slate-200/50 dark:border-slate-800/50 text-slate-300 dark:text-slate-600 opacity-40 cursor-not-allowed hover:scale-100' : 'bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-500 hover:border-blue-400'}`}
-                        >
-                          {tag}
-                          <span className={`text-[9px] px-1.5 py-0.5 rounded-full font-mono font-bold tracking-tight ${active ? 'bg-white/20 text-white' : 'bg-slate-200 dark:bg-slate-700 text-slate-400'}`}>
-                             {count}
-                          </span>
-                        </button>
-                      );
-                    })}
+                  
+                  <div className="space-y-8">
+                     {/* Categories */}
+                     <div>
+                       <h5 className="text-xs font-black text-slate-400 uppercase tracking-[0.3em] mb-5">Verticals</h5>
+                       <div className="flex flex-wrap gap-3" role="group" aria-label="Vertical Filter Chips">
+                        {categories.filter(c => c !== ALL_CATEGORY).map(cat => {
+                          const active = selectedCategories.includes(cat);
+                          const count = dynamicCategoryCounts[cat] || 0;
+                          const isZero = count === 0 && !active;
+                          return (
+                            <button 
+                              key={cat} 
+                              onClick={() => toggleCategory(cat)} 
+                              aria-pressed={active} 
+                              aria-label={`Filter by ${cat} category, ${count} projects available`}
+                              disabled={isZero}
+                              className={`flex items-center gap-2 px-4 py-2 rounded-full text-xs font-black border transition-all active:scale-90 outline-none focus-visible:ring-2 focus-visible:ring-blue-500 hover:scale-105 ${active ? 'bg-slate-900 dark:bg-blue-600 border-slate-900 dark:border-blue-600 text-white shadow-lg shadow-blue-500/20 scale-105' : isZero ? 'bg-slate-50/40 dark:bg-slate-900/20 border-dashed border-slate-200/50 dark:border-slate-800/50 text-slate-300 dark:text-slate-600 opacity-40 cursor-not-allowed hover:scale-100' : 'bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:border-blue-400'}`}
+                            >
+                              {cat}
+                              <span className={`text-[9px] px-1.5 py-0.5 rounded-full font-mono font-bold tracking-tight ${active ? 'bg-white/20 text-white' : 'bg-slate-200 dark:bg-slate-700 text-slate-400'}`}>
+                                 {count}
+                              </span>
+                            </button>
+                          );
+                        })}
+                       </div>
+                     </div>
+
+                     {/* Technologies */}
+                     <div className="pt-2 border-t border-slate-100 dark:border-slate-800">
+                        <h5 className="text-xs font-black text-slate-400 uppercase tracking-[0.3em] mb-5 pt-6">Technologies</h5>
+                        <div className="flex flex-wrap gap-3" role="group" aria-label="Technology Filter Chips">
+                          {allTags.map(tag => {
+                            const active = selectedTags.includes(tag);
+                            const count = dynamicTagCounts[tag] || 0;
+                            const isZero = count === 0 && !active;
+                            return (
+                              <button 
+                                key={tag} 
+                                onClick={() => toggleTag(tag)} 
+                                aria-pressed={active} 
+                                aria-label={`Filter by ${tag} technology, ${count} projects available`}
+                                disabled={isZero}
+                                className={`flex items-center gap-2 px-4 py-2 rounded-full text-xs font-black border transition-all active:scale-90 outline-none focus-visible:ring-2 focus-visible:ring-blue-500 hover:scale-105 ${active ? 'bg-blue-600 border-blue-600 text-white shadow-lg shadow-blue-500/30 scale-105' : isZero ? 'bg-slate-50/40 dark:bg-slate-900/20 border-dashed border-slate-200/50 dark:border-slate-800/50 text-slate-300 dark:text-slate-600 opacity-40 cursor-not-allowed hover:scale-100' : 'bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-500 hover:border-blue-400'}`}
+                              >
+                                {tag}
+                                <span className={`text-[9px] px-1.5 py-0.5 rounded-full font-mono font-bold tracking-tight ${active ? 'bg-white/20 text-white' : 'bg-slate-200 dark:bg-slate-700 text-slate-400'}`}>
+                                   {count}
+                                </span>
+                              </button>
+                            );
+                          })}
+                        </div>
+                     </div>
                   </div>
                 </div>
               )}

@@ -130,7 +130,7 @@ export const Hero: React.FC = () => {
         <div 
           className="absolute inset-0 bg-cover bg-center will-change-transform"
           style={{ 
-            backgroundImage: 'url("https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=2070&fm=webp")',
+            backgroundImage: 'url("/assets/hero_background.png")',
             // Subtle parallax factor (0.15) with scale (1.1) to avoid edges showing
             transform: `translate3d(0, ${scrollY * 0.15}px, 0) scale(1.1)` 
           }}
@@ -279,7 +279,7 @@ export const Hero: React.FC = () => {
               {/* Image Container */}
               <div className="relative bg-slate-900 border border-white/10 rounded-[2rem] md:rounded-[3rem] shadow-2xl overflow-hidden aspect-square sm:aspect-[4/3] lg:aspect-[16/10] group/img ring-1 ring-white/5 transition-all duration-700">
                 <img 
-                  src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&q=80&w=1200&fm=webp" 
+                  src="/assets/hero_visual.png" 
                   className="w-full h-full object-cover opacity-60 transition-transform duration-1000 group-hover/img:scale-105" 
                   alt="Modern Software Engineering Environment"
                   loading="lazy"

@@ -8,22 +8,22 @@ const TEAM = [
   {
     name: 'Alex Morgan',
     role: 'CEO & Founder',
-    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=400&h=500&fm=webp',
+    image: '/assets/about_ceo.png',
   },
   {
     name: 'Sarah Chen',
     role: 'Lead Architect',
-    image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=400&h=500&fm=webp',
+    image: '/assets/about_architect.png',
   },
   {
     name: 'James Wilson',
     role: 'Head of Design',
-    image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=400&h=500&fm=webp',
+    image: '/assets/about_designer.png',
   },
   {
     name: 'Maria Garcia',
     role: 'Project Manager',
-    image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=400&h=500&fm=webp',
+    image: '/assets/about_pm.png',
   },
 ];
 
@@ -37,7 +37,8 @@ export const About: React.FC = () => {
           <ScrollReveal direction="left" className="flex-1 w-full relative">
              <div className="relative aspect-square rounded-3xl overflow-hidden bg-slate-100 dark:bg-slate-800 shadow-2xl group">
                 <img 
-                  src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=800&fm=webp" 
+                  src="/assets/about_team.png" 
+                  referrerPolicy="no-referrer" 
                   alt="OITS Dhaka team collaboration" 
                   loading="lazy"
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
@@ -132,6 +133,7 @@ export const About: React.FC = () => {
                 <div className="aspect-[4/5] overflow-hidden bg-slate-200 dark:bg-slate-700">
                   <img 
                     src={member.image} 
+                    referrerPolicy="no-referrer"
                     alt={`${member.name}, ${member.role} at OITS Dhaka`}
                     loading="lazy"
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
