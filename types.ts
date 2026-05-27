@@ -7,6 +7,7 @@ export interface Service {
   features: string[];
   benefits?: string[];
   caseStudyPlaceholder?: string;
+  category?: string;
 }
 
 export interface Project {

@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useMemo, useRef } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
 import { X, Tag, MonitorPlay, RotateCcw, Check, Play, Pause, AlertTriangle, Layers, FilterX, Linkedin, Twitter, Maximize, Minimize } from 'lucide-react';
 import { PROJECTS } from '../constants';
 import { Project } from '../types';
@@ -158,12 +159,73 @@ const CustomVideoPlayer: React.FC<CustomVideoPlayerProps> = ({ src, captionsUrl,
   );
 };
 
+const isSlowConnection = (): boolean => {
+  if (typeof window === 'undefined' || !window.navigator) return false;
+  const connection = (window.navigator as any).connection || 
+                     (window.navigator as any).mozConnection || 
+                     (window.navigator as any).webkitConnection;
+  if (!connection) return false;
+  return connection.saveData === true || ['slow-2g', '2g', '3g'].includes(connection.effectiveType);
+};
+
+const prefetchAsset = (url: string, asType: 'image' | 'video') => {
+  if (!url) return;
+  // If the user's connection is slow or in Save-Data mode, skip downloading heavy video files
+  if (asType === 'video' && isSlowConnection()) {
+    return;
+  }
+  
+  // Prevent duplicate prefetch link injection
+  const existing = document.querySelector(`link[href="${url}"]`);
+  if (existing) return;
+
+  const link = document.createElement('link');
+  link.rel = 'prefetch';
+  link.as = asType;
+  link.href = url;
+  document.head.appendChild(link);
+};
+
 const ProjectCard = ({ project, onClick, onViewDemo, highlightedTags, index }: any) => {
   const [imageLoaded, setImageLoaded] = useState(false);
+  const hoverTimeoutRef = useRef<any>(null);
+
+  const handleMouseEnter = () => {
+    // 150ms delay threshold prevents thrashing the prefetch engine on rapid sweeps
+    hoverTimeoutRef.current = setTimeout(() => {
+      if (project.imageUrl) {
+        prefetchAsset(project.imageUrl, 'image');
+      }
+      if (project.demoVideoUrl) {
+        prefetchAsset(project.demoVideoUrl, 'video');
+      }
+    }, 150);
+  };
+
+  const handleMouseLeave = () => {
+    if (hoverTimeoutRef.current) {
+      clearTimeout(hoverTimeoutRef.current);
+      hoverTimeoutRef.current = null;
+    }
+  };
+
+  useEffect(() => {
+    return () => {
+      if (hoverTimeoutRef.current) {
+        clearTimeout(hoverTimeoutRef.current);
+      }
+    };
+  }, []);
 
   return (
-    <ScrollReveal 
-      delay={index * 0.05}
+    <motion.div 
+      layout
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, scale: 0.95 }}
+      transition={{ duration: 0.5, ease: [0.21, 0.47, 0.32, 0.98] }}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
       className={`group bg-white dark:bg-slate-900 rounded-3xl overflow-hidden border border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-2xl transition-all duration-700`}
     >
       <div className="relative aspect-[4/3] overflow-hidden bg-slate-200 dark:bg-slate-800 cursor-pointer" onClick={onClick}>
@@ -208,7 +270,7 @@ const ProjectCard = ({ project, onClick, onViewDemo, highlightedTags, index }: a
           ))}
         </div>
       </div>
-    </ScrollReveal>
+    </motion.div>
   );
 };
 
@@ -233,6 +295,19 @@ export const Portfolio: React.FC<PortfolioProps> = ({ limit }) => {
 
   const [loading, setLoading] = useState(true);
   const [modalState, setModalState] = useState<{ project: Project; autoPlay: boolean } | null>(null);
+
+  // Dynamic connection-aware prefetching for top entries to optimize modal load responsiveness
+  useEffect(() => {
+    const topProjects = PROJECTS.slice(0, 3);
+    topProjects.forEach(project => {
+      if (project.imageUrl) {
+        prefetchAsset(project.imageUrl, 'image');
+      }
+      if (project.demoVideoUrl) {
+        prefetchAsset(project.demoVideoUrl, 'video');
+      }
+    });
+  }, []);
 
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY_CATEGORIES, JSON.stringify(selectedCategories));
@@ -440,19 +515,20 @@ export const Portfolio: React.FC<PortfolioProps> = ({ limit }) => {
               )}
               
               <div 
-                key={selectedCategories.join('-') + selectedTags.join('-')}
-                className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-10 min-h-[500px] animate-in fade-in zoom-in-95 duration-700"
+                className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-10 min-h-[500px]"
               >
-                {loading ? [1,2,3].map(i => <ProjectSkeleton key={i}/>) : filteredProjects.map((p, i) => (
-                  <ProjectCard 
-                    key={p.id} 
-                    project={p} 
-                    index={i} 
-                    highlightedTags={selectedTags} 
-                    onClick={() => setModalState({ project: p, autoPlay: false })} 
-                    onViewDemo={() => setModalState({ project: p, autoPlay: true })} 
-                  />
-                ))}
+                <AnimatePresence mode="popLayout">
+                  {loading ? [1,2,3].map(i => <ProjectSkeleton key={i}/>) : filteredProjects.map((p, i) => (
+                    <ProjectCard 
+                      key={p.id} 
+                      project={p} 
+                      index={i} 
+                      highlightedTags={selectedTags} 
+                      onClick={() => setModalState({ project: p, autoPlay: false })} 
+                      onViewDemo={() => setModalState({ project: p, autoPlay: true })} 
+                    />
+                  ))}
+                </AnimatePresence>
                 {!loading && filteredProjects.length === 0 && (
                    <div className="col-span-full py-40 text-center bg-white dark:bg-slate-900 rounded-[3rem] border-2 border-dashed border-slate-200 dark:border-slate-800 animate-in zoom-in-95 duration-500">
                       <div className="w-24 h-24 bg-slate-50 dark:bg-slate-800/50 rounded-full flex items-center justify-center mx-auto mb-8 shadow-inner">

@@ -15,7 +15,11 @@ const Toast = ({ message, type, onClose }: { message: string, type: 'success' | 
   }, [onClose]);
 
   return (
-    <div className={`fixed bottom-8 right-8 z-50 flex items-center gap-3 px-6 py-4 rounded-2xl shadow-2xl border ${type === 'success' ? 'bg-green-600 border-green-500' : 'bg-red-600 border-red-500'} text-white animate-in slide-in-from-bottom-10 duration-500`}>
+    <div 
+      role="status"
+      aria-live="polite"
+      className={`fixed bottom-8 right-8 z-50 flex items-center gap-3 px-6 py-4 rounded-2xl shadow-2xl border ${type === 'success' ? 'bg-green-600 border-green-500' : 'bg-red-600 border-red-500'} text-white animate-in slide-in-from-bottom-10 duration-500`}
+    >
       {type === 'success' ? <CheckCircle2 size={20} /> : <AlertCircle size={20} />}
       <p className="font-bold text-sm tracking-tight">{message}</p>
     </div>

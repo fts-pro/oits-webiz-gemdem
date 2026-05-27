@@ -67,7 +67,8 @@ export const SERVICES: Service[] = [
     icon: 'Users',
     features: ['Workflow Automation Engines', 'Legacy Core Migration', 'SaaS Multi-tenant Control', 'Enterprise Risk Mitigations'],
     benefits: ['100% intellectual property ownership', 'Streamlined administrative overhead', 'Seamless system interconnectedness', 'Reduced operating licensing costs'],
-    caseStudyPlaceholder: "Client Diagnostic: 'OITS Dhaka consolidated our fragmented backend portals into a unified workflow engine. Operating administrative spend dropped directly by 30%.'"
+    caseStudyPlaceholder: "Client Diagnostic: 'OITS Dhaka consolidated our fragmented backend portals into a unified workflow engine. Operating administrative spend dropped directly by 30%.'",
+    category: 'Core Engineering'
   },
   {
     id: 'web-dev',
@@ -76,7 +77,8 @@ export const SERVICES: Service[] = [
     icon: 'Globe',
     features: ['React & Next.js Core Optimization', 'Cloud-Native SaaS Architecture', 'High-Conversion E-commerce', 'Headless CMS & API Orchestration'],
     benefits: ['Sub-second initial server response time', 'SEO-friendly server-side parsing', 'Fluid responsive layout adaptations', 'State preservation on connection loss'],
-    caseStudyPlaceholder: "Client Diagnostic: 'Our platform rewrite was handled with immense technical accuracy. Under Black Friday stress testing, we registered absolute zero-latency spikes.'"
+    caseStudyPlaceholder: "Client Diagnostic: 'Our platform rewrite was handled with immense technical accuracy. Under Black Friday stress testing, we registered absolute zero-latency spikes.'",
+    category: 'Web Solutions'
   },
   {
     id: 'mobile-dev',
@@ -85,7 +87,8 @@ export const SERVICES: Service[] = [
     icon: 'Smartphone',
     features: ['Swift & Kotlin Architecture', 'React Native & Flutter Mastery', 'Offline-First Functionality', 'Sensors & Device API Integration'],
     benefits: ['Identical user layouts across operating systems', 'Lower device battery & CPU footprints', 'Immediate response times during cell transitions', 'Biometric sign-on compatibility'],
-    caseStudyPlaceholder: "Client Diagnostic: 'The OITS Dhaka mobile delivery has been exceptionally smooth. App Store ratings surged in eight weeks.'"
+    caseStudyPlaceholder: "Client Diagnostic: 'The OITS Dhaka mobile delivery has been exceptionally smooth. App Store ratings surged in eight weeks.'",
+    category: 'Mobile Solutions'
   },
   {
     id: 'cloud',
@@ -94,7 +97,8 @@ export const SERVICES: Service[] = [
     icon: 'Cloud',
     features: ['Serverless & Microservices', 'Kubernetes Cluster Management', 'Automated CI/CD Pipelines', 'Automated Database Backups'],
     benefits: ['On-demand container scaling controls', 'Up to 50% decrease in idle resource spend', 'Radical DevOps delivery automation rates', 'Guaranteed high accessibility benchmarks'],
-    caseStudyPlaceholder: "Client Diagnostic: 'Their cluster modernization removed all scaling bottlenecks. We now handle ten times our past user transactions smoothly.'"
+    caseStudyPlaceholder: "Client Diagnostic: 'Their cluster modernization removed all scaling bottlenecks. We now handle ten times our past user transactions smoothly.'",
+    category: 'Infrastructure'
   },
   {
     id: 'ui-ux',
@@ -103,7 +107,37 @@ export const SERVICES: Service[] = [
     icon: 'Layers',
     features: ['Precision Wireframing & Pairing', 'Conversion Funnel Optimizations', 'Dynamic Interaction Prototyping', 'Universal Accessibility Compliance'],
     benefits: ['Instant uplift in new user registrations', 'Reduced checkout drop-off rates', 'Strong core brand prestige signals', 'Frictionless customer navigation pathways'],
-    caseStudyPlaceholder: "Client Diagnostic: 'The UI redesign reduced user checkout drop-offs by 25% with immediate, measurable gains in user retention metrics.'"
+    caseStudyPlaceholder: "Client Diagnostic: 'The UI redesign reduced user checkout drop-offs by 25% with immediate, measurable gains in user retention metrics.'",
+    category: 'Design'
+  },
+  {
+    id: 'tech-frontiers',
+    title: 'Solutions for Technology Frontiers',
+    description: 'Pioneering cutting-edge implementations with AI/ML predictive analytics, immersive AR/VR spatial experiences, secure DApp structures (Blockchain), and responsive Edge computing frameworks.',
+    icon: 'Layers',
+    features: ['AI/ML Predictive Analytics', 'Immersive AR/VR Apps', 'Blockchain & Web-3 (DApps)', 'IoT & Edge Computing'],
+    benefits: ['First-mover market technology advantages', 'Highly secure decentralized frameworks', 'Enhanced user-engagement through immersion', 'Real-time data processing at the Edge'],
+    caseStudyPlaceholder: "Client Diagnostic: 'Implementing these AI-driven analytics provided our team with 40% more accuracy in predicting customer churn.'",
+    category: 'Advanced Solutions'
+  },
+  {
+    id: 'cross-platform',
+    title: 'Cross-platform Solutions',
+    description: 'Streamline your digital presence with high-performance PWA structures and unified mobile frameworks, ensuring consistent speed and interactivity across all device types.',
+    icon: 'Smartphone',
+    features: ['Progressive Web App (PWA)', 'React Native Frameworks', 'Flutter Application Development', 'Unified OS Experience'],
+    benefits: ['Reduced development & maintenance costs', 'Identical branding across all OS', 'Faster product delivery lifecycle', 'Low device resource footprint'],
+    caseStudyPlaceholder: "Client Diagnostic: 'Moving to a unified React Native architecture enabled us to reach both iOS and Android markets 50% faster than our original roadmap.'",
+    category: 'Mobile Solutions'
+  },
+  {
+    id: 'dedicated-teams',
+    title: 'Dedicated Teams',
+    description: 'Expand your engineering capacity seamlessly with our fully managed teams of experts, meticulously selected to align with your project’s agile workflows and core objectives.',
+    icon: 'Users',
+    features: ['Expert Staff Augmentation', 'Agile Project Management', 'Full-stack Technical Leads', 'Seamless Team Integration'],
+    benefits: ['Rapid scalability of engineering capacity', 'Direct access to senior engineering talent', 'Minimized recruitment & onboarding friction', 'Complete alignment with agile sprint cadences'],
+    caseStudyPlaceholder: "Client Diagnostic: 'The OITS Dedicated Team integrated perfectly within two weeks, boosting our core feature delivery cadence by 60%.'"
   }
 ];
 

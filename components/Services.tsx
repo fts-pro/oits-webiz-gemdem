@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { Globe, Smartphone, Users, Cloud, ArrowUpRight, X, Check, BookOpen, Layers, Star } from 'lucide-react';
+import React, { useState, useEffect, useMemo } from 'react';
+import { AnimatePresence, motion } from 'motion/react';
+import { Globe, Smartphone, Users, Cloud, ArrowUpRight, X, Check, BookOpen, Layers, Star, Code, Cpu, Shield, Zap } from 'lucide-react';
 import { SERVICES } from '../constants';
 import { SectionId, Service } from '../types';
 import { Button } from './ui/Button';
@@ -14,6 +15,41 @@ const iconMap: Record<string, React.ReactNode> = {
   Users: <Users className="w-7 h-7" />,
   Cloud: <Cloud className="w-7 h-7" />,
   Layers: <Layers className="w-7 h-7" />,
+};
+
+const featureIconMap: Record<string, React.ReactNode> = {
+  'Workflow Automation Engines': <Zap size={16} />,
+  'Legacy Core Migration': <Code size={16} />,
+  'SaaS Multi-tenant Control': <Cloud size={16} />,
+  'Enterprise Risk Mitigations': <Shield size={16} />,
+  'React & Next.js Core Optimization': <Code size={16} />,
+  'Cloud-Native SaaS Architecture': <Cloud size={16} />,
+  'High-Conversion E-commerce': <Smartphone size={16} />,
+  'Headless CMS & API Orchestration': <Layers size={16} />,
+  'Swift & Kotlin Architecture': <Smartphone size={16} />,
+  'React Native & Flutter Mastery': <Smartphone size={16} />,
+  'Offline-First Functionality': <Zap size={16} />,
+  'Sensors & Device API Integration': <Cpu size={16} />,
+  'Serverless & Microservices': <Cloud size={16} />,
+  'Kubernetes Cluster Management': <Layers size={16} />,
+  'Automated CI/CD Pipelines': <Code size={16} />,
+  'Automated Database Backups': <Shield size={16} />,
+  'Precision Wireframing & Pairing': <Layers size={16} />,
+  'Conversion Funnel Optimizations': <Zap size={16} />,
+  'Dynamic Interaction Prototyping': <Smartphone size={16} />,
+  'Universal Accessibility Compliance': <Users size={16} />,
+  'AI/ML Predictive Analytics': <Cpu size={16} />,
+  'Immersive AR/VR Apps': <Layers size={16} />,
+  'Blockchain & Web-3 (DApps)': <Shield size={16} />,
+  'IoT & Edge Computing': <Cpu size={16} />,
+  'Progressive Web App (PWA)': <Globe size={16} />,
+  'React Native Frameworks': <Smartphone size={16} />,
+  'Flutter Application Development': <Smartphone size={16} />,
+  'Unified OS Experience': <Layers size={16} />,
+  'Expert Staff Augmentation': <Users size={16} />,
+  'Agile Project Management': <Users size={16} />,
+  'Full-stack Technical Leads': <Users size={16} />,
+  'Seamless Team Integration': <Users size={16} />,
 };
 
 interface ServicesProps {
@@ -65,6 +101,10 @@ const ServiceSkeleton: React.FC = () => (
 export const Services: React.FC<ServicesProps> = ({ limit }) => {
   const [selectedService, setSelectedService] = useState<Service | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [activeCategory, setActiveCategory] = useState('All');
+
+  const categories = useMemo(() => ['All', ...Array.from(new Set(SERVICES.map(s => s.category || 'Other')))], []);
+  const filteredServices = useMemo(() => activeCategory === 'All' ? SERVICES : SERVICES.filter(s => (s.category || 'Other') === activeCategory), [activeCategory]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -86,73 +126,93 @@ export const Services: React.FC<ServicesProps> = ({ limit }) => {
               Future-proof solutions <br className="hidden lg:block" /> for digital innovators.
             </h3>
           </div>
-          <p className="text-slate-600 dark:text-slate-400 max-w-sm text-lg leading-relaxed font-medium">
-            We architect resilient, high-speed digital systems using the industry's most advanced technology stacks.
-          </p>
+          <div className="flex flex-wrap gap-2">
+            {categories.map((cat) => (
+              <button 
+                key={cat} 
+                onClick={() => setActiveCategory(cat)}
+                className={`px-4 py-2 rounded-full text-sm font-bold transition-all ${activeCategory === cat ? 'bg-blue-600 text-white' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700'}`}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
+
         </AnimateScroll>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-8 md:gap-10">
-          {isLoading 
-            ? Array.from({ length: displayServices.length }).map((_, index) => (
-                <ServiceSkeleton key={`skeleton-${index}`} />
-              ))
-            : displayServices.map((service, index) => (
-                <ScrollReveal 
-                  key={service.id} 
-                  id={service.id}
-                  delay={index * 0.1}
-                  className={`group relative bg-slate-50 dark:bg-slate-800/40 border-2 border-slate-50 dark:border-slate-800 rounded-[2.5rem] p-10 transition-all duration-700 ease-out hover:-translate-y-3 hover:shadow-2xl hover:shadow-blue-500/5 hover:border-blue-400/30 cursor-pointer outline-none focus-visible:ring-4 focus-visible:ring-blue-500/20 scroll-mt-32`}
-                  onClick={() => setSelectedService(service)}
-                  role="button"
-                  tabIndex={0}
-                  aria-label={`Service: ${service.title}. Click for details.`}
-                  aria-describedby={`service-desc-${service.id}`}
-                  aria-expanded={selectedService?.id === service.id}
-                  onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && setSelectedService(service)}
-                >
-                  {/* Icon with hover bounce animation for interactive feedback */}
-                  <div className="w-16 h-16 shrink-0 bg-white dark:bg-slate-700 rounded-2xl flex items-center justify-center text-slate-900 dark:text-white shadow-sm mb-10 group-hover:bg-blue-600 group-hover:text-white transition-all duration-300 group-hover:animate-smooth-bounce border border-slate-100 dark:border-slate-600">
-                    {iconMap[service.icon]}
-                  </div>
+          <AnimatePresence mode="popLayout">
+            {isLoading 
+              ? Array.from({ length: 4 }).map((_, index) => (
+                  <ServiceSkeleton key={`skeleton-${index}`} />
+                ))
+              : filteredServices.map((service, index) => (
+                  <motion.div
+                    key={service.id}
+                    layout
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.9 }}
+                    transition={{ duration: 0.5 }}
+                  >
+                  <ScrollReveal 
+                    key={service.id} 
+                    id={service.id}
+                    delay={index * 0.1}
+                    className={`group relative bg-slate-50 dark:bg-slate-800/40 border-2 border-slate-50 dark:border-slate-800 rounded-[2.5rem] p-10 transition-all duration-700 ease-out hover:-translate-y-3 hover:shadow-2xl hover:shadow-blue-500/5 hover:border-blue-400/30 cursor-pointer outline-none focus-visible:ring-4 focus-visible:ring-blue-500/20 scroll-mt-32`}
+                    onClick={() => setSelectedService(service)}
+                    role="button"
+                    tabIndex={0}
+                    aria-label={`Service: ${service.title}. Click for details.`}
+                    aria-describedby={`service-desc-${service.id}`}
+                    aria-expanded={selectedService?.id === service.id}
+                    onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && setSelectedService(service)}
+                  >
+                    {/* Icon with hover bounce animation for interactive feedback */}
+                    <div className="w-16 h-16 shrink-0 bg-white dark:bg-slate-700 rounded-2xl flex items-center justify-center text-slate-900 dark:text-white shadow-sm mb-10 group-hover:bg-blue-600 group-hover:text-white transition-all duration-300 group-hover:animate-smooth-bounce border border-slate-100 dark:border-slate-600">
+                      {iconMap[service.icon]}
+                    </div>
 
-                  <h4 className="text-2xl font-black text-slate-900 dark:text-white mb-4 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors tracking-tight">{service.title}</h4>
-                  <Tooltip content={service.description} position="top">
-                    <p id={`service-desc-${service.id}`} className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-8 line-clamp-4 font-medium h-[80px]">
-                      {service.description}
-                    </p>
-                  </Tooltip>
+                    <h4 className="text-2xl font-black text-slate-900 dark:text-white mb-4 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors tracking-tight">{service.title}</h4>
+                    <Tooltip content={service.description} position="top">
+                      <p id={`service-desc-${service.id}`} className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-8 line-clamp-4 font-medium h-[80px]">
+                        {service.description}
+                      </p>
+                    </Tooltip>
 
-                  {/* Technologies/Benefits highlights directly in the card */}
-                  <div className="space-y-3 mb-10">
-                    <p className="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-2">Key Tech & Benefits</p>
-                    {service.features.slice(0, 3).map((feature, idx) => (
-                      <div key={idx} className="flex items-center gap-3 text-xs font-bold text-slate-500 dark:text-slate-400">
-                        <Check size={14} className="text-blue-600 dark:text-blue-400 shrink-0" />
-                        <span className="tracking-tight">{feature}</span>
-                      </div>
-                    ))}
-                  </div>
+                    {/* Technologies/Benefits highlights directly in the card */}
+                    <div className="space-y-3 mb-10">
+                      <p className="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-2">Key Tech & Benefits</p>
+                      {service.features.slice(0, 3).map((feature, idx) => (
+                        <div key={idx} className="flex items-center gap-3 text-xs font-bold text-slate-500 dark:text-slate-400">
+                          <Check size={14} className="text-blue-600 dark:text-blue-400 shrink-0" />
+                          <span className="tracking-tight">{feature}</span>
+                        </div>
+                      ))}
+                    </div>
 
-                  <div className="space-y-6">
-                    <div className="h-px w-full bg-slate-200 dark:bg-slate-700/50" />
-                    {/* Learn More button with scale-up and icon translation on hover */}
-                    <button 
-                      className="group/btn flex items-center gap-2 text-xs font-black text-slate-900 dark:text-white uppercase tracking-[0.2em] transition-all duration-300 hover:scale-105 active:scale-95"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setSelectedService(service);
-                      }}
-                      aria-label={`Learn more about ${service.title}`}
-                    >
-                      Learn More 
-                      <ArrowUpRight 
-                        size={16} 
-                        className="transition-transform duration-300 group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1 group-hover/btn:scale-110 text-blue-600 dark:text-blue-400" 
-                      />
-                    </button>
-                  </div>
-                </ScrollReveal>
-              ))}
+                    <div className="space-y-6">
+                      <div className="h-px w-full bg-slate-200 dark:bg-slate-700/50" />
+                      {/* Learn More button with scale-up and icon translation on hover */}
+                      <button 
+                        className="group/btn flex items-center gap-2 text-xs font-black text-slate-900 dark:text-white uppercase tracking-[0.2em] transition-all duration-300 hover:scale-105 active:scale-95"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setSelectedService(service);
+                        }}
+                        aria-label={`Learn more about ${service.title}`}
+                      >
+                        Learn More 
+                        <ArrowUpRight 
+                          size={16} 
+                          className="transition-transform duration-300 group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1 group-hover/btn:scale-110 text-blue-600 dark:text-blue-400" 
+                        />
+                      </button>
+                    </div>
+                  </ScrollReveal>
+                  </motion.div>
+                ))}
+          </AnimatePresence>
         </div>
       </div>
 
@@ -196,7 +256,7 @@ export const Services: React.FC<ServicesProps> = ({ limit }) => {
                     {selectedService.features.map((feature, idx) => (
                       <div key={idx} className="flex items-center gap-4 p-4.5 bg-slate-50 dark:bg-slate-800/20 rounded-2xl border border-slate-100 dark:border-slate-800/50 transition-all hover:border-blue-500/20 group/item">
                         <div className="w-9 h-9 rounded-xl bg-blue-100 dark:bg-blue-900/40 flex items-center justify-center text-blue-600 dark:text-blue-400 shadow-sm shrink-0 transition-transform group-hover/item:scale-105">
-                          <Check size={16} />
+                          {featureIconMap[feature] || <Check size={16} />}
                         </div>
                         <span className="text-sm font-bold text-slate-700 dark:text-slate-200 tracking-tight">{feature}</span>
                       </div>

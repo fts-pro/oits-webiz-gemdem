@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Terminal, Sun, Moon } from 'lucide-react';
+import { Menu, X, Terminal, Sun, Moon, Home } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 import { COMPANY_NAME } from '../constants';
+import { Tooltip } from './ui/Tooltip';
 import { Button } from './ui/Button';
 
 interface HeaderProps {
@@ -11,7 +12,7 @@ interface HeaderProps {
 }
 
 const NAV_LINKS = [
-  { label: 'Home', href: '/', aria: 'Navigate to home page' },
+  { label: 'Home', href: '/', aria: 'Navigate to home page', icon: Home },
   { label: 'Services', href: '/services', aria: 'View our software engineering services' },
   { label: 'Portfolio', href: '/portfolio', aria: 'Browse our past projects and case studies' },
   { label: 'About', href: '/about', aria: 'Learn about OITS Dhaka and our mission' },
@@ -96,15 +97,16 @@ export const Header: React.FC<HeaderProps> = ({ theme, toggleTheme }) => {
         {/* Desktop Nav */}
         <nav className="hidden md:flex items-center gap-1" aria-label="Main Navigation">
           {NAV_LINKS.map((item) => (
-            <Link 
-              key={item.label} 
-              to={item.href}
-              aria-label={item.aria || `Navigate to ${item.label}`}
-              onClick={handleLinkClick}
-              className={`px-4 py-2 rounded-full text-sm font-bold transition-all duration-305 hover:scale-105 active:scale-95 ${navLinkClass(item.href)}`}
-            >
-              {item.label}
-            </Link>
+            <Tooltip key={item.label} content={item.label} position="bottom">
+              <Link 
+                to={item.href}
+                aria-label={item.aria || `Navigate to ${item.label}`}
+                onClick={handleLinkClick}
+                className={`px-4 py-2 rounded-full text-sm font-bold transition-all duration-305 hover:scale-105 active:scale-95 ${navLinkClass(item.href)}`}
+              >
+                {item.icon ? <item.icon size={18} /> : item.label}
+              </Link>
+            </Tooltip>
           ))}
           
           <div className={`ml-4 pl-4 border-l flex items-center gap-4 ${isScrolled ? 'border-slate-200 dark:border-slate-700' : 'border-white/20'}`}>
@@ -181,7 +183,7 @@ export const Header: React.FC<HeaderProps> = ({ theme, toggleTheme }) => {
                           : 'text-slate-800 dark:text-slate-100 hover:bg-slate-50 dark:hover:bg-slate-900/50'
                       }`}
                     >
-                      {item.label}
+                      {item.icon ? <item.icon size={22} /> : item.label}
                     </Link>
                   </motion.div>
                 ))}
