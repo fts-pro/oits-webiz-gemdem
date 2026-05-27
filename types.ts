@@ -19,7 +19,7 @@ export interface Project {
   fullDescription?: string;
   technologies?: string[];
   link?: string;
-  demoVideoUrl?: string;
+  demoVideoUrl?: string | { mp4: string; webm: string };
   captionsUrl?: string;
 }
 

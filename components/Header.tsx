@@ -102,7 +102,7 @@ export const Header: React.FC<HeaderProps> = ({ theme, toggleTheme }) => {
                 to={item.href}
                 aria-label={item.aria || `Navigate to ${item.label}`}
                 onClick={handleLinkClick}
-                className={`px-4 py-2 rounded-full text-sm font-bold transition-all duration-305 hover:scale-105 active:scale-95 ${navLinkClass(item.href)}`}
+                className={`px-4 py-2 rounded-full text-sm font-bold transition-all duration-305 hover:scale-105 active:scale-95 ${navLinkClass(item.href)} ${item.label === 'Home' ? 'hidden' : ''}`}
               >
                 {item.icon ? <item.icon size={18} /> : item.label}
               </Link>

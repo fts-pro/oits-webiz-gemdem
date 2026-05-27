@@ -35,7 +35,7 @@ const ProjectSkeleton = () => (
 );
 
 interface CustomVideoPlayerProps {
-  src: string;
+  src: string | { mp4: string; webm: string };
   captionsUrl?: string;
   poster?: string;
   onClose: () => void;
@@ -121,7 +121,6 @@ const CustomVideoPlayer: React.FC<CustomVideoPlayerProps> = ({ src, captionsUrl,
       ) : (
         <video 
           ref={videoRef} 
-          src={src} 
           poster={poster} 
           className="w-full h-full object-contain cursor-pointer" 
           onClick={togglePlay} 
@@ -129,6 +128,14 @@ const CustomVideoPlayer: React.FC<CustomVideoPlayerProps> = ({ src, captionsUrl,
           crossOrigin="anonymous"
           aria-hidden="true"
         >
+          {typeof src === 'string' ? (
+            <source src={src} type="video/mp4" />
+          ) : (
+            <>
+              <source src={src.webm} type="video/webm" />
+              <source src={src.mp4} type="video/mp4" />
+            </>
+          )}
           {captionsUrl && <track kind="captions" src={captionsUrl} srcLang="en" label="English" default={true} />}
         </video>
       )}
