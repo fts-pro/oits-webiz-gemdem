@@ -8,6 +8,7 @@ export interface Service {
   benefits?: string[];
   caseStudyPlaceholder?: string;
   category?: string;
+  techStack?: string[];
 }
 
 export interface Project {
@@ -56,7 +57,7 @@ export interface ProcessStep {
 export interface TechDomain {
   id: string;
   label: string;
-  skills: string[];
+  skills: { name: string; level: number }[];
 }
 
 export enum SectionId {

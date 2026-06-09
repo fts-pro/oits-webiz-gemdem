@@ -6,6 +6,8 @@ import { AiAssistant } from './components/AiAssistant';
 import { CookieConsent } from './components/CookieConsent';
 import { ScrollToTopButton } from './components/ScrollToTopButton';
 import { PageTransition } from './components/PageTransition';
+import { Breadcrumbs } from './components/ui/Breadcrumbs';
+import { SEO } from './components/SEO';
 import { COMPANY_NAME, TAGLINE } from './constants';
 
 // Lazy load pages for performance
@@ -63,8 +65,12 @@ function AppContent() {
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 selection:bg-blue-100 selection:text-blue-900 dark:selection:bg-blue-900 dark:selection:text-blue-100 transition-colors duration-300 relative">
+      <SEO />
       <Header theme={theme} toggleTheme={toggleTheme} />
       <ScrollHandler />
+      <div className="pt-24 lg:pt-32 transition-all duration-500 hover:bg-white/5 dark:hover:bg-white/[0.02] hover:backdrop-blur-xl hover:border-b hover:border-white/20 group cursor-default">
+        <Breadcrumbs />
+      </div>
       <main>
         <Suspense fallback={
           <div className="h-screen flex items-center justify-center bg-slate-50 dark:bg-slate-950">

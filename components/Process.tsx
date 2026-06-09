@@ -1,5 +1,5 @@
-import React from 'react';
-import { Search, Layers, Code, ShieldCheck, Rocket } from 'lucide-react';
+import React, { useState } from 'react';
+import { Search, Layers, Code, ShieldCheck, Rocket, X } from 'lucide-react';
 import { PROCESS_STEPS } from '../constants';
 import { SectionId } from '../types';
 import { ScrollReveal } from './ui/ScrollReveal';
@@ -13,6 +13,8 @@ const iconMap: Record<string, React.ReactNode> = {
 };
 
 export const Process: React.FC = () => {
+  const [selectedStep, setSelectedStep] = useState<any | null>(null);
+
   return (
     <section id={SectionId.PROCESS} className="py-24 md:py-32 bg-slate-50 dark:bg-slate-950 relative overflow-hidden transition-colors duration-300">
       <div className="container mx-auto px-6 relative z-10">
@@ -36,7 +38,8 @@ export const Process: React.FC = () => {
                   key={step.id} 
                   delay={index * 0.1}
                   direction={isEven ? 'right' : 'left'}
-                  className={`relative z-10 flex flex-col md:flex-row items-center gap-8 md:gap-16`}
+                  className={`relative z-10 flex flex-col md:flex-row items-center gap-8 md:gap-16 cursor-pointer`}
+                  onClick={() => setSelectedStep(step)}
                 >
                   {/* Left Content (or Right on mobile) */}
                   <div className={`w-full md:w-1/2 flex ${isEven ? 'md:justify-end text-left md:text-right' : 'md:justify-start md order-last text-left'}`}>
@@ -64,6 +67,17 @@ export const Process: React.FC = () => {
           </div>
         </div>
         
+        {selectedStep && (
+            <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md">
+                <div className="bg-white dark:bg-slate-900 p-8 rounded-3xl max-w-lg w-full relative">
+                    <button onClick={() => setSelectedStep(null)} className="absolute top-4 right-4"><X /></button>
+                    <h3 className="text-2xl font-bold mb-4">{selectedStep.title}</h3>
+                    <p>{selectedStep.description}</p>
+                    <p className="mt-4 text-sm text-slate-500">More detailed information about {selectedStep.title}...</p>
+                </div>
+            </div>
+        )}
+
         <ScrollReveal delay={0.5} className="mt-32 p-10 md:p-12 rounded-[3rem] bg-blue-600 text-white flex flex-col md:flex-row items-center justify-between gap-8 shadow-2xl shadow-blue-600/20 relative overflow-hidden">
            <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3"></div>
            <div className="max-w-xl relative z-10 text-center md:text-left">

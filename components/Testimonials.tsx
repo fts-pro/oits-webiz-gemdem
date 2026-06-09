@@ -1,139 +1,115 @@
-import React, { useState, useEffect } from 'react';
-import { Quote, ChevronLeft, ChevronRight } from 'lucide-react';
-import { TESTIMONIALS } from '../constants';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
+import { Quote, ChevronLeft, ChevronRight, Star } from 'lucide-react';
 import { ScrollReveal } from './ui/ScrollReveal';
+
+const TESTIMONIALS = [
+  {
+    id: 1,
+    name: 'Sarah Jenkins',
+    role: 'CTO, TechFlow Solutions',
+    content: 'OITS Dhaka transformed our legacy systems into a high-performance cloud architecture. Their expertise in React and Node.js is world-class.',
+    impact: '150% Performance Boost',
+    avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=150',
+  },
+  {
+    id: 2,
+    name: 'David Chen',
+    role: 'Founder, EcoScale',
+    content: 'The custom software they built for us has automated 60% of our manual tasks. The ROI was evident within the first quarter.',
+    impact: '$200k Savings/Year',
+    avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=150',
+  },
+  {
+    id: 3,
+    name: 'Elena Rodriguez',
+    role: 'Product VP, FinTrack',
+    content: 'Their design team captured our brand perfectly. The UI/UX is not just beautiful, but incredibly intuitive for our fintech users.',
+    impact: '4.8 App Store Rating',
+    avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80&w=150',
+  },
+];
 
 export const Testimonials: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
-  const [touchStart, setTouchStart] = useState<number | null>(null);
-  const [touchEnd, setTouchEnd] = useState<number | null>(null);
 
-  const minSwipeDistance = 50;
-
-  useEffect(() => {
-    if (isPaused) return;
-    const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % TESTIMONIALS.length);
-    }, 5000);
-    return () => clearInterval(interval);
-  }, [isPaused]);
-
-  const nextTestimonial = () => {
-    setCurrentIndex((prev) => (prev + 1) % TESTIMONIALS.length);
-  };
-
-  const prevTestimonial = () => {
-    setCurrentIndex((prev) => (prev - 1 + TESTIMONIALS.length) % TESTIMONIALS.length);
-  };
-
-  const handleTouchStart = (e: React.TouchEvent) => {
-    setTouchEnd(null);
-    setTouchStart(e.targetTouches[0].clientX);
-  };
-
-  const handleTouchMove = (e: React.TouchEvent) => {
-    setTouchEnd(e.targetTouches[0].clientX);
-  };
-
-  const handleTouchEnd = () => {
-    if (touchStart === null || touchEnd === null) return;
-    const distance = touchStart - touchEnd;
-    const isLeftSwipe = distance > minSwipeDistance;
-    const isRightSwipe = distance < -minSwipeDistance;
-    
-    if (isLeftSwipe) {
-      nextTestimonial();
-    } else if (isRightSwipe) {
-      prevTestimonial();
-    }
-  };
+  const next = () => setCurrentIndex((prev) => (prev + 1) % TESTIMONIALS.length);
+  const prev = () => setCurrentIndex((prev) => (prev - 1 + TESTIMONIALS.length) % TESTIMONIALS.length);
 
   return (
-    <section className="py-24 bg-white dark:bg-slate-900 overflow-hidden transition-colors duration-300">
+    <section className="py-24 md:py-32 bg-slate-50 dark:bg-slate-950 overflow-hidden">
       <div className="container mx-auto px-6">
-        <ScrollReveal className="flex flex-col md:flex-row items-end justify-between mb-16 gap-6">
-          <div>
-            <h2 className="text-sm font-bold text-blue-600 dark:text-blue-400 uppercase tracking-widest mb-3">Testimonials</h2>
-            <h3 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white">What our clients say.</h3>
-          </div>
-          <div className="flex gap-4 items-center">
-            <button 
-              onClick={prevTestimonial}
-              aria-label="Previous testimonial"
-              className="p-3 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-blue-600 hover:text-white dark:hover:bg-blue-600 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
-            >
-              <ChevronLeft size={20} />
-            </button>
-            <button 
-              onClick={nextTestimonial}
-              aria-label="Next testimonial"
-              className="p-3 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-blue-600 hover:text-white dark:hover:bg-blue-600 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
-            >
-              <ChevronRight size={20} />
-            </button>
-          </div>
+        <ScrollReveal className="text-center mb-20">
+          <h3 className="text-xs font-bold text-blue-600 dark:text-blue-400 uppercase tracking-widest mb-4">Social Proof</h3>
+          <h2 className="text-3xl md:text-5xl font-bold text-slate-900 dark:text-white mb-6 uppercase tracking-tighter">What our clients say.</h2>
+          <p className="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
+            We build long-term partnerships through consistent delivery and technical excellence.
+          </p>
         </ScrollReveal>
 
-        <div 
-          className="relative overflow-hidden cursor-grab active:cursor-grabbing focus-visible:ring-2 focus-visible:ring-blue-500 rounded-3xl outline-none"
-          tabIndex={0}
-          onMouseEnter={() => setIsPaused(true)}
-          onMouseLeave={() => setIsPaused(false)}
-          onFocus={() => setIsPaused(true)}
-          onBlur={() => setIsPaused(false)}
-          onTouchStart={handleTouchStart}
-          onTouchMove={handleTouchMove}
-          onTouchEnd={handleTouchEnd}
-          style={{ touchAction: 'pan-y' }}
-        >
-          <div 
-            className="flex transition-transform duration-500 ease-in-out"
-            style={{ transform: `translateX(-${currentIndex * 100}%)` }}
-            aria-live="polite"
-          >
-            {TESTIMONIALS.map((t, index) => (
-              <div 
-                key={t.id} 
-                className="w-full flex-shrink-0 px-4"
-                aria-hidden={currentIndex !== index}
-              >
-                <ScrollReveal 
-                  delay={0.1}
-                  className={`bg-slate-50 dark:bg-slate-800 p-8 md:p-12 rounded-3xl relative max-w-4xl mx-auto shadow-sm hover:shadow-md`}
-                >
-                  <Quote className="text-blue-100 dark:text-blue-900/50 w-16 h-16 mb-8" />
-                  <blockquote className="text-slate-700 dark:text-slate-300 italic mb-10 text-xl md:text-2xl relative z-10 leading-relaxed font-medium">"{t.content}"</blockquote>
-                  
-                  <div className="flex items-center gap-5 mt-auto">
-                    <img 
-                      src={t.avatar} 
-                      alt={`${t.name} from ${t.company}`} 
-                      className="w-14 h-14 rounded-full object-cover shadow-sm bg-slate-200" 
-                      loading="lazy"
-                    />
-                    <div>
-                      <p className="font-bold text-lg text-slate-900 dark:text-white">{t.name}</p>
-                      <p className="text-sm text-slate-500 dark:text-slate-400 font-medium">{t.role}, {t.company}</p>
-                    </div>
-                  </div>
-                </ScrollReveal>
+        <div className="max-w-5xl mx-auto relative">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={currentIndex}
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -20 }}
+              transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+              className="glass-panel bg-white/60 dark:bg-slate-900/60 p-10 md:p-20 rounded-[3rem] border border-slate-200/50 dark:border-slate-800/50 shadow-2xl shadow-blue-500/5 flex flex-col md:flex-row gap-12 items-center"
+            >
+              <div className="relative shrink-0">
+                <div className="absolute -top-4 -left-4 w-12 h-12 bg-blue-600 rounded-2xl flex items-center justify-center text-white shadow-xl z-20">
+                  <Quote size={20} />
+                </div>
+                <img 
+                  src={TESTIMONIALS[currentIndex].avatar} 
+                  alt={TESTIMONIALS[currentIndex].name}
+                  className="w-32 h-32 md:w-48 md:h-48 rounded-[2rem] object-cover ring-4 ring-white dark:ring-slate-800 shadow-lg"
+                  loading="lazy"
+                />
               </div>
-            ))}
+
+              <div className="flex-1 text-center md:text-left">
+                <div className="flex justify-center md:justify-start gap-1 mb-6">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} size={16} className="fill-blue-500 text-blue-500" />
+                  ))}
+                </div>
+                <p className="text-xl md:text-2xl text-slate-700 dark:text-slate-200 mb-8 font-medium leading-relaxed italic">
+                  "{TESTIMONIALS[currentIndex].content}"
+                </p>
+                <div>
+                  <h4 className="text-xl font-bold text-slate-900 dark:text-white">{TESTIMONIALS[currentIndex].name}</h4>
+                  <p className="text-slate-500 font-bold uppercase tracking-widest text-[10px] mt-1">{TESTIMONIALS[currentIndex].role}</p>
+                </div>
+                
+                <div className="mt-8 pt-8 border-t border-slate-100 dark:border-slate-800/50 flex flex-col md:flex-row items-center gap-4">
+                  <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Business Impact:</span>
+                  <span className="px-4 py-2 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 font-mono text-sm font-black">
+                    {TESTIMONIALS[currentIndex].impact}
+                  </span>
+                </div>
+              </div>
+            </motion.div>
+          </AnimatePresence>
+
+          {/* Navigation Controls */}
+          <div className="mt-12 flex justify-center gap-4 relative z-20">
+            <button 
+              onClick={prev}
+              className="w-14 h-14 rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center justify-center text-slate-900 dark:text-white hover:bg-blue-600 hover:text-white transition-all shadow-lg active:scale-95"
+              aria-label="Previous testimonial"
+            >
+              <ChevronLeft size={24} />
+            </button>
+            <button 
+              onClick={next}
+              className="w-14 h-14 rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center justify-center text-slate-900 dark:text-white hover:bg-blue-600 hover:text-white transition-all shadow-lg active:scale-95"
+              aria-label="Next testimonial"
+            >
+              <ChevronRight size={24} />
+            </button>
           </div>
-        </div>
-        
-        <div className="flex justify-center gap-3 mt-12" role="tablist" aria-label="Testimonial pagination">
-          {TESTIMONIALS.map((_, index) => (
-            <button
-              key={index}
-              role="tab"
-              onClick={() => setCurrentIndex(index)}
-              aria-label={`Go to testimonial ${index + 1}`}
-              aria-selected={currentIndex === index}
-              className={`w-3 h-3 rounded-full transition-all duration-300 outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${currentIndex === index ? 'bg-blue-600 w-8' : 'bg-slate-200 dark:bg-slate-700 hover:bg-blue-400'}`}
-            />
-          ))}
         </div>
       </div>
     </section>

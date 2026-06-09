@@ -23,7 +23,7 @@ export const Tooltip: React.FC<TooltipProps> = ({
   };
 
   const hideTip = () => {
-    clearInterval(timeout);
+    clearTimeout(timeout);
     setActive(false);
   };
 
@@ -43,7 +43,7 @@ export const Tooltip: React.FC<TooltipProps> = ({
 
   return (
     <div
-      className="relative w-full"
+      className="relative"
       onMouseEnter={showTip}
       onMouseLeave={hideTip}
       onFocus={showTip}

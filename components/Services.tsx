@@ -57,7 +57,7 @@ interface ServicesProps {
 }
 
 const ServiceSkeleton: React.FC = () => (
-  <div className="group relative bg-slate-50 dark:bg-slate-800/20 border-2 border-slate-50/50 dark:border-slate-800/50 rounded-[2.5rem] p-10 select-none animate-pulse">
+  <div className="group relative bg-slate-50 dark:bg-slate-800/20 border-2 border-slate-50/50 dark:border-slate-800/50 rounded-[2.5rem] p-10 select-none shimmer animate-pulse">
     {/* Icon block skeleton */}
     <div className="w-16 h-16 bg-slate-200 dark:bg-slate-700/80 rounded-2xl mb-10" />
     
@@ -159,7 +159,7 @@ export const Services: React.FC<ServicesProps> = ({ limit }) => {
                     key={service.id} 
                     id={service.id}
                     delay={index * 0.1}
-                    className={`group relative bg-slate-50 dark:bg-slate-800/40 border-2 border-slate-50 dark:border-slate-800 rounded-[2.5rem] p-10 transition-all duration-700 ease-out hover:-translate-y-3 hover:shadow-2xl hover:shadow-blue-500/5 hover:border-blue-400/30 cursor-pointer outline-none focus-visible:ring-4 focus-visible:ring-blue-500/20 scroll-mt-32`}
+                    className={`group relative glass-panel bg-white/60 dark:bg-slate-900/60 border border-slate-200/50 dark:border-slate-800/50 rounded-[2.5rem] p-10 transition-all duration-700 ease-out hover:-translate-y-3 hover:shadow-2xl hover:shadow-blue-500/10 hover:border-blue-400/30 cursor-pointer outline-none focus-visible:ring-4 focus-visible:ring-blue-500/20 scroll-mt-32 ring-2 ring-white/20 dark:ring-white/5 ring-inset ${service.id === 'cross-platform' ? 'shadow-inner-soft' : ''}`}
                     onClick={() => setSelectedService(service)}
                     role="button"
                     tabIndex={0}
@@ -168,8 +168,30 @@ export const Services: React.FC<ServicesProps> = ({ limit }) => {
                     aria-expanded={selectedService?.id === service.id}
                     onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && setSelectedService(service)}
                   >
+                    {/* Active pulse indicator for 'custom-software' */}
+                    {service.id === 'custom-software' && (
+                      <div className="absolute top-8 right-8 flex items-center gap-2">
+                        <span className="relative flex h-3 w-3">
+                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                          <span className="relative inline-flex rounded-full h-3 w-3 bg-blue-500"></span>
+                        </span>
+                        <span className="text-[10px] font-black text-blue-600 dark:text-blue-400 uppercase tracking-widest">Primary Focus</span>
+                      </div>
+                    )}
+
+                    {/* Tech Stack Tags for cross-platform */}
+                    {service.id === 'cross-platform' && service.techStack && (
+                      <div className="flex flex-wrap gap-1.5 mb-6">
+                        {service.techStack.map((tech) => (
+                          <span key={tech} className="px-2 py-0.5 rounded-full text-[9px] font-black uppercase tracking-wider bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 border border-blue-100 dark:border-blue-800/50">
+                            {tech}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                    
                     {/* Icon with hover bounce animation for interactive feedback */}
-                    <div className="w-16 h-16 shrink-0 bg-white dark:bg-slate-700 rounded-2xl flex items-center justify-center text-slate-900 dark:text-white shadow-sm mb-10 group-hover:bg-blue-600 group-hover:text-white transition-all duration-300 group-hover:animate-smooth-bounce border border-slate-100 dark:border-slate-600">
+                    <div className={`w-16 h-16 shrink-0 bg-white dark:bg-slate-700 rounded-2xl flex items-center justify-center text-slate-900 dark:text-white shadow-sm mb-10 group-hover:bg-blue-600 group-hover:text-white transition-all duration-300 group-hover:animate-smooth-bounce border border-slate-100 dark:border-slate-600 ${service.id === 'custom-software' ? 'group-hover:rotate-[360deg]' : ''}`}>
                       {iconMap[service.icon]}
                     </div>
 
@@ -180,9 +202,21 @@ export const Services: React.FC<ServicesProps> = ({ limit }) => {
                       </p>
                     </Tooltip>
 
+                    <div className="overflow-hidden transition-all duration-700 max-h-0 group-hover:max-h-[120px] mb-0 group-hover:mb-8">
+                       <p className="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-4">Strategic Advantages</p>
+                       <div className="grid grid-cols-1 gap-2">
+                          {service.benefits?.slice(0, 2).map((benefit, bIdx) => (
+                            <div key={bIdx} className="flex items-center gap-2 text-[11px] font-bold text-slate-500">
+                               <div className="w-1.5 h-1.5 rounded-full bg-blue-500/50" />
+                               {benefit}
+                            </div>
+                          ))}
+                       </div>
+                    </div>
+
                     {/* Technologies/Benefits highlights directly in the card */}
                     <div className="space-y-3 mb-10">
-                      <p className="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-2">Key Tech & Benefits</p>
+                      <p className="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-2">Key Tech & Features</p>
                       {service.features.slice(0, 3).map((feature, idx) => (
                         <div key={idx} className="flex items-center gap-3 text-xs font-bold text-slate-500 dark:text-slate-400">
                           <Check size={14} className="text-blue-600 dark:text-blue-400 shrink-0" />

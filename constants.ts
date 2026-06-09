@@ -128,7 +128,8 @@ export const SERVICES: Service[] = [
     features: ['Progressive Web App (PWA)', 'React Native Frameworks', 'Flutter Application Development', 'Unified OS Experience'],
     benefits: ['Reduced development & maintenance costs', 'Identical branding across all OS', 'Faster product delivery lifecycle', 'Low device resource footprint'],
     caseStudyPlaceholder: "Client Diagnostic: 'Moving to a unified React Native architecture enabled us to reach both iOS and Android markets 50% faster than our original roadmap.'",
-    category: 'Mobile Solutions'
+    category: 'Mobile Solutions',
+    techStack: ['React Native', 'Flutter', 'PWA', 'Expo']
   },
   {
     id: 'dedicated-teams',
@@ -270,16 +271,34 @@ export const TECH_DOMAINS: TechDomain[] = [
   {
     id: 'frontend',
     label: 'Frontend',
-    skills: ['React', 'Next.js', 'Vue.js', 'TypeScript', 'Tailwind CSS', 'Three.js']
+    skills: [
+      { name: 'React', level: 95 },
+      { name: 'Next.js', level: 90 },
+      { name: 'TypeScript', level: 92 },
+      { name: 'Tailwind CSS', level: 95 },
+      { name: 'Three.js', level: 75 }
+    ]
   },
   {
     id: 'backend',
     label: 'Backend',
-    skills: ['Node.js', 'Python', 'Go', 'NestJS', 'PostgreSQL', 'Redis', 'GraphQL']
+    skills: [
+      { name: 'Node.js', level: 90 },
+      { name: 'Python', level: 85 },
+      { name: 'Go', level: 80 },
+      { name: 'PostgreSQL', level: 88 },
+      { name: 'Redis', level: 80 }
+    ]
   },
   {
     id: 'cloud',
     label: 'Cloud & DevOps',
-    skills: ['AWS', 'Google Cloud', 'Docker', 'Kubernetes', 'Terraform', 'CI/CD']
+    skills: [
+      { name: 'AWS', level: 85 },
+      { name: 'Docker', level: 90 },
+      { name: 'Kubernetes', level: 75 },
+      { name: 'Terraform', level: 80 },
+      { name: 'CI/CD', level: 95 }
+    ]
   }
 ];
