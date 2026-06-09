@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 
 interface TooltipProps {
   content: string | React.ReactNode;
@@ -14,18 +14,25 @@ export const Tooltip: React.FC<TooltipProps> = ({
   position = 'top',
 }) => {
   const [active, setActive] = useState(false);
-  let timeout: any;
+  const timeoutRef = useRef<any>(null);
 
   const showTip = () => {
-    timeout = setTimeout(() => {
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    timeoutRef.current = setTimeout(() => {
       setActive(true);
     }, delay);
   };
 
   const hideTip = () => {
-    clearTimeout(timeout);
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
     setActive(false);
   };
+
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    };
+  }, []);
 
   const positionStyles = {
     top: 'bottom-full left-1/2 -translate-x-1/2 mb-3',

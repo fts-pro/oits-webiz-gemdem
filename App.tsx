@@ -41,6 +41,8 @@ const ScrollHandler = () => {
 function AppContent() {
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
 
+  const location = useLocation();
+
   useEffect(() => {
     const storedTheme = localStorage.getItem('theme');
     if (storedTheme === 'dark' || (!storedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
@@ -68,9 +70,11 @@ function AppContent() {
       <SEO />
       <Header theme={theme} toggleTheme={toggleTheme} />
       <ScrollHandler />
-      <div className="pt-24 lg:pt-32 transition-all duration-500 hover:bg-white/5 dark:hover:bg-white/[0.02] hover:backdrop-blur-xl hover:border-b hover:border-white/20 group cursor-default">
-        <Breadcrumbs />
-      </div>
+      {location.pathname !== '/' && (
+        <div className="pt-24 lg:pt-32">
+          <Breadcrumbs />
+        </div>
+      )}
       <main>
         <Suspense fallback={
           <div className="h-screen flex items-center justify-center bg-slate-50 dark:bg-slate-950">
