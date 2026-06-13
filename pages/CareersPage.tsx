@@ -3,6 +3,7 @@ import { PageTransition } from '../components/PageTransition';
 import { SEO } from '../components/SEO';
 import { Button } from '../components/ui/Button';
 import { Briefcase, Heart, Award, ArrowRight, ShieldCheck, Star, Users, CheckCircle, Send, UploadCloud } from 'lucide-react';
+import { Toast } from '../components/ui/Toast';
 
 const CULTURE_POINTS = [
   {
@@ -92,6 +93,7 @@ export const CareersPage: React.FC = () => {
     resumeName: ""
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [showToast, setShowToast] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -131,6 +133,7 @@ export const CareersPage: React.FC = () => {
     e.preventDefault();
     if (!formData.name || !formData.email || !formData.role) return;
     setIsSubmitted(true);
+    setShowToast(true);
   };
 
   return (
@@ -378,6 +381,13 @@ export const CareersPage: React.FC = () => {
         </section>
 
       </div>
+      {showToast && (
+        <Toast 
+          message="Application submitted successfully! Our talent acquisition team will review and contact you." 
+          type="success" 
+          onClose={() => setShowToast(false)} 
+        />
+      )}
     </PageTransition>
   );
 };

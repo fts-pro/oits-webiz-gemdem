@@ -3,11 +3,13 @@ import { Mail, Phone, Send, AlertCircle, CheckCircle2, ArrowRight, RefreshCw } f
 import { Button } from './ui/Button';
 import { CONTACT_EMAIL } from '../constants';
 import { SectionId } from '../types';
+import { Toast } from './ui/Toast';
 
 export const Contact: React.FC = () => {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
   const [errors, setErrors] = useState<{ name?: string; email?: string; message?: string }>({});
   const [status, setStatus] = useState<'idle' | 'sending' | 'success'>('idle');
+  const [showToast, setShowToast] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [focusedField, setFocusedField] = useState<string | null>(null);
   const sectionRef = useRef<HTMLElement>(null);
@@ -88,6 +90,7 @@ export const Contact: React.FC = () => {
     setStatus('sending');
     setTimeout(() => {
       setStatus('success');
+      setShowToast(true);
       setFormData({ name: '', email: '', message: '' });
       setErrors({});
     }, 1800);
@@ -323,6 +326,13 @@ export const Contact: React.FC = () => {
           animation: shimmer 1.5s infinite;
         }
       `}</style>
+      {showToast && (
+        <Toast 
+          message="Inquiry submitted! Our technical architect will review and respond within 24 hours." 
+          type="success" 
+          onClose={() => setShowToast(false)} 
+        />
+      )}
     </section>
   );
 };

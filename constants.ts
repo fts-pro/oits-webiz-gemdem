@@ -168,7 +168,7 @@ export const PROJECTS: Project[] = [
   {
     id: '3',
     title: 'Global Logistics Engine',
-    category: 'Cloud',
+    category: 'IT Consulting',
     imageUrl: '/assets/portfolio_3.png',
     description: 'AI-driven logistics platform managing complex global supply chains.',
     fullDescription: 'Integrating AI for predictive route optimization, this platform reduced fuel costs for a major shipping firm by 14% in its first quarter of operation using real-time GPS tracking and weather forecasting data.',
@@ -190,7 +190,7 @@ export const PROJECTS: Project[] = [
   {
     id: '5',
     title: 'EcoTrack IoT',
-    category: 'Cloud',
+    category: 'IT Consulting',
     imageUrl: '/assets/portfolio_5.png',
     description: 'Industrial IoT monitoring for sustainable manufacturing.',
     fullDescription: 'Connects factory floor sensors to a central dashboard to monitor carbon footprint and energy waste in real-time. Built with a focus on edge computing and high-availability data streams.',
@@ -212,7 +212,7 @@ export const PROJECTS: Project[] = [
   {
     id: '7',
     title: 'CloudScale Infrastructure',
-    category: 'Cloud',
+    category: 'IT Consulting',
     imageUrl: '/assets/portfolio_2.png',
     description: 'Automated multitenant provisioning system for enterprise cloud users.',
     fullDescription: 'A robust orchestration tool that manages resource allocation across hybrid cloud environments, providing a single pane of glass for multi-cloud deployments.',

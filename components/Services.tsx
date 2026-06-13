@@ -227,21 +227,34 @@ export const Services: React.FC<ServicesProps> = ({ limit }) => {
 
                     <div className="space-y-6">
                       <div className="h-px w-full bg-slate-200 dark:bg-slate-700/50" />
-                      {/* Learn More button with scale-up and icon translation on hover */}
-                      <button 
-                        className="group/btn flex items-center gap-2 text-xs font-black text-slate-900 dark:text-white uppercase tracking-[0.2em] transition-all duration-300 hover:scale-105 active:scale-95"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setSelectedService(service);
-                        }}
-                        aria-label={`Learn more about ${service.title}`}
-                      >
-                        Learn More 
-                        <ArrowUpRight 
-                          size={16} 
-                          className="transition-transform duration-300 group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1 group-hover/btn:scale-110 text-blue-600 dark:text-blue-400" 
-                        />
-                      </button>
+                      <div className="flex items-center justify-between gap-2 overflow-hidden">
+                        {/* Learn More button with scale-up and icon translation on hover */}
+                        <button 
+                          className="group/btn flex items-center gap-1.5 text-xs font-black text-slate-900 dark:text-white uppercase tracking-[0.15em] transition-all duration-300 hover:scale-105 active:scale-95 shrink-0"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setSelectedService(service);
+                          }}
+                          aria-label={`Learn more about ${service.title}`}
+                        >
+                          Learn More 
+                          <ArrowUpRight 
+                            size={14} 
+                            className="transition-transform duration-300 group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1 group-hover/btn:scale-110 text-blue-600 dark:text-blue-400" 
+                          />
+                        </button>
+
+                        {/* Secondary hover-revealed Call-To-Action Button */}
+                        <div className="opacity-0 translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-500 ease-out">
+                          <Link 
+                            to="/contact" 
+                            onClick={(e) => e.stopPropagation()}
+                            className="inline-block px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-[9px] font-mono font-black uppercase tracking-wider shrink-0 shadow-lg shadow-blue-500/15"
+                          >
+                            Inquire Now
+                          </Link>
+                        </div>
+                      </div>
                     </div>
                   </ScrollReveal>
                   </motion.div>
