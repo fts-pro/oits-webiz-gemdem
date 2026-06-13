@@ -1,5 +1,6 @@
 import React, { useState, useEffect, Suspense, lazy } from 'react';
 import { HashRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { LanguageProvider } from './components/LanguageContext';
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
 import { AiAssistant } from './components/AiAssistant';
@@ -40,8 +41,22 @@ const ScrollHandler = () => {
 
 function AppContent() {
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
+  const [scrollProgress, setScrollProgress] = useState(0);
 
   const location = useLocation();
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const totalScroll = document.documentElement.scrollHeight - window.innerHeight;
+      if (totalScroll > 0) {
+        setScrollProgress((window.scrollY / totalScroll) * 100);
+      } else {
+        setScrollProgress(0);
+      }
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   useEffect(() => {
     const storedTheme = localStorage.getItem('theme');
@@ -67,6 +82,13 @@ function AppContent() {
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 selection:bg-blue-100 selection:text-blue-900 dark:selection:bg-blue-900 dark:selection:text-blue-100 transition-colors duration-300 relative">
+      {/* Dynamic Scroll Progress Bar */}
+      <div className="fixed top-0 left-0 right-0 h-[3px] bg-transparent z-[1001] pointer-events-none">
+        <div 
+          className="h-full bg-blue-600 dark:bg-blue-500 transition-transform duration-75 origin-left" 
+          style={{ transform: `scaleX(${scrollProgress / 100})` }}
+        />
+      </div>
       <SEO />
       <Header theme={theme} toggleTheme={toggleTheme} />
       <ScrollHandler />
@@ -102,7 +124,9 @@ function AppContent() {
 function App() {
   return (
     <HashRouter>
-      <AppContent />
+      <LanguageProvider>
+        <AppContent />
+      </LanguageProvider>
     </HashRouter>
   );
 }

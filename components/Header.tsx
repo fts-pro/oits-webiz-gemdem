@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Terminal, Sun, Moon, Home, Layers, BookOpen, Mail, User, Search } from 'lucide-react';
+import { Menu, X, Terminal, Sun, Moon, Home, Layers, BookOpen, Mail, User, Search, Globe } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
+import { useLanguage } from './LanguageContext';
 import { COMPANY_NAME, SERVICES, PROJECTS } from '../constants';
 import { Tooltip } from './ui/Tooltip';
 import { Button } from './ui/Button';
@@ -31,6 +32,7 @@ const NAV_LINKS = [
 ];
 
 export const Header: React.FC<HeaderProps> = ({ theme, toggleTheme }) => {
+  const { language, toggleLanguage, t } = useLanguage();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -177,7 +179,7 @@ export const Header: React.FC<HeaderProps> = ({ theme, toggleTheme }) => {
                 <div className={`transition-all duration-500 ${activeIcon === item.label ? 'scale-110' : ''}`}>
                   {item.icon && <item.icon size={15} />}
                 </div>
-                {!['Home', 'Contact'].includes(item.label) && <span>{item.label}</span>}
+                {!['Home', 'Contact'].includes(item.label) && <span>{t('nav.' + item.label.toLowerCase())}</span>}
               </Link>
             );
 
@@ -235,6 +237,13 @@ export const Header: React.FC<HeaderProps> = ({ theme, toggleTheme }) => {
                 {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
              </button>
              <button
+               onClick={toggleLanguage}
+               className={`px-3 py-1.5 rounded-xl font-mono text-[10px] font-black uppercase tracking-wider transition-all hover:scale-110 border border-slate-200 dark:border-slate-800 hover:border-blue-500/50 ${themeButtonClass}`}
+               aria-label={`Switch language to ${language === 'en' ? 'Bengali' : 'English'}`}
+             >
+               {language === 'en' ? 'EN' : 'বাংলা'}
+             </button>
+             <button
                className={`p-2.5 rounded-full transition-all hover:scale-110 ${themeButtonClass}`}
                aria-label="User account"
              >
@@ -246,7 +255,7 @@ export const Header: React.FC<HeaderProps> = ({ theme, toggleTheme }) => {
                 size="sm" 
                 className={`transition-all duration-500 rounded-full font-black ml-2 ${isScrolled ? 'px-6 py-2 bg-blue-600 hover:bg-blue-700' : 'px-8 bg-blue-600 text-white'}`}
               >
-                Let's Build
+                {t('header.letsbuild')}
               </Button>
             </Link>
           </div>
@@ -254,6 +263,13 @@ export const Header: React.FC<HeaderProps> = ({ theme, toggleTheme }) => {
 
         {/* Mobile Toggle */}
         <div className="flex items-center gap-2 md:hidden">
+          <button
+            onClick={toggleLanguage}
+            className={`w-10 h-10 flex items-center justify-center rounded-full font-mono text-xs font-bold transition-all ${themeButtonClass}`}
+            aria-label="Switch language"
+          >
+            {language === 'en' ? 'EN' : 'বাংলা'}
+          </button>
           <button
             onClick={() => setIsSearchOpen(true)}
             className={`w-10 h-10 flex items-center justify-center rounded-full transition-all ${themeButtonClass}`}
@@ -445,7 +461,7 @@ export const Header: React.FC<HeaderProps> = ({ theme, toggleTheme }) => {
                         <div className="w-12 h-12 rounded-2xl bg-white dark:bg-slate-800 flex items-center justify-center shadow-sm">
                           {item.icon && <item.icon size={22} />}
                         </div>
-                        {item.label}
+                        {t('nav.' + item.label.toLowerCase())}
                       </Link>
                       
                       {/* Mobile Sub-links (if any) */}

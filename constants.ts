@@ -146,7 +146,7 @@ export const PROJECTS: Project[] = [
   {
     id: '1',
     title: 'FinTech Analytics Hub',
-    category: 'Enterprise Software',
+    category: 'Web Development',
     imageUrl: '/assets/portfolio_1.png',
     description: 'A comprehensive financial analytics dashboard for real-time market tracking.',
     fullDescription: 'We engineered a low-latency data ingestion pipeline for real-time stock market analysis, providing institutional-grade charting tools. The system handles over 10k concurrent data points per second with advanced visualization.',
@@ -157,7 +157,7 @@ export const PROJECTS: Project[] = [
   {
     id: '2',
     title: 'Luma Healthcare App',
-    category: 'Mobile Application',
+    category: 'Mobile Apps',
     imageUrl: '/assets/portfolio_2.png',
     description: 'A HIPAA-compliant telemedicine platform with secure video conferencing.',
     fullDescription: 'Our mobile team focused on high-security standards (HIPAA) and low-latency video streaming to connect patients with specialists globally. Features include encrypted health records, automated prescription refills, and instant appointment management.',
@@ -168,7 +168,7 @@ export const PROJECTS: Project[] = [
   {
     id: '3',
     title: 'Global Logistics Engine',
-    category: 'Supply Chain',
+    category: 'Cloud',
     imageUrl: '/assets/portfolio_3.png',
     description: 'AI-driven logistics platform managing complex global supply chains.',
     fullDescription: 'Integrating AI for predictive route optimization, this platform reduced fuel costs for a major shipping firm by 14% in its first quarter of operation using real-time GPS tracking and weather forecasting data.',
@@ -179,7 +179,7 @@ export const PROJECTS: Project[] = [
   {
     id: '4',
     title: 'EduStream Pro',
-    category: 'E-Learning',
+    category: 'Web Development',
     imageUrl: '/assets/portfolio_4.png',
     description: 'Cloud-based learning management system for universities.',
     fullDescription: 'A scalable LMS built to support over 50,000 students. Includes real-time testing, automated grading, a collaborative virtual classroom module, and rich multimedia resource storage.',
@@ -190,7 +190,7 @@ export const PROJECTS: Project[] = [
   {
     id: '5',
     title: 'EcoTrack IoT',
-    category: 'Smart Industry',
+    category: 'Cloud',
     imageUrl: '/assets/portfolio_5.png',
     description: 'Industrial IoT monitoring for sustainable manufacturing.',
     fullDescription: 'Connects factory floor sensors to a central dashboard to monitor carbon footprint and energy waste in real-time. Built with a focus on edge computing and high-availability data streams.',
@@ -201,7 +201,7 @@ export const PROJECTS: Project[] = [
   {
     id: '6',
     title: 'Nexus Real Estate VR',
-    category: 'Real Estate',
+    category: 'Web Development',
     imageUrl: '/assets/portfolio_1.png',
     description: 'Web-based VR walkthroughs for luxury property listings.',
     fullDescription: 'Allowing potential buyers to explore properties from their browser with high-fidelity 3D rendering and interactive floor plans, significantly increasing conversion rates for global buyers.',
@@ -212,18 +212,18 @@ export const PROJECTS: Project[] = [
   {
     id: '7',
     title: 'CloudScale Infrastructure',
-    category: 'Cloud Infrastructure',
+    category: 'Cloud',
     imageUrl: '/assets/portfolio_2.png',
     description: 'Automated multitenant provisioning system for enterprise cloud users.',
     fullDescription: 'A robust orchestration tool that manages resource allocation across hybrid cloud environments, providing a single pane of glass for multi-cloud deployments.',
     technologies: ['Terraform', 'Go', 'Kubernetes', 'AWS'],
     demoVideoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
-    captionsUrl: 'https://storage.googleapis.com/caption-demo/cloud.vtt'
+    captionsUrl: 'https://storage.googleapis.com/cloud.vtt'
   },
   {
     id: '8',
     title: 'OmniShop AI',
-    category: 'E-Commerce',
+    category: 'Web Development',
     imageUrl: '/assets/portfolio_3.png',
     description: 'Personalized e-commerce engine with real-time AI recommendations.',
     fullDescription: 'We built a high-conversion retail platform that uses machine learning to predict user behavior and provide ultra-fast search results across millions of SKU items.',
@@ -234,7 +234,7 @@ export const PROJECTS: Project[] = [
   {
     id: '9',
     title: 'MediVision Diagnosis',
-    category: 'Healthcare',
+    category: 'Mobile Apps',
     imageUrl: '/assets/portfolio_4.png',
     description: 'AI-powered diagnostic imaging assistant for radiologists.',
     fullDescription: 'A deep-learning application that assists medical professionals in identifying anomalies in X-rays and MRIs with 94% accuracy, integrated into existing hospital PACS systems.',

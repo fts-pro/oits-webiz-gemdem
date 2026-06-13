@@ -66,6 +66,40 @@ export const Footer: React.FC<FooterProps> = ({ theme, toggleTheme }) => {
   const [email, setEmail] = useState('');
   const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
 
+  const [projectsDelivered, setProjectsDelivered] = useState(0);
+  const [happyClients, setHappyClients] = useState(0);
+  const [yearsExperience, setYearsExperience] = useState(0);
+
+  React.useEffect(() => {
+    let startTime: number | null = null;
+    const duration = 1500; // 1.5 seconds animation duration
+    const targets = { projects: 150, clients: 85, experience: 10 };
+
+    const animate = (timestamp: number) => {
+      if (!startTime) startTime = timestamp;
+      const progress = timestamp - startTime;
+      const percentage = Math.min(progress / duration, 1);
+
+      // easeOutQuad curve
+      const easing = percentage * (2 - percentage);
+
+      setProjectsDelivered(Math.floor(easing * targets.projects));
+      setHappyClients(Math.floor(easing * targets.clients));
+      setYearsExperience(Math.floor(easing * targets.experience));
+
+      if (progress < duration) {
+        requestAnimationFrame(animate);
+      } else {
+        setProjectsDelivered(targets.projects);
+        setHappyClients(targets.clients);
+        setYearsExperience(targets.experience);
+      }
+    };
+
+    const animFrame = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(animFrame);
+  }, []);
+
   const handleSubscribe = (e: React.FormEvent) => {
     e.preventDefault();
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -81,6 +115,30 @@ export const Footer: React.FC<FooterProps> = ({ theme, toggleTheme }) => {
     <footer className="bg-slate-950 text-slate-300 py-24 border-t border-slate-900 overflow-hidden">
       {toast && <Toast message={toast.message} type={toast.type} onClose={() => setToast(null)} />}
       <div className="container mx-auto px-6">
+        
+        {/* State-driven Metrics Counter Dashboard Row */}
+        <div className="bg-slate-900/45 border border-slate-900/80 rounded-3xl p-8 mb-16 grid grid-cols-1 sm:grid-cols-3 gap-8 text-center sm:text-left shadow-2xl relative overflow-hidden group">
+          <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
+          <div className="space-y-1 relative z-10">
+            <p className="text-4xl md:text-5xl font-black text-blue-500 font-mono tracking-tighter">
+              {projectsDelivered}+
+            </p>
+            <p className="text-xs font-bold text-slate-400 uppercase tracking-[0.2em]">Projects Delivered</p>
+          </div>
+          <div className="space-y-1 sm:border-l border-slate-900 sm:pl-8 relative z-10">
+            <p className="text-4xl md:text-5xl font-black text-emerald-500 font-mono tracking-tighter">
+              {happyClients}+
+            </p>
+            <p className="text-xs font-bold text-slate-400 uppercase tracking-[0.2em]">Happy Clients</p>
+          </div>
+          <div className="space-y-1 sm:border-l border-slate-900 sm:pl-8 relative z-10">
+            <p className="text-4xl md:text-5xl font-black text-purple-500 font-mono tracking-tighter">
+              {yearsExperience}+
+            </p>
+            <p className="text-xs font-bold text-slate-400 uppercase tracking-[0.2em]">Years of Experience</p>
+          </div>
+        </div>
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16 mb-24">
           
           <div className="space-y-8">

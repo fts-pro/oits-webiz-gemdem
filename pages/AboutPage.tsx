@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { About } from '../components/About';
+import { MeetTheTeam } from '../components/MeetTheTeam';
 import { Metrics } from '../components/Metrics';
 import { Button } from '../components/ui/Button';
 import { Link } from 'react-router-dom';
@@ -69,6 +70,7 @@ const AboutPage: React.FC = () => {
       </div>
       
       <About />
+      <MeetTheTeam />
       <Metrics />
 
       {/* Skills Section with Animated Progress Bars */}

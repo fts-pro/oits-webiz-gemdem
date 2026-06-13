@@ -4,9 +4,10 @@ import { Services } from '../components/Services';
 import { Process } from '../components/Process';
 import { Button } from '../components/ui/Button';
 import { Link } from 'react-router-dom';
-import { Lightbulb, Users, Activity, TrendingUp } from 'lucide-react';
+import { Lightbulb, Users, Activity, TrendingUp, HelpCircle } from 'lucide-react';
 import { SEO } from '../components/SEO';
 import { ScrollReveal } from '../components/ui/ScrollReveal';
+import { Accordion } from '../components/ui/Accordion';
 
 const WHY_CHOOSE_US = [
   {
@@ -28,6 +29,29 @@ const WHY_CHOOSE_US = [
     title: "Scalable Solutions",
     desc: "We architect for global-scale growth. Our cloud-native systems expand seamlessly as your user base explodes.",
     icon: TrendingUp
+  }
+];
+
+const SERVICES_FAQS = [
+  {
+    id: "service-faq-0",
+    question: "What software architectures do you specialize in for enterprise systems?",
+    answer: "We specialize in domain-driven design, clean architecture, automated continuous delivery (CI/CD), and microservices. We build resilient, stateless backend servers in Go or NodeJS paired with highly responsive React or Vue web architectures."
+  },
+  {
+    id: "service-faq-1",
+    question: "Do you build cross-platform mobile apps or native apps?",
+    answer: "We cover both paths. We build native iOS and Android applications using Swift and Kotlin respectively for maximum performance and hardware integration. For high-velocity setups, we use Flutter or React Native to ship a single, clean codebase to both platforms."
+  },
+  {
+    id: "service-faq-2",
+    question: "How do you guarantee scalability and high availability on the cloud?",
+    answer: "Every application we deploy is bundled into lightweight Docker containers orchestrated by Kubernetes. We practice Infrastructure-as-Code (IaC) using HashiCorp Terraform on AWS, Azure, and Google Cloud, with automatic server-scaling policies and automated multi-region backup systems."
+  },
+  {
+    id: "service-faq-3",
+    question: "How do dedicated teams integrate into our existing startup processes?",
+    answer: "Our dedicated squads operate as a seamless extension of your organization. They join your daily standups, integrate into your Slack channels, deploy to your staging environments, and track task completions transparently using platforms like Jira or Trello."
   }
 ];
 
@@ -147,6 +171,31 @@ const ServicesPage: React.FC = () => {
       </section>
 
       <Process />
+
+      {/* Services Interactive Accordion FAQ Section */}
+      <section className="py-24 bg-slate-50 dark:bg-slate-900/40 border-t border-b border-slate-100 dark:border-slate-800">
+         <div className="container mx-auto px-6">
+            <div className="flex flex-col lg:flex-row gap-16">
+               <div className="lg:w-1/3">
+                  <ScrollReveal className="sticky top-32">
+                     <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/20 rounded-2xl flex items-center justify-center text-blue-600 dark:text-blue-400 mb-6">
+                        <HelpCircle size={24} />
+                     </div>
+                     <h3 className="text-3xl md:text-4xl font-extrabold text-slate-900 dark:text-white mb-4 tracking-tighter leading-tight">Service <br/>Frictionless FAQs</h3>
+                     <p className="text-slate-650 dark:text-slate-400 mb-8 leading-relaxed font-medium">
+                        Everything you need to know about our dedicated engineering practices, deliverables, and service architecture. For extra queries, connect with our support pipeline.
+                     </p>
+                  </ScrollReveal>
+               </div>
+               
+               <div className="lg:w-2/3">
+                 <ScrollReveal delay={0.2}>
+                    <Accordion items={SERVICES_FAQS} />
+                 </ScrollReveal>
+               </div>
+            </div>
+         </div>
+      </section>
 
       <section className="py-24 bg-slate-50 dark:bg-slate-950">
         <div className="container mx-auto px-6 text-center">

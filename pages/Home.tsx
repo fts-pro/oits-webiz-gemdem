@@ -5,7 +5,8 @@ import { Services } from '../components/Services';
 import { FeaturedIn } from '../components/FeaturedIn';
 import { Process } from '../components/Process';
 import { Portfolio } from '../components/Portfolio';
-import { Testimonials } from '../components/Testimonials';
+import { ClientTestimonials } from '../components/ClientTestimonials';
+import { TechStackInteractive } from '../components/TechStackInteractive';
 import { TrustedBy } from '../components/TrustedBy';
 import { Link } from 'react-router-dom';
 import { Button } from '../components/ui/Button';
@@ -54,6 +55,10 @@ const Home: React.FC = () => {
       
       <HorizontalDivider />
       
+      <TechStackInteractive />
+      
+      <HorizontalDivider />
+      
       <Process />
 
       {/* Featured Works Section */}
@@ -74,7 +79,7 @@ const Home: React.FC = () => {
 
       <HorizontalDivider />
 
-      <Testimonials />
+      <ClientTestimonials />
       
       <HorizontalDivider />
       
