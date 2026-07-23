@@ -8,6 +8,7 @@ import { Portfolio } from '../components/Portfolio';
 import { ClientTestimonials } from '../components/ClientTestimonials';
 import { TechStackInteractive } from '../components/TechStackInteractive';
 import { TrustedBy } from '../components/TrustedBy';
+import { Metrics } from '../components/Metrics';
 import { Link } from 'react-router-dom';
 import { Button } from '../components/ui/Button';
 import { SEO } from '../components/SEO';
@@ -53,6 +54,10 @@ const Home: React.FC = () => {
       
       <TrustedBy />
       
+      <HorizontalDivider />
+
+      <Metrics />
+
       <HorizontalDivider />
       
       <TechStackInteractive />

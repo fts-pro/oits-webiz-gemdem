@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Terminal, Sun, Moon, Home, Layers, BookOpen, Mail, User, Search, Globe } from 'lucide-react';
+import { Menu, X, Terminal, Sun, Moon, Home, Layers, BookOpen, Mail, User, Search, Globe, Volume2, VolumeX } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 import { useLanguage } from './LanguageContext';
+import { useSound } from './SoundContext';
 import { COMPANY_NAME, SERVICES, PROJECTS } from '../constants';
 import { Tooltip } from './ui/Tooltip';
 import { Button } from './ui/Button';
@@ -33,6 +34,7 @@ const NAV_LINKS = [
 
 export const Header: React.FC<HeaderProps> = ({ theme, toggleTheme }) => {
   const { language, toggleLanguage, t } = useLanguage();
+  const { soundEnabled, toggleSound } = useSound();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -230,6 +232,14 @@ export const Header: React.FC<HeaderProps> = ({ theme, toggleTheme }) => {
                <Search size={20} />
              </button>
              <button
+               onClick={toggleSound}
+               className={`p-2.5 rounded-full transition-all hover:scale-110 ${themeButtonClass}`}
+               aria-label={soundEnabled ? "Mute sound effects" : "Enable sound effects"}
+               title={soundEnabled ? "Sound Effects: ON" : "Sound Effects: OFF"}
+             >
+               {soundEnabled ? <Volume2 size={20} className="text-blue-500" /> : <VolumeX size={20} className="opacity-50" />}
+             </button>
+             <button
                onClick={toggleTheme}
                className={`p-2.5 rounded-full transition-all active:rotate-12 hover:scale-110 ${themeButtonClass}`}
                aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
@@ -275,6 +285,13 @@ export const Header: React.FC<HeaderProps> = ({ theme, toggleTheme }) => {
             className={`w-10 h-10 flex items-center justify-center rounded-full transition-all ${themeButtonClass}`}
           >
             <Search size={20} />
+          </button>
+          <button
+            onClick={toggleSound}
+            className={`w-10 h-10 flex items-center justify-center rounded-full transition-all ${themeButtonClass}`}
+            aria-label="Toggle sound"
+          >
+            {soundEnabled ? <Volume2 size={18} className="text-blue-500" /> : <VolumeX size={18} className="opacity-50" />}
           </button>
           <button
             onClick={toggleTheme}
@@ -483,10 +500,27 @@ export const Header: React.FC<HeaderProps> = ({ theme, toggleTheme }) => {
                   ))}
                 </nav>
               </div>
-              <div className="p-8 border-t border-slate-100 dark:border-slate-800">
+              <div className="p-8 border-t border-slate-100 dark:border-slate-800 space-y-4">
+                  <div className="flex items-center gap-3">
+                    <button
+                      onClick={toggleLanguage}
+                      className="flex-1 py-3 px-4 rounded-2xl bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white font-mono text-xs font-black uppercase tracking-wider flex items-center justify-center gap-2 border border-slate-200 dark:border-slate-700"
+                      aria-label="Toggle language"
+                    >
+                      <Globe size={16} className="text-blue-600 dark:text-blue-400" />
+                      <span>{language === 'en' ? 'English (EN)' : 'বাংলা (BN)'}</span>
+                    </button>
+                    <button
+                      onClick={toggleTheme}
+                      className="p-3 rounded-2xl bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-700"
+                      aria-label="Toggle theme"
+                    >
+                      {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+                    </button>
+                  </div>
                   <Link to="/contact" onClick={() => handleLinkClick('Contact')}>
                     <Button className="w-full py-6 text-lg rounded-3xl shadow-xl shadow-blue-500/20">
-                      Let's Talk
+                      {t('header.letsbuild')}
                     </Button>
                   </Link>
               </div>

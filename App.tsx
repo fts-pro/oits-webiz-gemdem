@@ -1,11 +1,14 @@
 import React, { useState, useEffect, Suspense, lazy } from 'react';
 import { HashRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { LanguageProvider } from './components/LanguageContext';
+import { SoundProvider } from './components/SoundContext';
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
 import { AiAssistant } from './components/AiAssistant';
 import { CookieConsent } from './components/CookieConsent';
 import { ScrollToTopButton } from './components/ScrollToTopButton';
+import { QuickQuoteModal } from './components/QuickQuoteModal';
+import { CustomCursor } from './components/ui/CustomCursor';
 import { PageTransition } from './components/PageTransition';
 import { Breadcrumbs } from './components/ui/Breadcrumbs';
 import { SEO } from './components/SEO';
@@ -115,8 +118,10 @@ function AppContent() {
       </main>
       <Footer theme={theme} toggleTheme={toggleTheme} />
       <AiAssistant />
+      <QuickQuoteModal />
       <ScrollToTopButton />
       <CookieConsent />
+      <CustomCursor />
     </div>
   );
 }
@@ -124,9 +129,11 @@ function AppContent() {
 function App() {
   return (
     <HashRouter>
-      <LanguageProvider>
-        <AppContent />
-      </LanguageProvider>
+      <SoundProvider>
+        <LanguageProvider>
+          <AppContent />
+        </LanguageProvider>
+      </SoundProvider>
     </HashRouter>
   );
 }

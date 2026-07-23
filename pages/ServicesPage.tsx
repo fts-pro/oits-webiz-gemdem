@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Services } from '../components/Services';
 import { Process } from '../components/Process';
+import { ClientTestimonials } from '../components/ClientTestimonials';
 import { Button } from '../components/ui/Button';
 import { Link } from 'react-router-dom';
 import { Lightbulb, Users, Activity, TrendingUp, HelpCircle } from 'lucide-react';
@@ -171,6 +172,8 @@ const ServicesPage: React.FC = () => {
       </section>
 
       <Process />
+
+      <ClientTestimonials />
 
       {/* Services Interactive Accordion FAQ Section */}
       <section className="py-24 bg-slate-50 dark:bg-slate-900/40 border-t border-b border-slate-100 dark:border-slate-800">

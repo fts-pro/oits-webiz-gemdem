@@ -4,6 +4,7 @@ import { Button } from './ui/Button';
 import { CONTACT_EMAIL } from '../constants';
 import { SectionId } from '../types';
 import { Toast } from './ui/Toast';
+import { SupportStatus } from './SupportStatus';
 
 export const Contact: React.FC = () => {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
@@ -166,6 +167,11 @@ export const Contact: React.FC = () => {
                   </div>
                 </div>
               ))}
+            </div>
+
+            {/* Support Desk Status Card */}
+            <div className={`transition-all duration-700 ease-out delay-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}>
+              <SupportStatus />
             </div>
           </div>
 

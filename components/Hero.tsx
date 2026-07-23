@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Terminal as TerminalIcon, Zap, PlayCircle, MessageCircle } from 'lucide-react';
 import { Button } from './ui/Button';
+import { ParticleCanvas } from './ui/ParticleCanvas';
 import { TAGLINE } from '../constants';
 
 const TYPING_TITLE = "Digital Elite";
@@ -148,6 +149,9 @@ export const Hero: React.FC = () => {
         
         {/* Radial spotlight effect for depth */}
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,transparent_0%,rgba(15,23,42,0.6)_100%)] hidden lg:block" />
+
+        {/* Interactive Particle Animation Background */}
+        <ParticleCanvas />
       </div>
 
       <div className="container mx-auto px-4 sm:px-6 relative z-10">
