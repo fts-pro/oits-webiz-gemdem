@@ -12,6 +12,8 @@ import { CustomCursor } from './components/ui/CustomCursor';
 import { PageTransition } from './components/PageTransition';
 import { Breadcrumbs } from './components/ui/Breadcrumbs';
 import { SEO } from './components/SEO';
+import { ScrollProgressBar } from './components/ui/ScrollProgressBar';
+import { PageSkeletonLoader } from './components/ui/SkeletonLoaders';
 import { COMPANY_NAME, TAGLINE } from './constants';
 
 // Lazy load pages for performance
@@ -85,13 +87,8 @@ function AppContent() {
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 selection:bg-blue-100 selection:text-blue-900 dark:selection:bg-blue-900 dark:selection:text-blue-100 transition-colors duration-300 relative">
-      {/* Dynamic Scroll Progress Bar */}
-      <div className="fixed top-0 left-0 right-0 h-[3px] bg-transparent z-[1001] pointer-events-none">
-        <div 
-          className="h-full bg-blue-600 dark:bg-blue-500 transition-transform duration-75 origin-left" 
-          style={{ transform: `scaleX(${scrollProgress / 100})` }}
-        />
-      </div>
+      {/* Dynamic Scroll Progress Bar with Section Markers */}
+      <ScrollProgressBar scrollProgress={scrollProgress} />
       <SEO />
       <Header theme={theme} toggleTheme={toggleTheme} />
       <ScrollHandler />
@@ -101,11 +98,7 @@ function AppContent() {
         </div>
       )}
       <main>
-        <Suspense fallback={
-          <div className="h-screen flex items-center justify-center bg-slate-50 dark:bg-slate-950">
-            <div className="w-12 h-12 border-4 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
-          </div>
-        }>
+        <Suspense fallback={<PageSkeletonLoader />}>
           <Routes>
             <Route path="/" element={<PageTransition><Home /></PageTransition>} />
             <Route path="/services" element={<PageTransition><ServicesPage /></PageTransition>} />

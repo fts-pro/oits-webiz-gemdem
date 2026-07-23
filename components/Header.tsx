@@ -4,6 +4,8 @@ import { Menu, X, Terminal, Sun, Moon, Home, Layers, BookOpen, Mail, User, Searc
 import { AnimatePresence, motion } from 'motion/react';
 import { useLanguage } from './LanguageContext';
 import { useSound } from './SoundContext';
+import { GlobalSearchModal } from './ui/GlobalSearchModal';
+import { ThemeToggle } from './ui/ThemeToggle';
 import { COMPANY_NAME, SERVICES, PROJECTS } from '../constants';
 import { Tooltip } from './ui/Tooltip';
 import { Button } from './ui/Button';
@@ -239,13 +241,7 @@ export const Header: React.FC<HeaderProps> = ({ theme, toggleTheme }) => {
              >
                {soundEnabled ? <Volume2 size={20} className="text-blue-500" /> : <VolumeX size={20} className="opacity-50" />}
              </button>
-             <button
-               onClick={toggleTheme}
-               className={`p-2.5 rounded-full transition-all active:rotate-12 hover:scale-110 ${themeButtonClass}`}
-               aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
-             >
-                {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
-             </button>
+             <ThemeToggle theme={theme} toggleTheme={toggleTheme} size={20} />
              <button
                onClick={toggleLanguage}
                className={`px-3 py-1.5 rounded-xl font-mono text-[10px] font-black uppercase tracking-wider transition-all hover:scale-110 border border-slate-200 dark:border-slate-800 hover:border-blue-500/50 ${themeButtonClass}`}
@@ -510,13 +506,7 @@ export const Header: React.FC<HeaderProps> = ({ theme, toggleTheme }) => {
                       <Globe size={16} className="text-blue-600 dark:text-blue-400" />
                       <span>{language === 'en' ? 'English (EN)' : 'বাংলা (BN)'}</span>
                     </button>
-                    <button
-                      onClick={toggleTheme}
-                      className="p-3 rounded-2xl bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-700"
-                      aria-label="Toggle theme"
-                    >
-                      {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
-                    </button>
+                    <ThemeToggle theme={theme} toggleTheme={toggleTheme} size={18} />
                   </div>
                   <Link to="/contact" onClick={() => handleLinkClick('Contact')}>
                     <Button className="w-full py-6 text-lg rounded-3xl shadow-xl shadow-blue-500/20">
@@ -528,6 +518,7 @@ export const Header: React.FC<HeaderProps> = ({ theme, toggleTheme }) => {
           </>
         )}
       </AnimatePresence>
+      <GlobalSearchModal isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
     </header>
   );
 };

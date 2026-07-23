@@ -4,6 +4,7 @@ import { Search, Layers, Code, ShieldCheck, Rocket, X, ArrowRight, CheckCircle2 
 import { PROCESS_STEPS } from '../constants';
 import { SectionId } from '../types';
 import { ScrollReveal } from './ui/ScrollReveal';
+import { InteractiveTimeline } from './ui/InteractiveTimeline';
 
 const iconMap: Record<string, React.ReactNode> = {
   Search: <Search className="w-6 h-6" />,
@@ -60,24 +61,9 @@ export const Process: React.FC = () => {
           </p>
         </ScrollReveal>
 
-        {/* Horizontal Step Indicator Bar for Quick Overview */}
-        <ScrollReveal className="max-w-4xl mx-auto mb-16 hidden lg:block">
-          <div className="grid grid-cols-5 gap-2 bg-white dark:bg-slate-900 p-3 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-sm">
-            {PROCESS_STEPS.map((step, idx) => (
-              <button
-                key={step.id}
-                onClick={() => setSelectedStep(step)}
-                className="flex flex-col items-center p-3 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/60 transition-all text-center group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
-              >
-                <span className="text-[10px] font-mono font-black text-blue-600 dark:text-blue-400 mb-1">
-                  STEP {step.number}
-                </span>
-                <span className="text-xs font-bold text-slate-800 dark:text-slate-200 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors line-clamp-1">
-                  {step.title}
-                </span>
-              </button>
-            ))}
-          </div>
+        {/* Interactive Software Development Lifecycle Timeline */}
+        <ScrollReveal className="max-w-4xl mx-auto mb-20">
+          <InteractiveTimeline />
         </ScrollReveal>
 
         <div className="relative max-w-5xl mx-auto">
