@@ -18,6 +18,9 @@ export interface Project {
   imageUrl: string;
   description: string;
   fullDescription?: string;
+  problem?: string;
+  solution?: string;
+  outcomes?: string[];
   technologies?: string[];
   link?: string;
   demoVideoUrl?: string | { mp4: string; webm: string };

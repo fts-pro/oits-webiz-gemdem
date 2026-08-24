@@ -762,6 +762,49 @@ export const Portfolio: React.FC<PortfolioProps> = ({ limit }) => {
                  <p className="text-slate-700 dark:text-slate-300 text-xl leading-relaxed mb-10 font-medium">
                    {modalState.project.fullDescription || modalState.project.description}
                  </p>
+
+                 {modalState.project.problem && modalState.project.solution && (
+                   <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
+                     <div className="bg-slate-50 dark:bg-slate-800/50 p-8 rounded-[2rem] border border-slate-100 dark:border-slate-800">
+                       <h5 className="text-sm font-black text-slate-900 dark:text-white uppercase tracking-widest mb-4 flex items-center gap-2">
+                         <AlertTriangle size={16} className="text-orange-500" />
+                         The Problem
+                       </h5>
+                       <p className="text-slate-600 dark:text-slate-400 leading-relaxed text-sm">
+                         {modalState.project.problem}
+                       </p>
+                     </div>
+                     <div className="bg-blue-50 dark:bg-blue-900/10 p-8 rounded-[2rem] border border-blue-100 dark:border-blue-900/30">
+                       <h5 className="text-sm font-black text-blue-900 dark:text-blue-100 uppercase tracking-widest mb-4 flex items-center gap-2">
+                         <Check size={16} className="text-blue-500" />
+                         Our Solution
+                       </h5>
+                       <p className="text-slate-700 dark:text-blue-200/70 leading-relaxed text-sm">
+                         {modalState.project.solution}
+                       </p>
+                     </div>
+                   </div>
+                 )}
+
+                 {modalState.project.outcomes && modalState.project.outcomes.length > 0 && (
+                   <div className="mb-10">
+                     <h5 className="text-sm font-black text-slate-900 dark:text-white uppercase tracking-widest mb-6 flex items-center gap-2">
+                       <TrendingUp size={16} className="text-emerald-500" />
+                       Key Outcomes
+                     </h5>
+                     <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                       {modalState.project.outcomes.map((outcome, idx) => (
+                         <li key={idx} className="flex items-start gap-3 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-4 rounded-xl shadow-sm">
+                           <div className="mt-1 flex-shrink-0 w-6 h-6 rounded-full bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center">
+                             <Check size={12} className="text-emerald-600 dark:text-emerald-400" />
+                           </div>
+                           <span className="text-sm font-medium text-slate-700 dark:text-slate-300">{outcome}</span>
+                         </li>
+                       ))}
+                     </ul>
+                   </div>
+                 )}
+
                  <div className="flex flex-wrap gap-3">
                    {modalState.project.technologies?.map(tech => (
                      <span key={tech} className="px-4 py-2 bg-slate-100 dark:bg-slate-800 rounded-lg text-xs font-bold text-slate-600 dark:text-slate-300">

@@ -150,6 +150,9 @@ export const PROJECTS: Project[] = [
     imageUrl: '/assets/portfolio_1.png',
     description: 'A comprehensive financial analytics dashboard for real-time market tracking.',
     fullDescription: 'We engineered a low-latency data ingestion pipeline for real-time stock market analysis, providing institutional-grade charting tools. The system handles over 10k concurrent data points per second with advanced visualization.',
+    problem: 'Institutional traders lacked real-time visibility into micro-market movements, relying on outdated dashboards that crashed under heavy data loads.',
+    solution: 'We built a high-performance data pipeline and a React-based frontend using WebSockets, ensuring sub-50ms latency for streaming millions of data points.',
+    outcomes: ['Decreased system latency by 85%', 'Supported 10x concurrent users without degradation', 'Enabled split-second trading decisions'],
     technologies: ['React', 'D3.js', 'Node.js', 'PostgreSQL'],
     demoVideoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
     captionsUrl: 'https://storage.googleapis.com/caption-demo/finance.vtt'
@@ -161,6 +164,9 @@ export const PROJECTS: Project[] = [
     imageUrl: '/assets/portfolio_2.png',
     description: 'A HIPAA-compliant telemedicine platform with secure video conferencing.',
     fullDescription: 'Our mobile team focused on high-security standards (HIPAA) and low-latency video streaming to connect patients with specialists globally. Features include encrypted health records, automated prescription refills, and instant appointment management.',
+    problem: 'Patients in remote areas struggled to access specialized healthcare, while doctors needed a secure, HIPAA-compliant way to conduct remote consultations.',
+    solution: 'Developed a robust cross-platform mobile app featuring WebRTC for crystal-clear video calls and secure, encrypted medical record storage.',
+    outcomes: ['Connected over 50,000 patients with specialists globally', 'Achieved 100% HIPAA compliance', 'Reduced appointment wait times by 40%'],
     technologies: ['Flutter', 'Firebase', 'WebRTC'],
     demoVideoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
     captionsUrl: 'https://storage.googleapis.com/caption-demo/healthcare.vtt'
@@ -172,6 +178,9 @@ export const PROJECTS: Project[] = [
     imageUrl: '/assets/portfolio_3.png',
     description: 'AI-driven logistics platform managing complex global supply chains.',
     fullDescription: 'Integrating AI for predictive route optimization, this platform reduced fuel costs for a major shipping firm by 14% in its first quarter of operation using real-time GPS tracking and weather forecasting data.',
+    problem: 'Global shipping operations faced unpredictable delays and high fuel consumption due to manual route planning and lack of real-time weather integration.',
+    solution: 'Implemented an AI-driven predictive logistics engine that dynamically recalculates shipping routes based on live weather and traffic data.',
+    outcomes: ['Reduced fuel costs by 14% in Q1', 'Decreased average shipping delays by 22%', 'Provided real-time transparency to B2B clients'],
     technologies: ['Next.js', 'Python', 'AWS SageMaker'],
     demoVideoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
     captionsUrl: 'https://storage.googleapis.com/caption-demo/logistics.vtt'
@@ -183,6 +192,9 @@ export const PROJECTS: Project[] = [
     imageUrl: '/assets/portfolio_4.png',
     description: 'Cloud-based learning management system for universities.',
     fullDescription: 'A scalable LMS built to support over 50,000 students. Includes real-time testing, automated grading, a collaborative virtual classroom module, and rich multimedia resource storage.',
+    problem: 'Universities struggled with legacy LMS platforms that crashed during peak exam periods and lacked interactive, real-time collaboration features.',
+    solution: 'Architected a highly scalable, cloud-native learning management system with real-time syncing, auto-grading algorithms, and seamless video integration.',
+    outcomes: ['Supported 50,000+ concurrent users with zero downtime', 'Reduced administrative grading time by 60%', 'Boosted student engagement metrics by 35%'],
     technologies: ['Vue.js', 'Firebase', 'Node.js', 'Redis'],
     demoVideoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WhatCarCanYouGetForAGrand.mp4',
     captionsUrl: 'https://storage.googleapis.com/caption-demo/edu.vtt'
@@ -194,6 +206,9 @@ export const PROJECTS: Project[] = [
     imageUrl: '/assets/portfolio_5.png',
     description: 'Industrial IoT monitoring for sustainable manufacturing.',
     fullDescription: 'Connects factory floor sensors to a central dashboard to monitor carbon footprint and energy waste in real-time. Built with a focus on edge computing and high-availability data streams.',
+    problem: 'Manufacturing plants lacked visibility into micro-level energy consumption, leading to massive inefficiencies and high carbon footprints.',
+    solution: 'Deployed an IoT edge-computing network to aggregate sensor data in real-time, visualized through a centralized, predictive analytics dashboard.',
+    outcomes: ['Identified and eliminated 18% of energy waste', 'Achieved ROI within 4 months of deployment', 'Enabled automated environmental compliance reporting'],
     technologies: ['Angular', 'Go', 'MQTT', 'Docker'],
     demoVideoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4',
     captionsUrl: 'https://storage.googleapis.com/caption-demo/eco.vtt'
@@ -205,6 +220,9 @@ export const PROJECTS: Project[] = [
     imageUrl: '/assets/portfolio_1.png',
     description: 'Web-based VR walkthroughs for luxury property listings.',
     fullDescription: 'Allowing potential buyers to explore properties from their browser with high-fidelity 3D rendering and interactive floor plans, significantly increasing conversion rates for global buyers.',
+    problem: 'Luxury real estate agents lost potential international buyers who couldn\'t travel for in-person viewings.',
+    solution: 'Engineered a WebGL-powered interactive 3D virtual tour platform that runs smoothly on standard mobile and desktop browsers.',
+    outcomes: ['Increased international sales by 25%', 'Reduced time-to-close by an average of 14 days', 'Hosted 10,000+ virtual tours in the first month'],
     technologies: ['React', 'Three.js', 'WebGL', 'AWS S3'],
     demoVideoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackAds.mp4',
     captionsUrl: 'https://storage.googleapis.com/caption-demo/vr.vtt'
@@ -216,6 +234,9 @@ export const PROJECTS: Project[] = [
     imageUrl: '/assets/portfolio_2.png',
     description: 'Automated multitenant provisioning system for enterprise cloud users.',
     fullDescription: 'A robust orchestration tool that manages resource allocation across hybrid cloud environments, providing a single pane of glass for multi-cloud deployments.',
+    problem: 'Enterprise IT teams struggled to manage complex hybrid cloud architectures, resulting in wasted resources and fragmented security policies.',
+    solution: 'Built a centralized cloud orchestration platform using Kubernetes and Terraform to automate multi-cloud provisioning and scaling.',
+    outcomes: ['Reduced infrastructure costs by 30%', 'Automated 95% of server provisioning tasks', 'Unified security and access controls across AWS and Azure'],
     technologies: ['Terraform', 'Go', 'Kubernetes', 'AWS'],
     demoVideoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
     captionsUrl: 'https://storage.googleapis.com/cloud.vtt'
@@ -227,6 +248,9 @@ export const PROJECTS: Project[] = [
     imageUrl: '/assets/portfolio_3.png',
     description: 'Personalized e-commerce engine with real-time AI recommendations.',
     fullDescription: 'We built a high-conversion retail platform that uses machine learning to predict user behavior and provide ultra-fast search results across millions of SKU items.',
+    problem: 'An e-commerce giant was losing sales due to a slow, inaccurate search engine and generic product recommendations.',
+    solution: 'Integrated an ElasticSearch cluster powered by a Python-based machine learning recommendation engine to personalize the shopping experience in real-time.',
+    outcomes: ['Boosted average order value (AOV) by 18%', 'Decreased search latency from 2s to 120ms', 'Increased overall conversion rate by 2.5%'],
     technologies: ['React', 'Next.js', 'Python', 'ElasticSearch'],
     demoVideoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
     captionsUrl: 'https://storage.googleapis.com/caption-demo/shop.vtt'
@@ -238,6 +262,9 @@ export const PROJECTS: Project[] = [
     imageUrl: '/assets/portfolio_4.png',
     description: 'AI-powered diagnostic imaging assistant for radiologists.',
     fullDescription: 'A deep-learning application that assists medical professionals in identifying anomalies in X-rays and MRIs with 94% accuracy, integrated into existing hospital PACS systems.',
+    problem: 'Radiologists faced severe burnout due to overwhelming case loads, leading to delayed diagnoses and potential human error.',
+    solution: 'Developed an AI diagnostic assistant using PyTorch that pre-screens medical images, highlighting potential anomalies for doctor review.',
+    outcomes: ['Achieved 94% diagnostic accuracy in clinical trials', 'Reduced average scan review time by 45%', 'Seamlessly integrated with 5 major hospital networks'],
     technologies: ['Python', 'PyTorch', 'FastAPI', 'AWS'],
     demoVideoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
     captionsUrl: 'https://storage.googleapis.com/caption-demo/med.vtt'

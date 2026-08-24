@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { About } from '../components/About';
 import { MeetTheTeam } from '../components/MeetTheTeam';
 import { Metrics } from '../components/Metrics';
+import { ClientTestimonials } from '../components/ClientTestimonials';
 import { Button } from '../components/ui/Button';
 import { Link } from 'react-router-dom';
 import { HelpCircle, Briefcase, Coffee, Globe, GraduationCap, Cpu, Code2, Database } from 'lucide-react';
@@ -147,6 +148,10 @@ const AboutPage: React.FC = () => {
           </div>
         </div>
       </section>
+
+      <div className="py-12 border-y border-slate-100 dark:border-slate-800">
+        <ClientTestimonials />
+      </div>
 
       {/* FAQ Section with Glass-panel effect */}
       <section className="py-24 bg-white dark:bg-slate-950">
